@@ -1,0 +1,2611 @@
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"cymetadata.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	cy_metadata
+  20              		.global	cy_meta_flashprotect
+  21              		.global	cy_meta_wonvl
+  22              		.global	cy_meta_custnvl
+  23              		.global	cy_meta_configecc
+  24              		.section	.cyconfigecc,"a",%progbits
+  25              		.align	2
+  26              		.type	cy_meta_configecc, %object
+  27              		.size	cy_meta_configecc, 2000
+  28              	cy_meta_configecc:
+  29 0000 05       		.byte	5
+  30 0001 52       		.byte	82
+  31 0002 00       		.byte	0
+  32 0003 40       		.byte	64
+  33 0004 04       		.byte	4
+  34 0005 64       		.byte	100
+  35 0006 00       		.byte	0
+  36 0007 40       		.byte	64
+  37 0008 03       		.byte	3
+  38 0009 65       		.byte	101
+  39 000a 00       		.byte	0
+  40 000b 40       		.byte	64
+  41 000c 50       		.byte	80
+  42 000d 00       		.byte	0
+  43 000e 01       		.byte	1
+  44 000f 40       		.byte	64
+  45 0010 31       		.byte	49
+  46 0011 01       		.byte	1
+  47 0012 01       		.byte	1
+  48 0013 40       		.byte	64
+  49 0014 3A       		.byte	58
+  50 0015 02       		.byte	2
+  51 0016 01       		.byte	1
+  52 0017 40       		.byte	64
+  53 0018 2F       		.byte	47
+  54 0019 03       		.byte	3
+  55 001a 01       		.byte	1
+  56 001b 40       		.byte	64
+  57 001c 49       		.byte	73
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 2
+
+
+  58 001d 04       		.byte	4
+  59 001e 01       		.byte	1
+  60 001f 40       		.byte	64
+  61 0020 37       		.byte	55
+  62 0021 05       		.byte	5
+  63 0022 01       		.byte	1
+  64 0023 40       		.byte	64
+  65 0024 05       		.byte	5
+  66 0025 07       		.byte	7
+  67 0026 01       		.byte	1
+  68 0027 40       		.byte	64
+  69 0028 59       		.byte	89
+  70 0029 08       		.byte	8
+  71 002a 01       		.byte	1
+  72 002b 40       		.byte	64
+  73 002c 3D       		.byte	61
+  74 002d 09       		.byte	9
+  75 002e 01       		.byte	1
+  76 002f 40       		.byte	64
+  77 0030 05       		.byte	5
+  78 0031 0B       		.byte	11
+  79 0032 01       		.byte	1
+  80 0033 40       		.byte	64
+  81 0034 02       		.byte	2
+  82 0035 0D       		.byte	13
+  83 0036 01       		.byte	1
+  84 0037 40       		.byte	64
+  85 0038 01       		.byte	1
+  86 0039 0F       		.byte	15
+  87 003a 01       		.byte	1
+  88 003b 40       		.byte	64
+  89 003c 04       		.byte	4
+  90 003d 16       		.byte	22
+  91 003e 01       		.byte	1
+  92 003f 40       		.byte	64
+  93 0040 02       		.byte	2
+  94 0041 17       		.byte	23
+  95 0042 01       		.byte	1
+  96 0043 40       		.byte	64
+  97 0044 4C       		.byte	76
+  98 0045 18       		.byte	24
+  99 0046 01       		.byte	1
+ 100 0047 40       		.byte	64
+ 101 0048 3F       		.byte	63
+ 102 0049 19       		.byte	25
+ 103 004a 01       		.byte	1
+ 104 004b 40       		.byte	64
+ 105 004c 5F       		.byte	95
+ 106 004d 1A       		.byte	26
+ 107 004e 01       		.byte	1
+ 108 004f 40       		.byte	64
+ 109 0050 47       		.byte	71
+ 110 0051 1B       		.byte	27
+ 111 0052 01       		.byte	1
+ 112 0053 40       		.byte	64
+ 113 0054 09       		.byte	9
+ 114 0055 40       		.byte	64
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 3
+
+
+ 115 0056 01       		.byte	1
+ 116 0057 40       		.byte	64
+ 117 0058 0A       		.byte	10
+ 118 0059 41       		.byte	65
+ 119 005a 01       		.byte	1
+ 120 005b 40       		.byte	64
+ 121 005c 0E       		.byte	14
+ 122 005d 42       		.byte	66
+ 123 005e 01       		.byte	1
+ 124 005f 40       		.byte	64
+ 125 0060 05       		.byte	5
+ 126 0061 43       		.byte	67
+ 127 0062 01       		.byte	1
+ 128 0063 40       		.byte	64
+ 129 0064 06       		.byte	6
+ 130 0065 45       		.byte	69
+ 131 0066 01       		.byte	1
+ 132 0067 40       		.byte	64
+ 133 0068 05       		.byte	5
+ 134 0069 46       		.byte	70
+ 135 006a 01       		.byte	1
+ 136 006b 40       		.byte	64
+ 137 006c 02       		.byte	2
+ 138 006d 47       		.byte	71
+ 139 006e 01       		.byte	1
+ 140 006f 40       		.byte	64
+ 141 0070 02       		.byte	2
+ 142 0071 4C       		.byte	76
+ 143 0072 01       		.byte	1
+ 144 0073 40       		.byte	64
+ 145 0074 09       		.byte	9
+ 146 0075 4D       		.byte	77
+ 147 0076 01       		.byte	1
+ 148 0077 40       		.byte	64
+ 149 0078 06       		.byte	6
+ 150 0079 50       		.byte	80
+ 151 007a 01       		.byte	1
+ 152 007b 40       		.byte	64
+ 153 007c 02       		.byte	2
+ 154 007d 51       		.byte	81
+ 155 007e 01       		.byte	1
+ 156 007f 40       		.byte	64
+ 157 0080 00       		.byte	0
+ 158 0081 08       		.byte	8
+ 159 0082 01       		.byte	1
+ 160 0083 08       		.byte	8
+ 161 0084 10       		.byte	16
+ 162 0085 80       		.byte	-128
+ 163 0086 11       		.byte	17
+ 164 0087 80       		.byte	-128
+ 165 0088 61       		.byte	97
+ 166 0089 84       		.byte	-124
+ 167 008a 81       		.byte	-127
+ 168 008b 77       		.byte	119
+ 169 008c 82       		.byte	-126
+ 170 008d 0D       		.byte	13
+ 171 008e 85       		.byte	-123
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 4
+
+
+ 172 008f 0D       		.byte	13
+ 173 0090 88       		.byte	-120
+ 174 0091 38       		.byte	56
+ 175 0092 89       		.byte	-119
+ 176 0093 72       		.byte	114
+ 177 0094 8A       		.byte	-118
+ 178 0095 0F       		.byte	15
+ 179 0096 8B       		.byte	-117
+ 180 0097 0F       		.byte	15
+ 181 0098 0D       		.byte	13
+ 182 0099 01       		.byte	1
+ 183 009a 11       		.byte	17
+ 184 009b 01       		.byte	1
+ 185 009c 37       		.byte	55
+ 186 009d 01       		.byte	1
+ 187 009e 39       		.byte	57
+ 188 009f 80       		.byte	-128
+ 189 00a0 3F       		.byte	63
+ 190 00a1 40       		.byte	64
+ 191 00a2 40       		.byte	64
+ 192 00a3 21       		.byte	33
+ 193 00a4 41       		.byte	65
+ 194 00a5 04       		.byte	4
+ 195 00a6 42       		.byte	66
+ 196 00a7 03       		.byte	3
+ 197 00a8 49       		.byte	73
+ 198 00a9 FF       		.byte	-1
+ 199 00aa 4A       		.byte	74
+ 200 00ab FF       		.byte	-1
+ 201 00ac 4B       		.byte	75
+ 202 00ad FF       		.byte	-1
+ 203 00ae 4D       		.byte	77
+ 204 00af A0       		.byte	-96
+ 205 00b0 4F       		.byte	79
+ 206 00b1 01       		.byte	1
+ 207 00b2 50       		.byte	80
+ 208 00b3 18       		.byte	24
+ 209 00b4 59       		.byte	89
+ 210 00b5 04       		.byte	4
+ 211 00b6 5A       		.byte	90
+ 212 00b7 04       		.byte	4
+ 213 00b8 5D       		.byte	93
+ 214 00b9 02       		.byte	2
+ 215 00ba 5F       		.byte	95
+ 216 00bb 01       		.byte	1
+ 217 00bc 60       		.byte	96
+ 218 00bd 40       		.byte	64
+ 219 00be 62       		.byte	98
+ 220 00bf 80       		.byte	-128
+ 221 00c0 64       		.byte	100
+ 222 00c1 40       		.byte	64
+ 223 00c2 65       		.byte	101
+ 224 00c3 40       		.byte	64
+ 225 00c4 66       		.byte	102
+ 226 00c5 80       		.byte	-128
+ 227 00c6 68       		.byte	104
+ 228 00c7 40       		.byte	64
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 5
+
+
+ 229 00c8 6A       		.byte	106
+ 230 00c9 50       		.byte	80
+ 231 00ca 6B       		.byte	107
+ 232 00cb A8       		.byte	-88
+ 233 00cc 6C       		.byte	108
+ 234 00cd 40       		.byte	64
+ 235 00ce 6D       		.byte	109
+ 236 00cf 20       		.byte	32
+ 237 00d0 6E       		.byte	110
+ 238 00d1 50       		.byte	80
+ 239 00d2 6F       		.byte	111
+ 240 00d3 A8       		.byte	-88
+ 241 00d4 82       		.byte	-126
+ 242 00d5 04       		.byte	4
+ 243 00d6 83       		.byte	-125
+ 244 00d7 01       		.byte	1
+ 245 00d8 8C       		.byte	-116
+ 246 00d9 08       		.byte	8
+ 247 00da 90       		.byte	-112
+ 248 00db 01       		.byte	1
+ 249 00dc 93       		.byte	-109
+ 250 00dd 01       		.byte	1
+ 251 00de 9E       		.byte	-98
+ 252 00df 03       		.byte	3
+ 253 00e0 A1       		.byte	-95
+ 254 00e1 01       		.byte	1
+ 255 00e2 A2       		.byte	-94
+ 256 00e3 08       		.byte	8
+ 257 00e4 B0       		.byte	-80
+ 258 00e5 02       		.byte	2
+ 259 00e6 B2       		.byte	-78
+ 260 00e7 01       		.byte	1
+ 261 00e8 B3       		.byte	-77
+ 262 00e9 01       		.byte	1
+ 263 00ea B4       		.byte	-76
+ 264 00eb 08       		.byte	8
+ 265 00ec B6       		.byte	-74
+ 266 00ed 04       		.byte	4
+ 267 00ee BE       		.byte	-66
+ 268 00ef 14       		.byte	20
+ 269 00f0 BF       		.byte	-65
+ 270 00f1 04       		.byte	4
+ 271 00f2 C0       		.byte	-64
+ 272 00f3 24       		.byte	36
+ 273 00f4 C1       		.byte	-63
+ 274 00f5 05       		.byte	5
+ 275 00f6 C2       		.byte	-62
+ 276 00f7 03       		.byte	3
+ 277 00f8 C5       		.byte	-59
+ 278 00f9 5C       		.byte	92
+ 279 00fa C6       		.byte	-58
+ 280 00fb 20       		.byte	32
+ 281 00fc C7       		.byte	-57
+ 282 00fd 0E       		.byte	14
+ 283 00fe C8       		.byte	-56
+ 284 00ff 1F       		.byte	31
+ 285 0100 C9       		.byte	-55
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 6
+
+
+ 286 0101 FF       		.byte	-1
+ 287 0102 CA       		.byte	-54
+ 288 0103 FF       		.byte	-1
+ 289 0104 CB       		.byte	-53
+ 290 0105 FF       		.byte	-1
+ 291 0106 CD       		.byte	-51
+ 292 0107 AF       		.byte	-81
+ 293 0108 CE       		.byte	-50
+ 294 0109 07       		.byte	7
+ 295 010a CF       		.byte	-49
+ 296 010b 01       		.byte	1
+ 297 010c D0       		.byte	-48
+ 298 010d 18       		.byte	24
+ 299 010e D2       		.byte	-46
+ 300 010f 80       		.byte	-128
+ 301 0110 D4       		.byte	-44
+ 302 0111 17       		.byte	23
+ 303 0112 D8       		.byte	-40
+ 304 0113 04       		.byte	4
+ 305 0114 D9       		.byte	-39
+ 306 0115 04       		.byte	4
+ 307 0116 DA       		.byte	-38
+ 308 0117 04       		.byte	4
+ 309 0118 DB       		.byte	-37
+ 310 0119 04       		.byte	4
+ 311 011a DC       		.byte	-36
+ 312 011b 02       		.byte	2
+ 313 011c DD       		.byte	-35
+ 314 011d 22       		.byte	34
+ 315 011e DF       		.byte	-33
+ 316 011f 05       		.byte	5
+ 317 0120 E0       		.byte	-32
+ 318 0121 40       		.byte	64
+ 319 0122 E2       		.byte	-30
+ 320 0123 80       		.byte	-128
+ 321 0124 E4       		.byte	-28
+ 322 0125 40       		.byte	64
+ 323 0126 E5       		.byte	-27
+ 324 0127 40       		.byte	64
+ 325 0128 E6       		.byte	-26
+ 326 0129 80       		.byte	-128
+ 327 012a E8       		.byte	-24
+ 328 012b 40       		.byte	64
+ 329 012c EA       		.byte	-22
+ 330 012d 50       		.byte	80
+ 331 012e EB       		.byte	-21
+ 332 012f A8       		.byte	-88
+ 333 0130 EC       		.byte	-20
+ 334 0131 40       		.byte	64
+ 335 0132 ED       		.byte	-19
+ 336 0133 20       		.byte	32
+ 337 0134 EE       		.byte	-18
+ 338 0135 50       		.byte	80
+ 339 0136 EF       		.byte	-17
+ 340 0137 A8       		.byte	-88
+ 341 0138 02       		.byte	2
+ 342 0139 02       		.byte	2
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 7
+
+
+ 343 013a 03       		.byte	3
+ 344 013b 02       		.byte	2
+ 345 013c 05       		.byte	5
+ 346 013d 02       		.byte	2
+ 347 013e 07       		.byte	7
+ 348 013f 01       		.byte	1
+ 349 0140 0E       		.byte	14
+ 350 0141 40       		.byte	64
+ 351 0142 0F       		.byte	15
+ 352 0143 02       		.byte	2
+ 353 0144 15       		.byte	21
+ 354 0145 01       		.byte	1
+ 355 0146 16       		.byte	22
+ 356 0147 40       		.byte	64
+ 357 0148 1C       		.byte	28
+ 358 0149 20       		.byte	32
+ 359 014a 1E       		.byte	30
+ 360 014b 48       		.byte	72
+ 361 014c 1F       		.byte	31
+ 362 014d 80       		.byte	-128
+ 363 014e 20       		.byte	32
+ 364 014f 01       		.byte	1
+ 365 0150 23       		.byte	35
+ 366 0151 02       		.byte	2
+ 367 0152 27       		.byte	39
+ 368 0153 10       		.byte	16
+ 369 0154 2F       		.byte	47
+ 370 0155 80       		.byte	-128
+ 371 0156 30       		.byte	48
+ 372 0157 02       		.byte	2
+ 373 0158 35       		.byte	53
+ 374 0159 02       		.byte	2
+ 375 015a 3A       		.byte	58
+ 376 015b 40       		.byte	64
+ 377 015c 3C       		.byte	60
+ 378 015d 02       		.byte	2
+ 379 015e 3E       		.byte	62
+ 380 015f 20       		.byte	32
+ 381 0160 3F       		.byte	63
+ 382 0161 10       		.byte	16
+ 383 0162 40       		.byte	64
+ 384 0163 01       		.byte	1
+ 385 0164 41       		.byte	65
+ 386 0165 08       		.byte	8
+ 387 0166 43       		.byte	67
+ 388 0167 12       		.byte	18
+ 389 0168 45       		.byte	69
+ 390 0169 08       		.byte	8
+ 391 016a 47       		.byte	71
+ 392 016b 12       		.byte	18
+ 393 016c 4E       		.byte	78
+ 394 016d 02       		.byte	2
+ 395 016e 4F       		.byte	79
+ 396 016f 06       		.byte	6
+ 397 0170 56       		.byte	86
+ 398 0171 68       		.byte	104
+ 399 0172 5D       		.byte	93
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 8
+
+
+ 400 0173 80       		.byte	-128
+ 401 0174 5E       		.byte	94
+ 402 0175 08       		.byte	8
+ 403 0176 5F       		.byte	95
+ 404 0177 10       		.byte	16
+ 405 0178 64       		.byte	100
+ 406 0179 01       		.byte	1
+ 407 017a 66       		.byte	102
+ 408 017b 08       		.byte	8
+ 409 017c 67       		.byte	103
+ 410 017d 04       		.byte	4
+ 411 017e 74       		.byte	116
+ 412 017f 01       		.byte	1
+ 413 0180 7D       		.byte	125
+ 414 0181 40       		.byte	64
+ 415 0182 C0       		.byte	-64
+ 416 0183 90       		.byte	-112
+ 417 0184 C2       		.byte	-62
+ 418 0185 90       		.byte	-112
+ 419 0186 C4       		.byte	-60
+ 420 0187 10       		.byte	16
+ 421 0188 CA       		.byte	-54
+ 422 0189 80       		.byte	-128
+ 423 018a CC       		.byte	-52
+ 424 018b 81       		.byte	-127
+ 425 018c CE       		.byte	-50
+ 426 018d 88       		.byte	-120
+ 427 018e D0       		.byte	-48
+ 428 018f EF       		.byte	-17
+ 429 0190 D2       		.byte	-46
+ 430 0191 10       		.byte	16
+ 431 0192 D6       		.byte	-42
+ 432 0193 70       		.byte	112
+ 433 0194 D8       		.byte	-40
+ 434 0195 70       		.byte	112
+ 435 0196 DE       		.byte	-34
+ 436 0197 10       		.byte	16
+ 437 0198 E2       		.byte	-30
+ 438 0199 04       		.byte	4
+ 439 019a 03       		.byte	3
+ 440 019b 04       		.byte	4
+ 441 019c 0A       		.byte	10
+ 442 019d 04       		.byte	4
+ 443 019e 0B       		.byte	11
+ 444 019f 01       		.byte	1
+ 445 01a0 14       		.byte	20
+ 446 01a1 01       		.byte	1
+ 447 01a2 1A       		.byte	26
+ 448 01a3 07       		.byte	7
+ 449 01a4 1F       		.byte	31
+ 450 01a5 02       		.byte	2
+ 451 01a6 22       		.byte	34
+ 452 01a7 08       		.byte	8
+ 453 01a8 27       		.byte	39
+ 454 01a9 01       		.byte	1
+ 455 01aa 2B       		.byte	43
+ 456 01ab 02       		.byte	2
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 9
+
+
+ 457 01ac 30       		.byte	48
+ 458 01ad 01       		.byte	1
+ 459 01ae 32       		.byte	50
+ 460 01af 02       		.byte	2
+ 461 01b0 33       		.byte	51
+ 462 01b1 02       		.byte	2
+ 463 01b2 34       		.byte	52
+ 464 01b3 08       		.byte	8
+ 465 01b4 35       		.byte	53
+ 466 01b5 01       		.byte	1
+ 467 01b6 36       		.byte	54
+ 468 01b7 04       		.byte	4
+ 469 01b8 37       		.byte	55
+ 470 01b9 04       		.byte	4
+ 471 01ba 3F       		.byte	63
+ 472 01bb 14       		.byte	20
+ 473 01bc 40       		.byte	64
+ 474 01bd 20       		.byte	32
+ 475 01be 41       		.byte	65
+ 476 01bf 03       		.byte	3
+ 477 01c0 45       		.byte	69
+ 478 01c1 D1       		.byte	-47
+ 479 01c2 46       		.byte	70
+ 480 01c3 20       		.byte	32
+ 481 01c4 48       		.byte	72
+ 482 01c5 0B       		.byte	11
+ 483 01c6 49       		.byte	73
+ 484 01c7 FF       		.byte	-1
+ 485 01c8 4A       		.byte	74
+ 486 01c9 FF       		.byte	-1
+ 487 01ca 4B       		.byte	75
+ 488 01cb FF       		.byte	-1
+ 489 01cc 4D       		.byte	77
+ 490 01cd A0       		.byte	-96
+ 491 01ce 4F       		.byte	79
+ 492 01cf 04       		.byte	4
+ 493 01d0 50       		.byte	80
+ 494 01d1 18       		.byte	24
+ 495 01d2 52       		.byte	82
+ 496 01d3 80       		.byte	-128
+ 497 01d4 54       		.byte	84
+ 498 01d5 05       		.byte	5
+ 499 01d6 58       		.byte	88
+ 500 01d7 04       		.byte	4
+ 501 01d8 59       		.byte	89
+ 502 01d9 04       		.byte	4
+ 503 01da 5A       		.byte	90
+ 504 01db 04       		.byte	4
+ 505 01dc 5B       		.byte	91
+ 506 01dd 04       		.byte	4
+ 507 01de 5C       		.byte	92
+ 508 01df 20       		.byte	32
+ 509 01e0 5F       		.byte	95
+ 510 01e1 01       		.byte	1
+ 511 01e2 60       		.byte	96
+ 512 01e3 40       		.byte	64
+ 513 01e4 62       		.byte	98
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 10
+
+
+ 514 01e5 C0       		.byte	-64
+ 515 01e6 64       		.byte	100
+ 516 01e7 40       		.byte	64
+ 517 01e8 65       		.byte	101
+ 518 01e9 40       		.byte	64
+ 519 01ea 66       		.byte	102
+ 520 01eb C0       		.byte	-64
+ 521 01ec 68       		.byte	104
+ 522 01ed C0       		.byte	-64
+ 523 01ee 6A       		.byte	106
+ 524 01ef C0       		.byte	-64
+ 525 01f0 6C       		.byte	108
+ 526 01f1 C0       		.byte	-64
+ 527 01f2 6E       		.byte	110
+ 528 01f3 C0       		.byte	-64
+ 529 01f4 84       		.byte	-124
+ 530 01f5 02       		.byte	2
+ 531 01f6 92       		.byte	-110
+ 532 01f7 01       		.byte	1
+ 533 01f8 93       		.byte	-109
+ 534 01f9 01       		.byte	1
+ 535 01fa A1       		.byte	-95
+ 536 01fb 01       		.byte	1
+ 537 01fc B0       		.byte	-80
+ 538 01fd 01       		.byte	1
+ 539 01fe B3       		.byte	-77
+ 540 01ff 01       		.byte	1
+ 541 0200 B6       		.byte	-74
+ 542 0201 02       		.byte	2
+ 543 0202 BE       		.byte	-66
+ 544 0203 40       		.byte	64
+ 545 0204 BF       		.byte	-65
+ 546 0205 04       		.byte	4
+ 547 0206 D8       		.byte	-40
+ 548 0207 04       		.byte	4
+ 549 0208 D9       		.byte	-39
+ 550 0209 04       		.byte	4
+ 551 020a DC       		.byte	-36
+ 552 020b 02       		.byte	2
+ 553 020c DF       		.byte	-33
+ 554 020d 01       		.byte	1
+ 555 020e 01       		.byte	1
+ 556 020f 08       		.byte	8
+ 557 0210 05       		.byte	5
+ 558 0211 10       		.byte	16
+ 559 0212 09       		.byte	9
+ 560 0213 02       		.byte	2
+ 561 0214 0E       		.byte	14
+ 562 0215 20       		.byte	32
+ 563 0216 0F       		.byte	15
+ 564 0217 08       		.byte	8
+ 565 0218 16       		.byte	22
+ 566 0219 80       		.byte	-128
+ 567 021a 19       		.byte	25
+ 568 021b 01       		.byte	1
+ 569 021c 1A       		.byte	26
+ 570 021d 02       		.byte	2
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 11
+
+
+ 571 021e 1D       		.byte	29
+ 572 021f 70       		.byte	112
+ 573 0220 1E       		.byte	30
+ 574 0221 60       		.byte	96
+ 575 0222 1F       		.byte	31
+ 576 0223 10       		.byte	16
+ 577 0224 21       		.byte	33
+ 578 0225 08       		.byte	8
+ 579 0226 27       		.byte	39
+ 580 0227 29       		.byte	41
+ 581 0228 29       		.byte	41
+ 582 0229 01       		.byte	1
+ 583 022a 2F       		.byte	47
+ 584 022b 14       		.byte	20
+ 585 022c 31       		.byte	49
+ 586 022d 02       		.byte	2
+ 587 022e 35       		.byte	53
+ 588 022f 40       		.byte	64
+ 589 0230 3D       		.byte	61
+ 590 0231 01       		.byte	1
+ 591 0232 3E       		.byte	62
+ 592 0233 20       		.byte	32
+ 593 0234 45       		.byte	69
+ 594 0235 20       		.byte	32
+ 595 0236 46       		.byte	70
+ 596 0237 20       		.byte	32
+ 597 0238 4F       		.byte	79
+ 598 0239 09       		.byte	9
+ 599 023a 56       		.byte	86
+ 600 023b 20       		.byte	32
+ 601 023c 5E       		.byte	94
+ 602 023d 40       		.byte	64
+ 603 023e 5F       		.byte	95
+ 604 023f 09       		.byte	9
+ 605 0240 76       		.byte	118
+ 606 0241 80       		.byte	-128
+ 607 0242 83       		.byte	-125
+ 608 0243 20       		.byte	32
+ 609 0244 85       		.byte	-123
+ 610 0245 08       		.byte	8
+ 611 0246 91       		.byte	-111
+ 612 0247 01       		.byte	1
+ 613 0248 95       		.byte	-107
+ 614 0249 40       		.byte	64
+ 615 024a 9C       		.byte	-100
+ 616 024b 01       		.byte	1
+ 617 024c 9D       		.byte	-99
+ 618 024d 02       		.byte	2
+ 619 024e 9F       		.byte	-97
+ 620 024f 01       		.byte	1
+ 621 0250 A4       		.byte	-92
+ 622 0251 02       		.byte	2
+ 623 0252 A5       		.byte	-91
+ 624 0253 08       		.byte	8
+ 625 0254 A7       		.byte	-89
+ 626 0255 02       		.byte	2
+ 627 0256 AC       		.byte	-84
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 12
+
+
+ 628 0257 10       		.byte	16
+ 629 0258 AD       		.byte	-83
+ 630 0259 80       		.byte	-128
+ 631 025a C0       		.byte	-64
+ 632 025b 44       		.byte	68
+ 633 025c C2       		.byte	-62
+ 634 025d 68       		.byte	104
+ 635 025e C4       		.byte	-60
+ 636 025f 10       		.byte	16
+ 637 0260 CA       		.byte	-54
+ 638 0261 61       		.byte	97
+ 639 0262 CC       		.byte	-52
+ 640 0263 11       		.byte	17
+ 641 0264 CE       		.byte	-50
+ 642 0265 A0       		.byte	-96
+ 643 0266 D0       		.byte	-48
+ 644 0267 60       		.byte	96
+ 645 0268 D6       		.byte	-42
+ 646 0269 D0       		.byte	-48
+ 647 026a E6       		.byte	-26
+ 648 026b 08       		.byte	8
+ 649 026c 03       		.byte	3
+ 650 026d 01       		.byte	1
+ 651 026e 23       		.byte	35
+ 652 026f 01       		.byte	1
+ 653 0270 31       		.byte	49
+ 654 0271 01       		.byte	1
+ 655 0272 40       		.byte	64
+ 656 0273 15       		.byte	21
+ 657 0274 41       		.byte	65
+ 658 0275 03       		.byte	3
+ 659 0276 49       		.byte	73
+ 660 0277 FF       		.byte	-1
+ 661 0278 4A       		.byte	74
+ 662 0279 FF       		.byte	-1
+ 663 027a 4B       		.byte	75
+ 664 027b FF       		.byte	-1
+ 665 027c 4D       		.byte	77
+ 666 027d A0       		.byte	-96
+ 667 027e 4F       		.byte	79
+ 668 027f 04       		.byte	4
+ 669 0280 50       		.byte	80
+ 670 0281 18       		.byte	24
+ 671 0282 59       		.byte	89
+ 672 0283 04       		.byte	4
+ 673 0284 5A       		.byte	90
+ 674 0285 04       		.byte	4
+ 675 0286 5B       		.byte	91
+ 676 0287 04       		.byte	4
+ 677 0288 5C       		.byte	92
+ 678 0289 40       		.byte	64
+ 679 028a 5D       		.byte	93
+ 680 028b 04       		.byte	4
+ 681 028c 5F       		.byte	95
+ 682 028d 01       		.byte	1
+ 683 028e 60       		.byte	96
+ 684 028f 40       		.byte	64
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 13
+
+
+ 685 0290 62       		.byte	98
+ 686 0291 C0       		.byte	-64
+ 687 0292 64       		.byte	100
+ 688 0293 40       		.byte	64
+ 689 0294 65       		.byte	101
+ 690 0295 40       		.byte	64
+ 691 0296 66       		.byte	102
+ 692 0297 C0       		.byte	-64
+ 693 0298 68       		.byte	104
+ 694 0299 C0       		.byte	-64
+ 695 029a 6A       		.byte	106
+ 696 029b C0       		.byte	-64
+ 697 029c 6C       		.byte	108
+ 698 029d C0       		.byte	-64
+ 699 029e 6E       		.byte	110
+ 700 029f C0       		.byte	-64
+ 701 02a0 83       		.byte	-125
+ 702 02a1 01       		.byte	1
+ 703 02a2 8A       		.byte	-118
+ 704 02a3 04       		.byte	4
+ 705 02a4 8E       		.byte	-114
+ 706 02a5 01       		.byte	1
+ 707 02a6 9E       		.byte	-98
+ 708 02a7 04       		.byte	4
+ 709 02a8 9F       		.byte	-97
+ 710 02a9 02       		.byte	2
+ 711 02aa A2       		.byte	-94
+ 712 02ab 02       		.byte	2
+ 713 02ac A4       		.byte	-92
+ 714 02ad 01       		.byte	1
+ 715 02ae A9       		.byte	-87
+ 716 02af 02       		.byte	2
+ 717 02b0 B0       		.byte	-80
+ 718 02b1 01       		.byte	1
+ 719 02b2 B3       		.byte	-77
+ 720 02b3 02       		.byte	2
+ 721 02b4 B4       		.byte	-76
+ 722 02b5 04       		.byte	4
+ 723 02b6 B5       		.byte	-75
+ 724 02b7 01       		.byte	1
+ 725 02b8 B6       		.byte	-74
+ 726 02b9 02       		.byte	2
+ 727 02ba BC       		.byte	-68
+ 728 02bb 82       		.byte	-126
+ 729 02bc BE       		.byte	-66
+ 730 02bd 10       		.byte	16
+ 731 02be BF       		.byte	-65
+ 732 02bf 04       		.byte	4
+ 733 02c0 C0       		.byte	-64
+ 734 02c1 14       		.byte	20
+ 735 02c2 C1       		.byte	-63
+ 736 02c3 02       		.byte	2
+ 737 02c4 C5       		.byte	-59
+ 738 02c5 D0       		.byte	-48
+ 739 02c6 C7       		.byte	-57
+ 740 02c7 12       		.byte	18
+ 741 02c8 C8       		.byte	-56
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 14
+
+
+ 742 02c9 32       		.byte	50
+ 743 02ca C9       		.byte	-55
+ 744 02cb FF       		.byte	-1
+ 745 02cc CA       		.byte	-54
+ 746 02cd FF       		.byte	-1
+ 747 02ce CB       		.byte	-53
+ 748 02cf FF       		.byte	-1
+ 749 02d0 CD       		.byte	-51
+ 750 02d1 AF       		.byte	-81
+ 751 02d2 CE       		.byte	-50
+ 752 02d3 0F       		.byte	15
+ 753 02d4 CF       		.byte	-49
+ 754 02d5 04       		.byte	4
+ 755 02d6 D0       		.byte	-48
+ 756 02d7 18       		.byte	24
+ 757 02d8 D2       		.byte	-46
+ 758 02d9 80       		.byte	-128
+ 759 02da D4       		.byte	-44
+ 760 02db 05       		.byte	5
+ 761 02dc D6       		.byte	-42
+ 762 02dd 04       		.byte	4
+ 763 02de D8       		.byte	-40
+ 764 02df 04       		.byte	4
+ 765 02e0 D9       		.byte	-39
+ 766 02e1 04       		.byte	4
+ 767 02e2 DA       		.byte	-38
+ 768 02e3 04       		.byte	4
+ 769 02e4 DB       		.byte	-37
+ 770 02e5 04       		.byte	4
+ 771 02e6 DC       		.byte	-36
+ 772 02e7 44       		.byte	68
+ 773 02e8 DD       		.byte	-35
+ 774 02e9 44       		.byte	68
+ 775 02ea DF       		.byte	-33
+ 776 02eb 05       		.byte	5
+ 777 02ec E0       		.byte	-32
+ 778 02ed 40       		.byte	64
+ 779 02ee E2       		.byte	-30
+ 780 02ef C0       		.byte	-64
+ 781 02f0 E4       		.byte	-28
+ 782 02f1 40       		.byte	64
+ 783 02f2 E5       		.byte	-27
+ 784 02f3 40       		.byte	64
+ 785 02f4 E6       		.byte	-26
+ 786 02f5 C0       		.byte	-64
+ 787 02f6 E8       		.byte	-24
+ 788 02f7 C0       		.byte	-64
+ 789 02f8 EA       		.byte	-22
+ 790 02f9 C0       		.byte	-64
+ 791 02fa EC       		.byte	-20
+ 792 02fb C0       		.byte	-64
+ 793 02fc EE       		.byte	-18
+ 794 02fd C0       		.byte	-64
+ 795 02fe 06       		.byte	6
+ 796 02ff 06       		.byte	6
+ 797 0300 0E       		.byte	14
+ 798 0301 01       		.byte	1
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 15
+
+
+ 799 0302 16       		.byte	22
+ 800 0303 40       		.byte	64
+ 801 0304 17       		.byte	23
+ 802 0305 04       		.byte	4
+ 803 0306 1C       		.byte	28
+ 804 0307 40       		.byte	64
+ 805 0308 1D       		.byte	29
+ 806 0309 80       		.byte	-128
+ 807 030a 1E       		.byte	30
+ 808 030b 09       		.byte	9
+ 809 030c 1F       		.byte	31
+ 810 030d 80       		.byte	-128
+ 811 030e 21       		.byte	33
+ 812 030f 02       		.byte	2
+ 813 0310 24       		.byte	36
+ 814 0311 10       		.byte	16
+ 815 0312 27       		.byte	39
+ 816 0313 04       		.byte	4
+ 817 0314 2B       		.byte	43
+ 818 0315 80       		.byte	-128
+ 819 0316 2F       		.byte	47
+ 820 0317 04       		.byte	4
+ 821 0318 35       		.byte	53
+ 822 0319 40       		.byte	64
+ 823 031a 3A       		.byte	58
+ 824 031b 02       		.byte	2
+ 825 031c 3E       		.byte	62
+ 826 031d 02       		.byte	2
+ 827 031e 43       		.byte	67
+ 828 031f 88       		.byte	-120
+ 829 0320 45       		.byte	69
+ 830 0321 80       		.byte	-128
+ 831 0322 46       		.byte	70
+ 832 0323 04       		.byte	4
+ 833 0324 47       		.byte	71
+ 834 0325 02       		.byte	2
+ 835 0326 48       		.byte	72
+ 836 0327 01       		.byte	1
+ 837 0328 4F       		.byte	79
+ 838 0329 01       		.byte	1
+ 839 032a 56       		.byte	86
+ 840 032b 06       		.byte	6
+ 841 032c 57       		.byte	87
+ 842 032d 08       		.byte	8
+ 843 032e 5C       		.byte	92
+ 844 032f 40       		.byte	64
+ 845 0330 5E       		.byte	94
+ 846 0331 08       		.byte	8
+ 847 0332 5F       		.byte	95
+ 848 0333 01       		.byte	1
+ 849 0334 65       		.byte	101
+ 850 0335 01       		.byte	1
+ 851 0336 68       		.byte	104
+ 852 0337 03       		.byte	3
+ 853 0338 69       		.byte	105
+ 854 0339 40       		.byte	64
+ 855 033a 6B       		.byte	107
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 16
+
+
+ 856 033b 02       		.byte	2
+ 857 033c 76       		.byte	118
+ 858 033d 40       		.byte	64
+ 859 033e 7D       		.byte	125
+ 860 033f 40       		.byte	64
+ 861 0340 81       		.byte	-127
+ 862 0341 01       		.byte	1
+ 863 0342 95       		.byte	-107
+ 864 0343 40       		.byte	64
+ 865 0344 97       		.byte	-105
+ 866 0345 08       		.byte	8
+ 867 0346 99       		.byte	-103
+ 868 0347 40       		.byte	64
+ 869 0348 A4       		.byte	-92
+ 870 0349 02       		.byte	2
+ 871 034a A5       		.byte	-91
+ 872 034b 02       		.byte	2
+ 873 034c A7       		.byte	-89
+ 874 034d 02       		.byte	2
+ 875 034e AC       		.byte	-84
+ 876 034f 01       		.byte	1
+ 877 0350 AD       		.byte	-83
+ 878 0351 0A       		.byte	10
+ 879 0352 AE       		.byte	-82
+ 880 0353 01       		.byte	1
+ 881 0354 C0       		.byte	-64
+ 882 0355 C0       		.byte	-64
+ 883 0356 C2       		.byte	-62
+ 884 0357 80       		.byte	-128
+ 885 0358 C4       		.byte	-60
+ 886 0359 30       		.byte	48
+ 887 035a CA       		.byte	-54
+ 888 035b 21       		.byte	33
+ 889 035c CC       		.byte	-52
+ 890 035d 10       		.byte	16
+ 891 035e CE       		.byte	-50
+ 892 035f 81       		.byte	-127
+ 893 0360 D0       		.byte	-48
+ 894 0361 BA       		.byte	-70
+ 895 0362 D2       		.byte	-46
+ 896 0363 08       		.byte	8
+ 897 0364 D6       		.byte	-42
+ 898 0365 D0       		.byte	-48
+ 899 0366 D8       		.byte	-40
+ 900 0367 80       		.byte	-128
+ 901 0368 DE       		.byte	-34
+ 902 0369 10       		.byte	16
+ 903 036a E2       		.byte	-30
+ 904 036b 40       		.byte	64
+ 905 036c A7       		.byte	-89
+ 906 036d 02       		.byte	2
+ 907 036e AF       		.byte	-81
+ 908 036f 04       		.byte	4
+ 909 0370 B4       		.byte	-76
+ 910 0371 10       		.byte	16
+ 911 0372 EA       		.byte	-22
+ 912 0373 10       		.byte	16
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 17
+
+
+ 913 0374 EE       		.byte	-18
+ 914 0375 04       		.byte	4
+ 915 0376 01       		.byte	1
+ 916 0377 08       		.byte	8
+ 917 0378 07       		.byte	7
+ 918 0379 02       		.byte	2
+ 919 037a 09       		.byte	9
+ 920 037b 0C       		.byte	12
+ 921 037c 0E       		.byte	14
+ 922 037d 01       		.byte	1
+ 923 037e 11       		.byte	17
+ 924 037f 0C       		.byte	12
+ 925 0380 13       		.byte	19
+ 926 0381 03       		.byte	3
+ 927 0382 15       		.byte	21
+ 928 0383 03       		.byte	3
+ 929 0384 17       		.byte	23
+ 930 0385 0C       		.byte	12
+ 931 0386 1A       		.byte	26
+ 932 0387 01       		.byte	1
+ 933 0388 1F       		.byte	31
+ 934 0389 10       		.byte	16
+ 935 038a 21       		.byte	33
+ 936 038b 0F       		.byte	15
+ 937 038c 25       		.byte	37
+ 938 038d 04       		.byte	4
+ 939 038e 2B       		.byte	43
+ 940 038f 10       		.byte	16
+ 941 0390 2D       		.byte	45
+ 942 0391 0E       		.byte	14
+ 943 0392 2F       		.byte	47
+ 944 0393 01       		.byte	1
+ 945 0394 30       		.byte	48
+ 946 0395 01       		.byte	1
+ 947 0396 31       		.byte	49
+ 948 0397 01       		.byte	1
+ 949 0398 35       		.byte	53
+ 950 0399 10       		.byte	16
+ 951 039a 37       		.byte	55
+ 952 039b 0E       		.byte	14
+ 953 039c 39       		.byte	57
+ 954 039d 02       		.byte	2
+ 955 039e 3E       		.byte	62
+ 956 039f 01       		.byte	1
+ 957 03a0 3F       		.byte	63
+ 958 03a1 10       		.byte	16
+ 959 03a2 40       		.byte	64
+ 960 03a3 63       		.byte	99
+ 961 03a4 41       		.byte	65
+ 962 03a5 04       		.byte	4
+ 963 03a6 42       		.byte	66
+ 964 03a7 05       		.byte	5
+ 965 03a8 44       		.byte	68
+ 966 03a9 02       		.byte	2
+ 967 03aa 45       		.byte	69
+ 968 03ab 0C       		.byte	12
+ 969 03ac 47       		.byte	71
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 18
+
+
+ 970 03ad 0E       		.byte	14
+ 971 03ae 48       		.byte	72
+ 972 03af 11       		.byte	17
+ 973 03b0 49       		.byte	73
+ 974 03b1 FF       		.byte	-1
+ 975 03b2 4A       		.byte	74
+ 976 03b3 FF       		.byte	-1
+ 977 03b4 4B       		.byte	75
+ 978 03b5 FF       		.byte	-1
+ 979 03b6 4C       		.byte	76
+ 980 03b7 62       		.byte	98
+ 981 03b8 4D       		.byte	77
+ 982 03b9 A0       		.byte	-96
+ 983 03ba 4E       		.byte	78
+ 984 03bb F0       		.byte	-16
+ 985 03bc 4F       		.byte	79
+ 986 03bd 41       		.byte	65
+ 987 03be 50       		.byte	80
+ 988 03bf 0C       		.byte	12
+ 989 03c0 54       		.byte	84
+ 990 03c1 18       		.byte	24
+ 991 03c2 56       		.byte	86
+ 992 03c3 04       		.byte	4
+ 993 03c4 58       		.byte	88
+ 994 03c5 04       		.byte	4
+ 995 03c6 59       		.byte	89
+ 996 03c7 04       		.byte	4
+ 997 03c8 5A       		.byte	90
+ 998 03c9 04       		.byte	4
+ 999 03ca 5B       		.byte	91
+ 1000 03cb 04       		.byte	4
+ 1001 03cc 5C       		.byte	92
+ 1002 03cd 30       		.byte	48
+ 1003 03ce 5D       		.byte	93
+ 1004 03cf 33       		.byte	51
+ 1005 03d0 5F       		.byte	95
+ 1006 03d1 01       		.byte	1
+ 1007 03d2 66       		.byte	102
+ 1008 03d3 40       		.byte	64
+ 1009 03d4 67       		.byte	103
+ 1010 03d5 02       		.byte	2
+ 1011 03d6 69       		.byte	105
+ 1012 03d7 10       		.byte	16
+ 1013 03d8 6A       		.byte	106
+ 1014 03d9 30       		.byte	48
+ 1015 03da 6B       		.byte	107
+ 1016 03db 10       		.byte	16
+ 1017 03dc 6D       		.byte	109
+ 1018 03dd 10       		.byte	16
+ 1019 03de 6E       		.byte	110
+ 1020 03df 10       		.byte	16
+ 1021 03e0 6F       		.byte	111
+ 1022 03e1 12       		.byte	18
+ 1023 03e2 80       		.byte	-128
+ 1024 03e3 05       		.byte	5
+ 1025 03e4 82       		.byte	-126
+ 1026 03e5 02       		.byte	2
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 19
+
+
+ 1027 03e6 85       		.byte	-123
+ 1028 03e7 39       		.byte	57
+ 1029 03e8 86       		.byte	-122
+ 1030 03e9 0C       		.byte	12
+ 1031 03ea 88       		.byte	-120
+ 1032 03eb 03       		.byte	3
+ 1033 03ec 89       		.byte	-119
+ 1034 03ed 39       		.byte	57
+ 1035 03ee 8D       		.byte	-115
+ 1036 03ef 08       		.byte	8
+ 1037 03f0 8F       		.byte	-113
+ 1038 03f1 32       		.byte	50
+ 1039 03f2 90       		.byte	-112
+ 1040 03f3 0C       		.byte	12
+ 1041 03f4 94       		.byte	-108
+ 1042 03f5 0C       		.byte	12
+ 1043 03f6 98       		.byte	-104
+ 1044 03f7 03       		.byte	3
+ 1045 03f8 9C       		.byte	-100
+ 1046 03f9 0C       		.byte	12
+ 1047 03fa 9D       		.byte	-99
+ 1048 03fb 01       		.byte	1
+ 1049 03fc A1       		.byte	-95
+ 1050 03fd 10       		.byte	16
+ 1051 03fe A2       		.byte	-94
+ 1052 03ff 0C       		.byte	12
+ 1053 0400 A3       		.byte	-93
+ 1054 0401 4C       		.byte	76
+ 1055 0402 A4       		.byte	-92
+ 1056 0403 0A       		.byte	10
+ 1057 0404 A6       		.byte	-90
+ 1058 0405 01       		.byte	1
+ 1059 0406 A8       		.byte	-88
+ 1060 0407 10       		.byte	16
+ 1061 0408 A9       		.byte	-87
+ 1062 0409 20       		.byte	32
+ 1063 040a AB       		.byte	-85
+ 1064 040b 0C       		.byte	12
+ 1065 040c AE       		.byte	-82
+ 1066 040d 0C       		.byte	12
+ 1067 040e B1       		.byte	-79
+ 1068 040f 40       		.byte	64
+ 1069 0410 B2       		.byte	-78
+ 1070 0411 10       		.byte	16
+ 1071 0412 B3       		.byte	-77
+ 1072 0413 06       		.byte	6
+ 1073 0414 B4       		.byte	-76
+ 1074 0415 03       		.byte	3
+ 1075 0416 B5       		.byte	-75
+ 1076 0417 01       		.byte	1
+ 1077 0418 B6       		.byte	-74
+ 1078 0419 0C       		.byte	12
+ 1079 041a B7       		.byte	-73
+ 1080 041b 38       		.byte	56
+ 1081 041c BE       		.byte	-66
+ 1082 041d 04       		.byte	4
+ 1083 041e BF       		.byte	-65
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 20
+
+
+ 1084 041f 04       		.byte	4
+ 1085 0420 D8       		.byte	-40
+ 1086 0421 04       		.byte	4
+ 1087 0422 D9       		.byte	-39
+ 1088 0423 04       		.byte	4
+ 1089 0424 DC       		.byte	-36
+ 1090 0425 33       		.byte	51
+ 1091 0426 DF       		.byte	-33
+ 1092 0427 01       		.byte	1
+ 1093 0428 00       		.byte	0
+ 1094 0429 08       		.byte	8
+ 1095 042a 01       		.byte	1
+ 1096 042b 10       		.byte	16
+ 1097 042c 03       		.byte	3
+ 1098 042d 80       		.byte	-128
+ 1099 042e 04       		.byte	4
+ 1100 042f 08       		.byte	8
+ 1101 0430 06       		.byte	6
+ 1102 0431 20       		.byte	32
+ 1103 0432 07       		.byte	7
+ 1104 0433 01       		.byte	1
+ 1105 0434 08       		.byte	8
+ 1106 0435 40       		.byte	64
+ 1107 0436 0B       		.byte	11
+ 1108 0437 98       		.byte	-104
+ 1109 0438 0F       		.byte	15
+ 1110 0439 08       		.byte	8
+ 1111 043a 10       		.byte	16
+ 1112 043b 04       		.byte	4
+ 1113 043c 11       		.byte	17
+ 1114 043d 40       		.byte	64
+ 1115 043e 12       		.byte	18
+ 1116 043f 11       		.byte	17
+ 1117 0440 13       		.byte	19
+ 1118 0441 02       		.byte	2
+ 1119 0442 18       		.byte	24
+ 1120 0443 20       		.byte	32
+ 1121 0444 19       		.byte	25
+ 1122 0445 20       		.byte	32
+ 1123 0446 1A       		.byte	26
+ 1124 0447 01       		.byte	1
+ 1125 0448 1F       		.byte	31
+ 1126 0449 01       		.byte	1
+ 1127 044a 20       		.byte	32
+ 1128 044b 08       		.byte	8
+ 1129 044c 21       		.byte	33
+ 1130 044d 40       		.byte	64
+ 1131 044e 22       		.byte	34
+ 1132 044f 01       		.byte	1
+ 1133 0450 23       		.byte	35
+ 1134 0451 2C       		.byte	44
+ 1135 0452 24       		.byte	36
+ 1136 0453 0A       		.byte	10
+ 1137 0454 27       		.byte	39
+ 1138 0455 41       		.byte	65
+ 1139 0456 29       		.byte	41
+ 1140 0457 20       		.byte	32
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 21
+
+
+ 1141 0458 2A       		.byte	42
+ 1142 0459 10       		.byte	16
+ 1143 045a 2B       		.byte	43
+ 1144 045b 80       		.byte	-128
+ 1145 045c 2C       		.byte	44
+ 1146 045d 40       		.byte	64
+ 1147 045e 2D       		.byte	45
+ 1148 045f 40       		.byte	64
+ 1149 0460 2E       		.byte	46
+ 1150 0461 04       		.byte	4
+ 1151 0462 2F       		.byte	47
+ 1152 0463 08       		.byte	8
+ 1153 0464 32       		.byte	50
+ 1154 0465 40       		.byte	64
+ 1155 0466 36       		.byte	54
+ 1156 0467 08       		.byte	8
+ 1157 0468 37       		.byte	55
+ 1158 0469 42       		.byte	66
+ 1159 046a 39       		.byte	57
+ 1160 046b 94       		.byte	-108
+ 1161 046c 3B       		.byte	59
+ 1162 046d 88       		.byte	-120
+ 1163 046e 3E       		.byte	62
+ 1164 046f 12       		.byte	18
+ 1165 0470 3F       		.byte	63
+ 1166 0471 04       		.byte	4
+ 1167 0472 44       		.byte	68
+ 1168 0473 50       		.byte	80
+ 1169 0474 47       		.byte	71
+ 1170 0475 28       		.byte	40
+ 1171 0476 4C       		.byte	76
+ 1172 0477 01       		.byte	1
+ 1173 0478 4E       		.byte	78
+ 1174 0479 08       		.byte	8
+ 1175 047a 4F       		.byte	79
+ 1176 047b 18       		.byte	24
+ 1177 047c 57       		.byte	87
+ 1178 047d 08       		.byte	8
+ 1179 047e 5E       		.byte	94
+ 1180 047f 01       		.byte	1
+ 1181 0480 65       		.byte	101
+ 1182 0481 02       		.byte	2
+ 1183 0482 66       		.byte	102
+ 1184 0483 20       		.byte	32
+ 1185 0484 67       		.byte	103
+ 1186 0485 02       		.byte	2
+ 1187 0486 94       		.byte	-108
+ 1188 0487 20       		.byte	32
+ 1189 0488 98       		.byte	-104
+ 1190 0489 04       		.byte	4
+ 1191 048a 9D       		.byte	-99
+ 1192 048b 02       		.byte	2
+ 1193 048c C0       		.byte	-64
+ 1194 048d 8E       		.byte	-114
+ 1195 048e C2       		.byte	-62
+ 1196 048f 4F       		.byte	79
+ 1197 0490 C4       		.byte	-60
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 22
+
+
+ 1198 0491 0F       		.byte	15
+ 1199 0492 CA       		.byte	-54
+ 1200 0493 F5       		.byte	-11
+ 1201 0494 CC       		.byte	-52
+ 1202 0495 D8       		.byte	-40
+ 1203 0496 CE       		.byte	-50
+ 1204 0497 EE       		.byte	-18
+ 1205 0498 D0       		.byte	-48
+ 1206 0499 E0       		.byte	-32
+ 1207 049a D2       		.byte	-46
+ 1208 049b 30       		.byte	48
+ 1209 049c D6       		.byte	-42
+ 1210 049d 80       		.byte	-128
+ 1211 049e D8       		.byte	-40
+ 1212 049f B0       		.byte	-80
+ 1213 04a0 EE       		.byte	-18
+ 1214 04a1 04       		.byte	4
+ 1215 04a2 8D       		.byte	-115
+ 1216 04a3 02       		.byte	2
+ 1217 04a4 94       		.byte	-108
+ 1218 04a5 20       		.byte	32
+ 1219 04a6 98       		.byte	-104
+ 1220 04a7 04       		.byte	4
+ 1221 04a8 B0       		.byte	-80
+ 1222 04a9 04       		.byte	4
+ 1223 04aa E2       		.byte	-30
+ 1224 04ab 40       		.byte	64
+ 1225 04ac 94       		.byte	-108
+ 1226 04ad 20       		.byte	32
+ 1227 04ae E6       		.byte	-26
+ 1228 04af 08       		.byte	8
+ 1229 04b0 80       		.byte	-128
+ 1230 04b1 10       		.byte	16
+ 1231 04b2 B8       		.byte	-72
+ 1232 04b3 02       		.byte	2
+ 1233 04b4 BE       		.byte	-66
+ 1234 04b5 01       		.byte	1
+ 1235 04b6 D8       		.byte	-40
+ 1236 04b7 04       		.byte	4
+ 1237 04b8 DF       		.byte	-33
+ 1238 04b9 01       		.byte	1
+ 1239 04ba 1B       		.byte	27
+ 1240 04bb 02       		.byte	2
+ 1241 04bc A7       		.byte	-89
+ 1242 04bd 02       		.byte	2
+ 1243 04be 06       		.byte	6
+ 1244 04bf 01       		.byte	1
+ 1245 04c0 0B       		.byte	11
+ 1246 04c1 01       		.byte	1
+ 1247 04c2 0C       		.byte	12
+ 1248 04c3 02       		.byte	2
+ 1249 04c4 14       		.byte	20
+ 1250 04c5 02       		.byte	2
+ 1251 04c6 1C       		.byte	28
+ 1252 04c7 02       		.byte	2
+ 1253 04c8 24       		.byte	36
+ 1254 04c9 02       		.byte	2
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 23
+
+
+ 1255 04ca 28       		.byte	40
+ 1256 04cb 01       		.byte	1
+ 1257 04cc 30       		.byte	48
+ 1258 04cd 02       		.byte	2
+ 1259 04ce 32       		.byte	50
+ 1260 04cf 01       		.byte	1
+ 1261 04d0 33       		.byte	51
+ 1262 04d1 01       		.byte	1
+ 1263 04d2 3E       		.byte	62
+ 1264 04d3 01       		.byte	1
+ 1265 04d4 58       		.byte	88
+ 1266 04d5 04       		.byte	4
+ 1267 04d6 59       		.byte	89
+ 1268 04d7 04       		.byte	4
+ 1269 04d8 5C       		.byte	92
+ 1270 04d9 11       		.byte	17
+ 1271 04da 5F       		.byte	95
+ 1272 04db 01       		.byte	1
+ 1273 04dc 81       		.byte	-127
+ 1274 04dd 4C       		.byte	76
+ 1275 04de 83       		.byte	-125
+ 1276 04df A3       		.byte	-93
+ 1277 04e0 84       		.byte	-124
+ 1278 04e1 09       		.byte	9
+ 1279 04e2 85       		.byte	-123
+ 1280 04e3 0C       		.byte	12
+ 1281 04e4 86       		.byte	-122
+ 1282 04e5 10       		.byte	16
+ 1283 04e6 88       		.byte	-120
+ 1284 04e7 80       		.byte	-128
+ 1285 04e8 89       		.byte	-119
+ 1286 04e9 04       		.byte	4
+ 1287 04ea 8A       		.byte	-118
+ 1288 04eb 03       		.byte	3
+ 1289 04ec 8D       		.byte	-115
+ 1290 04ed 03       		.byte	3
+ 1291 04ee 90       		.byte	-112
+ 1292 04ef 30       		.byte	48
+ 1293 04f0 92       		.byte	-110
+ 1294 04f1 0C       		.byte	12
+ 1295 04f2 93       		.byte	-109
+ 1296 04f3 40       		.byte	64
+ 1297 04f4 94       		.byte	-108
+ 1298 04f5 2C       		.byte	44
+ 1299 04f6 95       		.byte	-107
+ 1300 04f7 F3       		.byte	-13
+ 1301 04f8 96       		.byte	-106
+ 1302 04f9 11       		.byte	17
+ 1303 04fa 97       		.byte	-105
+ 1304 04fb 0C       		.byte	12
+ 1305 04fc 98       		.byte	-104
+ 1306 04fd 40       		.byte	64
+ 1307 04fe 9B       		.byte	-101
+ 1308 04ff B3       		.byte	-77
+ 1309 0500 9C       		.byte	-100
+ 1310 0501 1C       		.byte	28
+ 1311 0502 9D       		.byte	-99
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 24
+
+
+ 1312 0503 FF       		.byte	-1
+ 1313 0504 9E       		.byte	-98
+ 1314 0505 22       		.byte	34
+ 1315 0506 A0       		.byte	-96
+ 1316 0507 14       		.byte	20
+ 1317 0508 A1       		.byte	-95
+ 1318 0509 08       		.byte	8
+ 1319 050a A4       		.byte	-92
+ 1320 050b 10       		.byte	16
+ 1321 050c A5       		.byte	-91
+ 1322 050d 4F       		.byte	79
+ 1323 050e A7       		.byte	-89
+ 1324 050f 90       		.byte	-112
+ 1325 0510 A9       		.byte	-87
+ 1326 0511 02       		.byte	2
+ 1327 0512 AD       		.byte	-83
+ 1328 0513 41       		.byte	65
+ 1329 0514 B2       		.byte	-78
+ 1330 0515 1F       		.byte	31
+ 1331 0516 B3       		.byte	-77
+ 1332 0517 0F       		.byte	15
+ 1333 0518 B4       		.byte	-76
+ 1334 0519 60       		.byte	96
+ 1335 051a B5       		.byte	-75
+ 1336 051b 7C       		.byte	124
+ 1337 051c B6       		.byte	-74
+ 1338 051d 80       		.byte	-128
+ 1339 051e B7       		.byte	-73
+ 1340 051f 8C       		.byte	-116
+ 1341 0520 B8       		.byte	-72
+ 1342 0521 20       		.byte	32
+ 1343 0522 BA       		.byte	-70
+ 1344 0523 02       		.byte	2
+ 1345 0524 BB       		.byte	-69
+ 1346 0525 A8       		.byte	-88
+ 1347 0526 BE       		.byte	-66
+ 1348 0527 40       		.byte	64
+ 1349 0528 C0       		.byte	-64
+ 1350 0529 53       		.byte	83
+ 1351 052a C1       		.byte	-63
+ 1352 052b 02       		.byte	2
+ 1353 052c C6       		.byte	-58
+ 1354 052d CB       		.byte	-53
+ 1355 052e C7       		.byte	-57
+ 1356 052f 0E       		.byte	14
+ 1357 0530 C8       		.byte	-56
+ 1358 0531 1C       		.byte	28
+ 1359 0532 C9       		.byte	-55
+ 1360 0533 FF       		.byte	-1
+ 1361 0534 CA       		.byte	-54
+ 1362 0535 FF       		.byte	-1
+ 1363 0536 CB       		.byte	-53
+ 1364 0537 FF       		.byte	-1
+ 1365 0538 CE       		.byte	-50
+ 1366 0539 F0       		.byte	-16
+ 1367 053a CF       		.byte	-49
+ 1368 053b 44       		.byte	68
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 25
+
+
+ 1369 053c D0       		.byte	-48
+ 1370 053d 0C       		.byte	12
+ 1371 053e D6       		.byte	-42
+ 1372 053f 02       		.byte	2
+ 1373 0540 D7       		.byte	-41
+ 1374 0541 10       		.byte	16
+ 1375 0542 D8       		.byte	-40
+ 1376 0543 04       		.byte	4
+ 1377 0544 D9       		.byte	-39
+ 1378 0545 04       		.byte	4
+ 1379 0546 DA       		.byte	-38
+ 1380 0547 04       		.byte	4
+ 1381 0548 DB       		.byte	-37
+ 1382 0549 04       		.byte	4
+ 1383 054a DC       		.byte	-36
+ 1384 054b 33       		.byte	51
+ 1385 054c DD       		.byte	-35
+ 1386 054d 33       		.byte	51
+ 1387 054e DF       		.byte	-33
+ 1388 054f 01       		.byte	1
+ 1389 0550 E6       		.byte	-26
+ 1390 0551 C0       		.byte	-64
+ 1391 0552 EA       		.byte	-22
+ 1392 0553 40       		.byte	64
+ 1393 0554 EB       		.byte	-21
+ 1394 0555 02       		.byte	2
+ 1395 0556 00       		.byte	0
+ 1396 0557 10       		.byte	16
+ 1397 0558 03       		.byte	3
+ 1398 0559 20       		.byte	32
+ 1399 055a 06       		.byte	6
+ 1400 055b 20       		.byte	32
+ 1401 055c 07       		.byte	7
+ 1402 055d 02       		.byte	2
+ 1403 055e 08       		.byte	8
+ 1404 055f 88       		.byte	-120
+ 1405 0560 0B       		.byte	11
+ 1406 0561 88       		.byte	-120
+ 1407 0562 0C       		.byte	12
+ 1408 0563 40       		.byte	64
+ 1409 0564 0F       		.byte	15
+ 1410 0565 12       		.byte	18
+ 1411 0566 10       		.byte	16
+ 1412 0567 80       		.byte	-128
+ 1413 0568 13       		.byte	19
+ 1414 0569 04       		.byte	4
+ 1415 056a 17       		.byte	23
+ 1416 056b 18       		.byte	24
+ 1417 056c 18       		.byte	24
+ 1418 056d 10       		.byte	16
+ 1419 056e 19       		.byte	25
+ 1420 056f A0       		.byte	-96
+ 1421 0570 1B       		.byte	27
+ 1422 0571 21       		.byte	33
+ 1423 0572 1E       		.byte	30
+ 1424 0573 60       		.byte	96
+ 1425 0574 22       		.byte	34
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 26
+
+
+ 1426 0575 08       		.byte	8
+ 1427 0576 23       		.byte	35
+ 1428 0577 1A       		.byte	26
+ 1429 0578 27       		.byte	39
+ 1430 0579 10       		.byte	16
+ 1431 057a 28       		.byte	40
+ 1432 057b 01       		.byte	1
+ 1433 057c 2A       		.byte	42
+ 1434 057d 1A       		.byte	26
+ 1435 057e 30       		.byte	48
+ 1436 057f 50       		.byte	80
+ 1437 0580 32       		.byte	50
+ 1438 0581 09       		.byte	9
+ 1439 0582 38       		.byte	56
+ 1440 0583 28       		.byte	40
+ 1441 0584 39       		.byte	57
+ 1442 0585 80       		.byte	-128
+ 1443 0586 3A       		.byte	58
+ 1444 0587 01       		.byte	1
+ 1445 0588 3E       		.byte	62
+ 1446 0589 20       		.byte	32
+ 1447 058a 3F       		.byte	63
+ 1448 058b 20       		.byte	32
+ 1449 058c 40       		.byte	64
+ 1450 058d 08       		.byte	8
+ 1451 058e 41       		.byte	65
+ 1452 058f 20       		.byte	32
+ 1453 0590 43       		.byte	67
+ 1454 0591 08       		.byte	8
+ 1455 0592 4A       		.byte	74
+ 1456 0593 02       		.byte	2
+ 1457 0594 4B       		.byte	75
+ 1458 0595 80       		.byte	-128
+ 1459 0596 50       		.byte	80
+ 1460 0597 88       		.byte	-120
+ 1461 0598 51       		.byte	81
+ 1462 0599 10       		.byte	16
+ 1463 059a 5A       		.byte	90
+ 1464 059b 40       		.byte	64
+ 1465 059c 69       		.byte	105
+ 1466 059d 14       		.byte	20
+ 1467 059e 6A       		.byte	106
+ 1468 059f 80       		.byte	-128
+ 1469 05a0 70       		.byte	112
+ 1470 05a1 14       		.byte	20
+ 1471 05a2 72       		.byte	114
+ 1472 05a3 16       		.byte	22
+ 1473 05a4 78       		.byte	120
+ 1474 05a5 01       		.byte	1
+ 1475 05a6 7B       		.byte	123
+ 1476 05a7 80       		.byte	-128
+ 1477 05a8 85       		.byte	-123
+ 1478 05a9 80       		.byte	-128
+ 1479 05aa 91       		.byte	-111
+ 1480 05ab 80       		.byte	-128
+ 1481 05ac 92       		.byte	-110
+ 1482 05ad 02       		.byte	2
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 27
+
+
+ 1483 05ae 95       		.byte	-107
+ 1484 05af 14       		.byte	20
+ 1485 05b0 96       		.byte	-106
+ 1486 05b1 94       		.byte	-108
+ 1487 05b2 97       		.byte	-105
+ 1488 05b3 10       		.byte	16
+ 1489 05b4 98       		.byte	-104
+ 1490 05b5 10       		.byte	16
+ 1491 05b6 9A       		.byte	-102
+ 1492 05b7 10       		.byte	16
+ 1493 05b8 9C       		.byte	-100
+ 1494 05b9 40       		.byte	64
+ 1495 05ba 9E       		.byte	-98
+ 1496 05bb 03       		.byte	3
+ 1497 05bc 9F       		.byte	-97
+ 1498 05bd 02       		.byte	2
+ 1499 05be A7       		.byte	-89
+ 1500 05bf 80       		.byte	-128
+ 1501 05c0 C0       		.byte	-64
+ 1502 05c1 A6       		.byte	-90
+ 1503 05c2 C2       		.byte	-62
+ 1504 05c3 AF       		.byte	-81
+ 1505 05c4 C4       		.byte	-60
+ 1506 05c5 6C       		.byte	108
+ 1507 05c6 CA       		.byte	-54
+ 1508 05c7 0F       		.byte	15
+ 1509 05c8 CC       		.byte	-52
+ 1510 05c9 0F       		.byte	15
+ 1511 05ca CE       		.byte	-50
+ 1512 05cb 2F       		.byte	47
+ 1513 05cc D0       		.byte	-48
+ 1514 05cd 06       		.byte	6
+ 1515 05ce D2       		.byte	-46
+ 1516 05cf 08       		.byte	8
+ 1517 05d0 D6       		.byte	-42
+ 1518 05d1 08       		.byte	8
+ 1519 05d2 E0       		.byte	-32
+ 1520 05d3 08       		.byte	8
+ 1521 05d4 04       		.byte	4
+ 1522 05d5 01       		.byte	1
+ 1523 05d6 06       		.byte	6
+ 1524 05d7 0E       		.byte	14
+ 1525 05d8 07       		.byte	7
+ 1526 05d9 55       		.byte	85
+ 1527 05da 09       		.byte	9
+ 1528 05db 03       		.byte	3
+ 1529 05dc 0A       		.byte	10
+ 1530 05dd 1C       		.byte	28
+ 1531 05de 0B       		.byte	11
+ 1532 05df 44       		.byte	68
+ 1533 05e0 10       		.byte	16
+ 1534 05e1 01       		.byte	1
+ 1535 05e2 11       		.byte	17
+ 1536 05e3 73       		.byte	115
+ 1537 05e4 12       		.byte	18
+ 1538 05e5 16       		.byte	22
+ 1539 05e6 13       		.byte	19
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 28
+
+
+ 1540 05e7 0C       		.byte	12
+ 1541 05e8 19       		.byte	25
+ 1542 05e9 73       		.byte	115
+ 1543 05ea 1A       		.byte	26
+ 1544 05eb 03       		.byte	3
+ 1545 05ec 1B       		.byte	27
+ 1546 05ed 04       		.byte	4
+ 1547 05ee 1C       		.byte	28
+ 1548 05ef 1C       		.byte	28
+ 1549 05f0 1E       		.byte	30
+ 1550 05f1 03       		.byte	3
+ 1551 05f2 21       		.byte	33
+ 1552 05f3 2A       		.byte	42
+ 1553 05f4 23       		.byte	35
+ 1554 05f5 44       		.byte	68
+ 1555 05f6 26       		.byte	38
+ 1556 05f7 08       		.byte	8
+ 1557 05f8 28       		.byte	40
+ 1558 05f9 20       		.byte	32
+ 1559 05fa 2B       		.byte	43
+ 1560 05fb 08       		.byte	8
+ 1561 05fc 30       		.byte	48
+ 1562 05fd 0F       		.byte	15
+ 1563 05fe 31       		.byte	49
+ 1564 05ff 0F       		.byte	15
+ 1565 0600 32       		.byte	50
+ 1566 0601 20       		.byte	32
+ 1567 0602 33       		.byte	51
+ 1568 0603 30       		.byte	48
+ 1569 0604 34       		.byte	52
+ 1570 0605 1A       		.byte	26
+ 1571 0606 37       		.byte	55
+ 1572 0607 40       		.byte	64
+ 1573 0608 39       		.byte	57
+ 1574 0609 08       		.byte	8
+ 1575 060a 3A       		.byte	58
+ 1576 060b 22       		.byte	34
+ 1577 060c 3B       		.byte	59
+ 1578 060d 02       		.byte	2
+ 1579 060e 3E       		.byte	62
+ 1580 060f 04       		.byte	4
+ 1581 0610 3F       		.byte	63
+ 1582 0611 44       		.byte	68
+ 1583 0612 40       		.byte	64
+ 1584 0613 03       		.byte	3
+ 1585 0614 45       		.byte	69
+ 1586 0615 04       		.byte	4
+ 1587 0616 49       		.byte	73
+ 1588 0617 FF       		.byte	-1
+ 1589 0618 4A       		.byte	74
+ 1590 0619 07       		.byte	7
+ 1591 061a 4B       		.byte	75
+ 1592 061b FF       		.byte	-1
+ 1593 061c 4C       		.byte	76
+ 1594 061d 40       		.byte	64
+ 1595 061e 4D       		.byte	77
+ 1596 061f 20       		.byte	32
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 29
+
+
+ 1597 0620 4E       		.byte	78
+ 1598 0621 F0       		.byte	-16
+ 1599 0622 4F       		.byte	79
+ 1600 0623 05       		.byte	5
+ 1601 0624 50       		.byte	80
+ 1602 0625 08       		.byte	8
+ 1603 0626 54       		.byte	84
+ 1604 0627 01       		.byte	1
+ 1605 0628 58       		.byte	88
+ 1606 0629 04       		.byte	4
+ 1607 062a 59       		.byte	89
+ 1608 062b 04       		.byte	4
+ 1609 062c 5A       		.byte	90
+ 1610 062d 04       		.byte	4
+ 1611 062e 5B       		.byte	91
+ 1612 062f 04       		.byte	4
+ 1613 0630 5C       		.byte	92
+ 1614 0631 33       		.byte	51
+ 1615 0632 5D       		.byte	93
+ 1616 0633 33       		.byte	51
+ 1617 0634 5F       		.byte	95
+ 1618 0635 01       		.byte	1
+ 1619 0636 60       		.byte	96
+ 1620 0637 40       		.byte	64
+ 1621 0638 61       		.byte	97
+ 1622 0639 A8       		.byte	-88
+ 1623 063a 62       		.byte	98
+ 1624 063b 40       		.byte	64
+ 1625 063c 63       		.byte	99
+ 1626 063d 20       		.byte	32
+ 1627 063e 87       		.byte	-121
+ 1628 063f 01       		.byte	1
+ 1629 0640 8A       		.byte	-118
+ 1630 0641 09       		.byte	9
+ 1631 0642 92       		.byte	-110
+ 1632 0643 05       		.byte	5
+ 1633 0644 9E       		.byte	-98
+ 1634 0645 04       		.byte	4
+ 1635 0646 A1       		.byte	-95
+ 1636 0647 01       		.byte	1
+ 1637 0648 AE       		.byte	-82
+ 1638 0649 02       		.byte	2
+ 1639 064a B0       		.byte	-80
+ 1640 064b 02       		.byte	2
+ 1641 064c B1       		.byte	-79
+ 1642 064d 01       		.byte	1
+ 1643 064e B2       		.byte	-78
+ 1644 064f 04       		.byte	4
+ 1645 0650 B4       		.byte	-76
+ 1646 0651 01       		.byte	1
+ 1647 0652 B6       		.byte	-74
+ 1648 0653 08       		.byte	8
+ 1649 0654 BE       		.byte	-66
+ 1650 0655 04       		.byte	4
+ 1651 0656 C0       		.byte	-64
+ 1652 0657 50       		.byte	80
+ 1653 0658 C1       		.byte	-63
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 30
+
+
+ 1654 0659 04       		.byte	4
+ 1655 065a C5       		.byte	-59
+ 1656 065b D0       		.byte	-48
+ 1657 065c C6       		.byte	-58
+ 1658 065d 50       		.byte	80
+ 1659 065e C7       		.byte	-57
+ 1660 065f 21       		.byte	33
+ 1661 0660 C8       		.byte	-56
+ 1662 0661 3A       		.byte	58
+ 1663 0662 C9       		.byte	-55
+ 1664 0663 FF       		.byte	-1
+ 1665 0664 CA       		.byte	-54
+ 1666 0665 FF       		.byte	-1
+ 1667 0666 CB       		.byte	-53
+ 1668 0667 FF       		.byte	-1
+ 1669 0668 CD       		.byte	-51
+ 1670 0669 A0       		.byte	-96
+ 1671 066a CF       		.byte	-49
+ 1672 066b 04       		.byte	4
+ 1673 066c D0       		.byte	-48
+ 1674 066d 18       		.byte	24
+ 1675 066e D2       		.byte	-46
+ 1676 066f 80       		.byte	-128
+ 1677 0670 D4       		.byte	-44
+ 1678 0671 07       		.byte	7
+ 1679 0672 D8       		.byte	-40
+ 1680 0673 04       		.byte	4
+ 1681 0674 D9       		.byte	-39
+ 1682 0675 04       		.byte	4
+ 1683 0676 DA       		.byte	-38
+ 1684 0677 04       		.byte	4
+ 1685 0678 DB       		.byte	-37
+ 1686 0679 04       		.byte	4
+ 1687 067a DC       		.byte	-36
+ 1688 067b 11       		.byte	17
+ 1689 067c DD       		.byte	-35
+ 1690 067d 11       		.byte	17
+ 1691 067e DF       		.byte	-33
+ 1692 067f 01       		.byte	1
+ 1693 0680 E0       		.byte	-32
+ 1694 0681 40       		.byte	64
+ 1695 0682 E2       		.byte	-30
+ 1696 0683 C0       		.byte	-64
+ 1697 0684 E4       		.byte	-28
+ 1698 0685 40       		.byte	64
+ 1699 0686 E5       		.byte	-27
+ 1700 0687 40       		.byte	64
+ 1701 0688 E6       		.byte	-26
+ 1702 0689 C0       		.byte	-64
+ 1703 068a E8       		.byte	-24
+ 1704 068b C0       		.byte	-64
+ 1705 068c EA       		.byte	-22
+ 1706 068d C0       		.byte	-64
+ 1707 068e EC       		.byte	-20
+ 1708 068f C0       		.byte	-64
+ 1709 0690 EE       		.byte	-18
+ 1710 0691 C0       		.byte	-64
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 31
+
+
+ 1711 0692 00       		.byte	0
+ 1712 0693 04       		.byte	4
+ 1713 0694 01       		.byte	1
+ 1714 0695 20       		.byte	32
+ 1715 0696 06       		.byte	6
+ 1716 0697 08       		.byte	8
+ 1717 0698 08       		.byte	8
+ 1718 0699 80       		.byte	-128
+ 1719 069a 09       		.byte	9
+ 1720 069b 02       		.byte	2
+ 1721 069c 0B       		.byte	11
+ 1722 069d 08       		.byte	8
+ 1723 069e 0E       		.byte	14
+ 1724 069f 80       		.byte	-128
+ 1725 06a0 0F       		.byte	15
+ 1726 06a1 42       		.byte	66
+ 1727 06a2 10       		.byte	16
+ 1728 06a3 08       		.byte	8
+ 1729 06a4 13       		.byte	19
+ 1730 06a5 04       		.byte	4
+ 1731 06a6 17       		.byte	23
+ 1732 06a7 40       		.byte	64
+ 1733 06a8 18       		.byte	24
+ 1734 06a9 04       		.byte	4
+ 1735 06aa 19       		.byte	25
+ 1736 06ab 15       		.byte	21
+ 1737 06ac 1D       		.byte	29
+ 1738 06ad 08       		.byte	8
+ 1739 06ae 1E       		.byte	30
+ 1740 06af 80       		.byte	-128
+ 1741 06b0 1F       		.byte	31
+ 1742 06b1 60       		.byte	96
+ 1743 06b2 21       		.byte	33
+ 1744 06b3 06       		.byte	6
+ 1745 06b4 22       		.byte	34
+ 1746 06b5 42       		.byte	66
+ 1747 06b6 24       		.byte	36
+ 1748 06b7 40       		.byte	64
+ 1749 06b8 28       		.byte	40
+ 1750 06b9 80       		.byte	-128
+ 1751 06ba 29       		.byte	41
+ 1752 06bb 21       		.byte	33
+ 1753 06bc 2F       		.byte	47
+ 1754 06bd 40       		.byte	64
+ 1755 06be 31       		.byte	49
+ 1756 06bf 32       		.byte	50
+ 1757 06c0 38       		.byte	56
+ 1758 06c1 08       		.byte	8
+ 1759 06c2 39       		.byte	57
+ 1760 06c3 20       		.byte	32
+ 1761 06c4 3E       		.byte	62
+ 1762 06c5 08       		.byte	8
+ 1763 06c6 41       		.byte	65
+ 1764 06c7 14       		.byte	20
+ 1765 06c8 43       		.byte	67
+ 1766 06c9 10       		.byte	16
+ 1767 06ca 45       		.byte	69
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 32
+
+
+ 1768 06cb 09       		.byte	9
+ 1769 06cc 47       		.byte	71
+ 1770 06cd 08       		.byte	8
+ 1771 06ce 4B       		.byte	75
+ 1772 06cf 04       		.byte	4
+ 1773 06d0 4F       		.byte	79
+ 1774 06d1 41       		.byte	65
+ 1775 06d2 50       		.byte	80
+ 1776 06d3 04       		.byte	4
+ 1777 06d4 53       		.byte	83
+ 1778 06d5 0C       		.byte	12
+ 1779 06d6 55       		.byte	85
+ 1780 06d7 01       		.byte	1
+ 1781 06d8 56       		.byte	86
+ 1782 06d9 08       		.byte	8
+ 1783 06da 57       		.byte	87
+ 1784 06db 11       		.byte	17
+ 1785 06dc 59       		.byte	89
+ 1786 06dd 04       		.byte	4
+ 1787 06de 5A       		.byte	90
+ 1788 06df 80       		.byte	-128
+ 1789 06e0 5B       		.byte	91
+ 1790 06e1 11       		.byte	17
+ 1791 06e2 5C       		.byte	92
+ 1792 06e3 40       		.byte	64
+ 1793 06e4 5E       		.byte	94
+ 1794 06e5 20       		.byte	32
+ 1795 06e6 5F       		.byte	95
+ 1796 06e7 09       		.byte	9
+ 1797 06e8 77       		.byte	119
+ 1798 06e9 40       		.byte	64
+ 1799 06ea 87       		.byte	-121
+ 1800 06eb 20       		.byte	32
+ 1801 06ec 88       		.byte	-120
+ 1802 06ed 08       		.byte	8
+ 1803 06ee 8B       		.byte	-117
+ 1804 06ef 01       		.byte	1
+ 1805 06f0 8F       		.byte	-113
+ 1806 06f1 80       		.byte	-128
+ 1807 06f2 91       		.byte	-111
+ 1808 06f3 20       		.byte	32
+ 1809 06f4 97       		.byte	-105
+ 1810 06f5 0C       		.byte	12
+ 1811 06f6 99       		.byte	-103
+ 1812 06f7 20       		.byte	32
+ 1813 06f8 9C       		.byte	-100
+ 1814 06f9 80       		.byte	-128
+ 1815 06fa A0       		.byte	-96
+ 1816 06fb 08       		.byte	8
+ 1817 06fc A2       		.byte	-94
+ 1818 06fd 10       		.byte	16
+ 1819 06fe A5       		.byte	-91
+ 1820 06ff 20       		.byte	32
+ 1821 0700 A6       		.byte	-90
+ 1822 0701 02       		.byte	2
+ 1823 0702 A7       		.byte	-89
+ 1824 0703 98       		.byte	-104
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 33
+
+
+ 1825 0704 B2       		.byte	-78
+ 1826 0705 08       		.byte	8
+ 1827 0706 B3       		.byte	-77
+ 1828 0707 02       		.byte	2
+ 1829 0708 B6       		.byte	-74
+ 1830 0709 01       		.byte	1
+ 1831 070a B7       		.byte	-73
+ 1832 070b 08       		.byte	8
+ 1833 070c C0       		.byte	-64
+ 1834 070d 46       		.byte	70
+ 1835 070e C2       		.byte	-62
+ 1836 070f 9B       		.byte	-101
+ 1837 0710 C4       		.byte	-60
+ 1838 0711 86       		.byte	-122
+ 1839 0712 CA       		.byte	-54
+ 1840 0713 85       		.byte	-123
+ 1841 0714 CC       		.byte	-52
+ 1842 0715 05       		.byte	5
+ 1843 0716 CE       		.byte	-50
+ 1844 0717 46       		.byte	70
+ 1845 0718 D0       		.byte	-48
+ 1846 0719 82       		.byte	-126
+ 1847 071a D2       		.byte	-46
+ 1848 071b 10       		.byte	16
+ 1849 071c D6       		.byte	-42
+ 1850 071d FF       		.byte	-1
+ 1851 071e E4       		.byte	-28
+ 1852 071f 08       		.byte	8
+ 1853 0720 30       		.byte	48
+ 1854 0721 02       		.byte	2
+ 1855 0722 33       		.byte	51
+ 1856 0723 20       		.byte	32
+ 1857 0724 36       		.byte	54
+ 1858 0725 40       		.byte	64
+ 1859 0726 37       		.byte	55
+ 1860 0727 08       		.byte	8
+ 1861 0728 38       		.byte	56
+ 1862 0729 40       		.byte	64
+ 1863 072a 83       		.byte	-125
+ 1864 072b 08       		.byte	8
+ 1865 072c CC       		.byte	-52
+ 1866 072d F0       		.byte	-16
+ 1867 072e CE       		.byte	-50
+ 1868 072f 10       		.byte	16
+ 1869 0730 E2       		.byte	-30
+ 1870 0731 20       		.byte	32
+ 1871 0732 08       		.byte	8
+ 1872 0733 20       		.byte	32
+ 1873 0734 5F       		.byte	95
+ 1874 0735 80       		.byte	-128
+ 1875 0736 83       		.byte	-125
+ 1876 0737 80       		.byte	-128
+ 1877 0738 94       		.byte	-108
+ 1878 0739 40       		.byte	64
+ 1879 073a A4       		.byte	-92
+ 1880 073b 02       		.byte	2
+ 1881 073c A6       		.byte	-90
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 34
+
+
+ 1882 073d 40       		.byte	64
+ 1883 073e A7       		.byte	-89
+ 1884 073f 20       		.byte	32
+ 1885 0740 C2       		.byte	-62
+ 1886 0741 40       		.byte	64
+ 1887 0742 D6       		.byte	-42
+ 1888 0743 20       		.byte	32
+ 1889 0744 E2       		.byte	-30
+ 1890 0745 80       		.byte	-128
+ 1891 0746 05       		.byte	5
+ 1892 0747 02       		.byte	2
+ 1893 0748 50       		.byte	80
+ 1894 0749 04       		.byte	4
+ 1895 074a 80       		.byte	-128
+ 1896 074b 02       		.byte	2
+ 1897 074c 8C       		.byte	-116
+ 1898 074d 40       		.byte	64
+ 1899 074e 94       		.byte	-108
+ 1900 074f 40       		.byte	64
+ 1901 0750 A4       		.byte	-92
+ 1902 0751 02       		.byte	2
+ 1903 0752 A7       		.byte	-89
+ 1904 0753 20       		.byte	32
+ 1905 0754 AC       		.byte	-84
+ 1906 0755 20       		.byte	32
+ 1907 0756 AE       		.byte	-82
+ 1908 0757 40       		.byte	64
+ 1909 0758 C0       		.byte	-64
+ 1910 0759 20       		.byte	32
+ 1911 075a D4       		.byte	-44
+ 1912 075b 20       		.byte	32
+ 1913 075c E2       		.byte	-30
+ 1914 075d 20       		.byte	32
+ 1915 075e EC       		.byte	-20
+ 1916 075f 10       		.byte	16
+ 1917 0760 EE       		.byte	-18
+ 1918 0761 40       		.byte	64
+ 1919 0762 AB       		.byte	-85
+ 1920 0763 20       		.byte	32
+ 1921 0764 AD       		.byte	-83
+ 1922 0765 02       		.byte	2
+ 1923 0766 B4       		.byte	-76
+ 1924 0767 04       		.byte	4
+ 1925 0768 EC       		.byte	-20
+ 1926 0769 10       		.byte	16
+ 1927 076a EE       		.byte	-18
+ 1928 076b 20       		.byte	32
+ 1929 076c 01       		.byte	1
+ 1930 076d 08       		.byte	8
+ 1931 076e 06       		.byte	6
+ 1932 076f 20       		.byte	32
+ 1933 0770 67       		.byte	103
+ 1934 0771 08       		.byte	8
+ 1935 0772 85       		.byte	-123
+ 1936 0773 08       		.byte	8
+ 1937 0774 C0       		.byte	-64
+ 1938 0775 0C       		.byte	12
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 35
+
+
+ 1939 0776 D8       		.byte	-40
+ 1940 0777 01       		.byte	1
+ 1941 0778 1B       		.byte	27
+ 1942 0779 04       		.byte	4
+ 1943 077a 97       		.byte	-105
+ 1944 077b 08       		.byte	8
+ 1945 077c B2       		.byte	-78
+ 1946 077d 20       		.byte	32
+ 1947 077e C6       		.byte	-58
+ 1948 077f 08       		.byte	8
+ 1949 0780 EE       		.byte	-18
+ 1950 0781 01       		.byte	1
+ 1951 0782 97       		.byte	-105
+ 1952 0783 08       		.byte	8
+ 1953 0784 AB       		.byte	-85
+ 1954 0785 04       		.byte	4
+ 1955 0786 87       		.byte	-121
+ 1956 0787 10       		.byte	16
+ 1957 0788 97       		.byte	-105
+ 1958 0789 08       		.byte	8
+ 1959 078a 12       		.byte	18
+ 1960 078b 80       		.byte	-128
+ 1961 078c 73       		.byte	115
+ 1962 078d 10       		.byte	16
+ 1963 078e 87       		.byte	-121
+ 1964 078f 04       		.byte	4
+ 1965 0790 8E       		.byte	-114
+ 1966 0791 80       		.byte	-128
+ 1967 0792 93       		.byte	-109
+ 1968 0793 10       		.byte	16
+ 1969 0794 97       		.byte	-105
+ 1970 0795 08       		.byte	8
+ 1971 0796 C4       		.byte	-60
+ 1972 0797 08       		.byte	8
+ 1973 0798 DC       		.byte	-36
+ 1974 0799 01       		.byte	1
+ 1975 079a E2       		.byte	-30
+ 1976 079b 02       		.byte	2
+ 1977 079c 00       		.byte	0
+ 1978 079d 1D       		.byte	29
+ 1979 079e 08       		.byte	8
+ 1980 079f 05       		.byte	5
+ 1981 07a0 0A       		.byte	10
+ 1982 07a1 10       		.byte	16
+ 1983 07a2 0C       		.byte	12
+ 1984 07a3 08       		.byte	8
+ 1985 07a4 10       		.byte	16
+ 1986 07a5 0A       		.byte	10
+ 1987 07a6 1C       		.byte	28
+ 1988 07a7 0A       		.byte	10
+ 1989 07a8 00       		.byte	0
+ 1990 07a9 FF       		.byte	-1
+ 1991 07aa 01       		.byte	1
+ 1992 07ab 03       		.byte	3
+ 1993 07ac 40       		.byte	64
+ 1994 07ad 28       		.byte	40
+ 1995 07ae 28       		.byte	40
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 36
+
+
+ 1996 07af 00       		.byte	0
+ 1997 07b0 08       		.byte	8
+ 1998 07b1 00       		.byte	0
+ 1999 07b2 04       		.byte	4
+ 2000 07b3 00       		.byte	0
+ 2001 07b4 48       		.byte	72
+ 2002 07b5 84       		.byte	-124
+ 2003 07b6 84       		.byte	-124
+ 2004 07b7 00       		.byte	0
+ 2005 07b8 84       		.byte	-124
+ 2006 07b9 00       		.byte	0
+ 2007 07ba 00       		.byte	0
+ 2008 07bb 00       		.byte	0
+ 2009 07bc 00       		.byte	0
+ 2010 07bd 0B       		.byte	11
+ 2011 07be 0B       		.byte	11
+ 2012 07bf 00       		.byte	0
+ 2013 07c0 00       		.byte	0
+ 2014 07c1 00       		.byte	0
+ 2015 07c2 00       		.byte	0
+ 2016 07c3 00       		.byte	0
+ 2017 07c4 03       		.byte	3
+ 2018 07c5 BC       		.byte	-68
+ 2019 07c6 BC       		.byte	-68
+ 2020 07c7 00       		.byte	0
+ 2021 07c8 80       		.byte	-128
+ 2022 07c9 00       		.byte	0
+ 2023 07ca 00       		.byte	0
+ 2024 07cb 00       		.byte	0
+ 2025 07cc 0E       		.byte	14
+ 2026 07cd 00       		.byte	0
+ 2027 07ce 18       		.byte	24
+ 2028 07cf 01       		.byte	1
+ 2029              		.section	.cywolatch,"a",%progbits
+ 2030              		.align	2
+ 2031              		.type	cy_meta_wonvl, %object
+ 2032              		.size	cy_meta_wonvl, 4
+ 2033              	cy_meta_wonvl:
+ 2034 0000 BC       		.byte	-68
+ 2035 0001 90       		.byte	-112
+ 2036 0002 AC       		.byte	-84
+ 2037 0003 AF       		.byte	-81
+ 2038              		.section	.cycustnvl,"a",%progbits
+ 2039              		.align	2
+ 2040              		.type	cy_meta_custnvl, %object
+ 2041              		.size	cy_meta_custnvl, 4
+ 2042              	cy_meta_custnvl:
+ 2043 0000 00       		.byte	0
+ 2044 0001 00       		.byte	0
+ 2045 0002 40       		.byte	64
+ 2046 0003 05       		.byte	5
+ 2047              		.section	.cymeta,"a",%progbits
+ 2048              		.align	2
+ 2049              		.type	cy_metadata, %object
+ 2050              		.size	cy_metadata, 12
+ 2051              	cy_metadata:
+ 2052 0000 00       		.byte	0
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 37
+
+
+ 2053 0001 01       		.byte	1
+ 2054 0002 2E       		.byte	46
+ 2055 0003 16       		.byte	22
+ 2056 0004 10       		.byte	16
+ 2057 0005 69       		.byte	105
+ 2058 0006 00       		.byte	0
+ 2059 0007 01       		.byte	1
+ 2060 0008 00       		.byte	0
+ 2061 0009 00       		.byte	0
+ 2062 000a 00       		.byte	0
+ 2063 000b 00       		.byte	0
+ 2064              		.section	.cyflashprotect,"a",%progbits
+ 2065              		.align	2
+ 2066              		.type	cy_meta_flashprotect, %object
+ 2067              		.size	cy_meta_flashprotect, 256
+ 2068              	cy_meta_flashprotect:
+ 2069 0000 00000000 		.space	256
+ 2069      00000000 
+ 2069      00000000 
+ 2069      00000000 
+ 2069      00000000 
+ 2070              		.text
+ 2071              	.Letext0:
+ 2072              		.file 1 "e:\\programmer\\cypres\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-non
+ 2073              		.file 2 "e:\\programmer\\cypres\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-non
+ 2074              		.file 3 "Generated_Source\\PSoC5\\cymetadata.c"
+ 2075              		.section	.debug_info,"",%progbits
+ 2076              	.Ldebug_info0:
+ 2077 0000 35010000 		.4byte	0x135
+ 2078 0004 0400     		.2byte	0x4
+ 2079 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 2080 000a 04       		.byte	0x4
+ 2081 000b 01       		.uleb128 0x1
+ 2082 000c 24000000 		.4byte	.LASF17
+ 2083 0010 0C       		.byte	0xc
+ 2084 0011 D4010000 		.4byte	.LASF18
+ 2085 0015 5F010000 		.4byte	.LASF19
+ 2086 0019 00000000 		.4byte	.Ldebug_line0
+ 2087 001d 02       		.uleb128 0x2
+ 2088 001e 01       		.byte	0x1
+ 2089 001f 06       		.byte	0x6
+ 2090 0020 C8010000 		.4byte	.LASF0
+ 2091 0024 03       		.uleb128 0x3
+ 2092 0025 00000000 		.4byte	.LASF9
+ 2093 0029 01       		.byte	0x1
+ 2094 002a 1D       		.byte	0x1d
+ 2095 002b 2F000000 		.4byte	0x2f
+ 2096 002f 02       		.uleb128 0x2
+ 2097 0030 01       		.byte	0x1
+ 2098 0031 08       		.byte	0x8
+ 2099 0032 16000000 		.4byte	.LASF1
+ 2100 0036 02       		.uleb128 0x2
+ 2101 0037 02       		.byte	0x2
+ 2102 0038 05       		.byte	0x5
+ 2103 0039 B5010000 		.4byte	.LASF2
+ 2104 003d 02       		.uleb128 0x2
+ 2105 003e 02       		.byte	0x2
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 38
+
+
+ 2106 003f 07       		.byte	0x7
+ 2107 0040 C4000000 		.4byte	.LASF3
+ 2108 0044 02       		.uleb128 0x2
+ 2109 0045 04       		.byte	0x4
+ 2110 0046 05       		.byte	0x5
+ 2111 0047 BF010000 		.4byte	.LASF4
+ 2112 004b 02       		.uleb128 0x2
+ 2113 004c 04       		.byte	0x4
+ 2114 004d 07       		.byte	0x7
+ 2115 004e B2000000 		.4byte	.LASF5
+ 2116 0052 02       		.uleb128 0x2
+ 2117 0053 08       		.byte	0x8
+ 2118 0054 05       		.byte	0x5
+ 2119 0055 51010000 		.4byte	.LASF6
+ 2120 0059 02       		.uleb128 0x2
+ 2121 005a 08       		.byte	0x8
+ 2122 005b 07       		.byte	0x7
+ 2123 005c 06010000 		.4byte	.LASF7
+ 2124 0060 04       		.uleb128 0x4
+ 2125 0061 04       		.byte	0x4
+ 2126 0062 05       		.byte	0x5
+ 2127 0063 696E7400 		.ascii	"int\000"
+ 2128 0067 02       		.uleb128 0x2
+ 2129 0068 04       		.byte	0x4
+ 2130 0069 07       		.byte	0x7
+ 2131 006a F9000000 		.4byte	.LASF8
+ 2132 006e 03       		.uleb128 0x3
+ 2133 006f 1D010000 		.4byte	.LASF10
+ 2134 0073 02       		.byte	0x2
+ 2135 0074 18       		.byte	0x18
+ 2136 0075 24000000 		.4byte	0x24
+ 2137 0079 05       		.uleb128 0x5
+ 2138 007a 91000000 		.4byte	0x91
+ 2139 007e 8A000000 		.4byte	0x8a
+ 2140 0082 06       		.uleb128 0x6
+ 2141 0083 8A000000 		.4byte	0x8a
+ 2142 0087 CF07     		.2byte	0x7cf
+ 2143 0089 00       		.byte	0
+ 2144 008a 02       		.uleb128 0x2
+ 2145 008b 04       		.byte	0x4
+ 2146 008c 07       		.byte	0x7
+ 2147 008d 48010000 		.4byte	.LASF11
+ 2148 0091 07       		.uleb128 0x7
+ 2149 0092 6E000000 		.4byte	0x6e
+ 2150 0096 08       		.uleb128 0x8
+ 2151 0097 E7000000 		.4byte	.LASF12
+ 2152 009b 03       		.byte	0x3
+ 2153 009c 1F       		.byte	0x1f
+ 2154 009d A7000000 		.4byte	0xa7
+ 2155 00a1 05       		.uleb128 0x5
+ 2156 00a2 03       		.byte	0x3
+ 2157 00a3 00000000 		.4byte	cy_meta_configecc
+ 2158 00a7 07       		.uleb128 0x7
+ 2159 00a8 79000000 		.4byte	0x79
+ 2160 00ac 05       		.uleb128 0x5
+ 2161 00ad 91000000 		.4byte	0x91
+ 2162 00b1 BC000000 		.4byte	0xbc
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 39
+
+
+ 2163 00b5 09       		.uleb128 0x9
+ 2164 00b6 8A000000 		.4byte	0x8a
+ 2165 00ba 03       		.byte	0x3
+ 2166 00bb 00       		.byte	0
+ 2167 00bc 0A       		.uleb128 0xa
+ 2168 00bd D7000000 		.4byte	.LASF13
+ 2169 00c1 03       		.byte	0x3
+ 2170 00c2 2601     		.2byte	0x126
+ 2171 00c4 CE000000 		.4byte	0xce
+ 2172 00c8 05       		.uleb128 0x5
+ 2173 00c9 03       		.byte	0x3
+ 2174 00ca 00000000 		.4byte	cy_meta_custnvl
+ 2175 00ce 07       		.uleb128 0x7
+ 2176 00cf AC000000 		.4byte	0xac
+ 2177 00d3 0A       		.uleb128 0xa
+ 2178 00d4 3A010000 		.4byte	.LASF14
+ 2179 00d8 03       		.byte	0x3
+ 2180 00d9 3401     		.2byte	0x134
+ 2181 00db E5000000 		.4byte	0xe5
+ 2182 00df 05       		.uleb128 0x5
+ 2183 00e0 03       		.byte	0x3
+ 2184 00e1 00000000 		.4byte	cy_meta_wonvl
+ 2185 00e5 07       		.uleb128 0x7
+ 2186 00e6 AC000000 		.4byte	0xac
+ 2187 00ea 05       		.uleb128 0x5
+ 2188 00eb 91000000 		.4byte	0x91
+ 2189 00ef FA000000 		.4byte	0xfa
+ 2190 00f3 09       		.uleb128 0x9
+ 2191 00f4 8A000000 		.4byte	0x8a
+ 2192 00f8 FF       		.byte	0xff
+ 2193 00f9 00       		.byte	0
+ 2194 00fa 0A       		.uleb128 0xa
+ 2195 00fb 25010000 		.4byte	.LASF15
+ 2196 00ff 03       		.byte	0x3
+ 2197 0100 4201     		.2byte	0x142
+ 2198 0102 0C010000 		.4byte	0x10c
+ 2199 0106 05       		.uleb128 0x5
+ 2200 0107 03       		.byte	0x3
+ 2201 0108 00000000 		.4byte	cy_meta_flashprotect
+ 2202 010c 07       		.uleb128 0x7
+ 2203 010d EA000000 		.4byte	0xea
+ 2204 0111 05       		.uleb128 0x5
+ 2205 0112 91000000 		.4byte	0x91
+ 2206 0116 21010000 		.4byte	0x121
+ 2207 011a 09       		.uleb128 0x9
+ 2208 011b 8A000000 		.4byte	0x8a
+ 2209 011f 0B       		.byte	0xb
+ 2210 0120 00       		.byte	0
+ 2211 0121 0A       		.uleb128 0xa
+ 2212 0122 0A000000 		.4byte	.LASF16
+ 2213 0126 03       		.byte	0x3
+ 2214 0127 6F01     		.2byte	0x16f
+ 2215 0129 33010000 		.4byte	0x133
+ 2216 012d 05       		.uleb128 0x5
+ 2217 012e 03       		.byte	0x3
+ 2218 012f 00000000 		.4byte	cy_metadata
+ 2219 0133 07       		.uleb128 0x7
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 40
+
+
+ 2220 0134 11010000 		.4byte	0x111
+ 2221 0138 00       		.byte	0
+ 2222              		.section	.debug_abbrev,"",%progbits
+ 2223              	.Ldebug_abbrev0:
+ 2224 0000 01       		.uleb128 0x1
+ 2225 0001 11       		.uleb128 0x11
+ 2226 0002 01       		.byte	0x1
+ 2227 0003 25       		.uleb128 0x25
+ 2228 0004 0E       		.uleb128 0xe
+ 2229 0005 13       		.uleb128 0x13
+ 2230 0006 0B       		.uleb128 0xb
+ 2231 0007 03       		.uleb128 0x3
+ 2232 0008 0E       		.uleb128 0xe
+ 2233 0009 1B       		.uleb128 0x1b
+ 2234 000a 0E       		.uleb128 0xe
+ 2235 000b 10       		.uleb128 0x10
+ 2236 000c 17       		.uleb128 0x17
+ 2237 000d 00       		.byte	0
+ 2238 000e 00       		.byte	0
+ 2239 000f 02       		.uleb128 0x2
+ 2240 0010 24       		.uleb128 0x24
+ 2241 0011 00       		.byte	0
+ 2242 0012 0B       		.uleb128 0xb
+ 2243 0013 0B       		.uleb128 0xb
+ 2244 0014 3E       		.uleb128 0x3e
+ 2245 0015 0B       		.uleb128 0xb
+ 2246 0016 03       		.uleb128 0x3
+ 2247 0017 0E       		.uleb128 0xe
+ 2248 0018 00       		.byte	0
+ 2249 0019 00       		.byte	0
+ 2250 001a 03       		.uleb128 0x3
+ 2251 001b 16       		.uleb128 0x16
+ 2252 001c 00       		.byte	0
+ 2253 001d 03       		.uleb128 0x3
+ 2254 001e 0E       		.uleb128 0xe
+ 2255 001f 3A       		.uleb128 0x3a
+ 2256 0020 0B       		.uleb128 0xb
+ 2257 0021 3B       		.uleb128 0x3b
+ 2258 0022 0B       		.uleb128 0xb
+ 2259 0023 49       		.uleb128 0x49
+ 2260 0024 13       		.uleb128 0x13
+ 2261 0025 00       		.byte	0
+ 2262 0026 00       		.byte	0
+ 2263 0027 04       		.uleb128 0x4
+ 2264 0028 24       		.uleb128 0x24
+ 2265 0029 00       		.byte	0
+ 2266 002a 0B       		.uleb128 0xb
+ 2267 002b 0B       		.uleb128 0xb
+ 2268 002c 3E       		.uleb128 0x3e
+ 2269 002d 0B       		.uleb128 0xb
+ 2270 002e 03       		.uleb128 0x3
+ 2271 002f 08       		.uleb128 0x8
+ 2272 0030 00       		.byte	0
+ 2273 0031 00       		.byte	0
+ 2274 0032 05       		.uleb128 0x5
+ 2275 0033 01       		.uleb128 0x1
+ 2276 0034 01       		.byte	0x1
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 41
+
+
+ 2277 0035 49       		.uleb128 0x49
+ 2278 0036 13       		.uleb128 0x13
+ 2279 0037 01       		.uleb128 0x1
+ 2280 0038 13       		.uleb128 0x13
+ 2281 0039 00       		.byte	0
+ 2282 003a 00       		.byte	0
+ 2283 003b 06       		.uleb128 0x6
+ 2284 003c 21       		.uleb128 0x21
+ 2285 003d 00       		.byte	0
+ 2286 003e 49       		.uleb128 0x49
+ 2287 003f 13       		.uleb128 0x13
+ 2288 0040 2F       		.uleb128 0x2f
+ 2289 0041 05       		.uleb128 0x5
+ 2290 0042 00       		.byte	0
+ 2291 0043 00       		.byte	0
+ 2292 0044 07       		.uleb128 0x7
+ 2293 0045 26       		.uleb128 0x26
+ 2294 0046 00       		.byte	0
+ 2295 0047 49       		.uleb128 0x49
+ 2296 0048 13       		.uleb128 0x13
+ 2297 0049 00       		.byte	0
+ 2298 004a 00       		.byte	0
+ 2299 004b 08       		.uleb128 0x8
+ 2300 004c 34       		.uleb128 0x34
+ 2301 004d 00       		.byte	0
+ 2302 004e 03       		.uleb128 0x3
+ 2303 004f 0E       		.uleb128 0xe
+ 2304 0050 3A       		.uleb128 0x3a
+ 2305 0051 0B       		.uleb128 0xb
+ 2306 0052 3B       		.uleb128 0x3b
+ 2307 0053 0B       		.uleb128 0xb
+ 2308 0054 49       		.uleb128 0x49
+ 2309 0055 13       		.uleb128 0x13
+ 2310 0056 3F       		.uleb128 0x3f
+ 2311 0057 19       		.uleb128 0x19
+ 2312 0058 02       		.uleb128 0x2
+ 2313 0059 18       		.uleb128 0x18
+ 2314 005a 00       		.byte	0
+ 2315 005b 00       		.byte	0
+ 2316 005c 09       		.uleb128 0x9
+ 2317 005d 21       		.uleb128 0x21
+ 2318 005e 00       		.byte	0
+ 2319 005f 49       		.uleb128 0x49
+ 2320 0060 13       		.uleb128 0x13
+ 2321 0061 2F       		.uleb128 0x2f
+ 2322 0062 0B       		.uleb128 0xb
+ 2323 0063 00       		.byte	0
+ 2324 0064 00       		.byte	0
+ 2325 0065 0A       		.uleb128 0xa
+ 2326 0066 34       		.uleb128 0x34
+ 2327 0067 00       		.byte	0
+ 2328 0068 03       		.uleb128 0x3
+ 2329 0069 0E       		.uleb128 0xe
+ 2330 006a 3A       		.uleb128 0x3a
+ 2331 006b 0B       		.uleb128 0xb
+ 2332 006c 3B       		.uleb128 0x3b
+ 2333 006d 05       		.uleb128 0x5
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 42
+
+
+ 2334 006e 49       		.uleb128 0x49
+ 2335 006f 13       		.uleb128 0x13
+ 2336 0070 3F       		.uleb128 0x3f
+ 2337 0071 19       		.uleb128 0x19
+ 2338 0072 02       		.uleb128 0x2
+ 2339 0073 18       		.uleb128 0x18
+ 2340 0074 00       		.byte	0
+ 2341 0075 00       		.byte	0
+ 2342 0076 00       		.byte	0
+ 2343              		.section	.debug_aranges,"",%progbits
+ 2344 0000 14000000 		.4byte	0x14
+ 2345 0004 0200     		.2byte	0x2
+ 2346 0006 00000000 		.4byte	.Ldebug_info0
+ 2347 000a 04       		.byte	0x4
+ 2348 000b 00       		.byte	0
+ 2349 000c 0000     		.2byte	0
+ 2350 000e 0000     		.2byte	0
+ 2351 0010 00000000 		.4byte	0
+ 2352 0014 00000000 		.4byte	0
+ 2353              		.section	.debug_line,"",%progbits
+ 2354              	.Ldebug_line0:
+ 2355 0000 29010000 		.section	.debug_str,"MS",%progbits,1
+ 2355      02002301 
+ 2355      00000201 
+ 2355      FB0E0D00 
+ 2355      01010101 
+ 2356              	.LASF9:
+ 2357 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 2357      6E74385F 
+ 2357      7400
+ 2358              	.LASF16:
+ 2359 000a 63795F6D 		.ascii	"cy_metadata\000"
+ 2359      65746164 
+ 2359      61746100 
+ 2360              	.LASF1:
+ 2361 0016 756E7369 		.ascii	"unsigned char\000"
+ 2361      676E6564 
+ 2361      20636861 
+ 2361      7200
+ 2362              	.LASF17:
+ 2363 0024 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2363      43313120 
+ 2363      352E342E 
+ 2363      31203230 
+ 2363      31363036 
+ 2364 0057 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 2364      20726576 
+ 2364      6973696F 
+ 2364      6E203233 
+ 2364      37373135 
+ 2365 008a 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2365      66756E63 
+ 2365      74696F6E 
+ 2365      2D736563 
+ 2365      74696F6E 
+ 2366              	.LASF5:
+ 2367 00b2 6C6F6E67 		.ascii	"long unsigned int\000"
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 43
+
+
+ 2367      20756E73 
+ 2367      69676E65 
+ 2367      6420696E 
+ 2367      7400
+ 2368              	.LASF3:
+ 2369 00c4 73686F72 		.ascii	"short unsigned int\000"
+ 2369      7420756E 
+ 2369      7369676E 
+ 2369      65642069 
+ 2369      6E7400
+ 2370              	.LASF13:
+ 2371 00d7 63795F6D 		.ascii	"cy_meta_custnvl\000"
+ 2371      6574615F 
+ 2371      63757374 
+ 2371      6E766C00 
+ 2372              	.LASF12:
+ 2373 00e7 63795F6D 		.ascii	"cy_meta_configecc\000"
+ 2373      6574615F 
+ 2373      636F6E66 
+ 2373      69676563 
+ 2373      6300
+ 2374              	.LASF8:
+ 2375 00f9 756E7369 		.ascii	"unsigned int\000"
+ 2375      676E6564 
+ 2375      20696E74 
+ 2375      00
+ 2376              	.LASF7:
+ 2377 0106 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2377      206C6F6E 
+ 2377      6720756E 
+ 2377      7369676E 
+ 2377      65642069 
+ 2378              	.LASF10:
+ 2379 011d 75696E74 		.ascii	"uint8_t\000"
+ 2379      385F7400 
+ 2380              	.LASF15:
+ 2381 0125 63795F6D 		.ascii	"cy_meta_flashprotect\000"
+ 2381      6574615F 
+ 2381      666C6173 
+ 2381      6870726F 
+ 2381      74656374 
+ 2382              	.LASF14:
+ 2383 013a 63795F6D 		.ascii	"cy_meta_wonvl\000"
+ 2383      6574615F 
+ 2383      776F6E76 
+ 2383      6C00
+ 2384              	.LASF11:
+ 2385 0148 73697A65 		.ascii	"sizetype\000"
+ 2385      74797065 
+ 2385      00
+ 2386              	.LASF6:
+ 2387 0151 6C6F6E67 		.ascii	"long long int\000"
+ 2387      206C6F6E 
+ 2387      6720696E 
+ 2387      7400
+ 2388              	.LASF19:
+ 2389 015f 433A5C55 		.ascii	"C:\\Users\\Gustav\\source\\PRJ3-Group-13\\Code\\Sor"
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccrRNnxp.s 			page 44
+
+
+ 2389      73657273 
+ 2389      5C477573 
+ 2389      7461765C 
+ 2389      736F7572 
+ 2390 018c 74696E67 		.ascii	"ting Controller\\Sorting_Controller.cydsn\000"
+ 2390      20436F6E 
+ 2390      74726F6C 
+ 2390      6C65725C 
+ 2390      536F7274 
+ 2391              	.LASF2:
+ 2392 01b5 73686F72 		.ascii	"short int\000"
+ 2392      7420696E 
+ 2392      7400
+ 2393              	.LASF4:
+ 2394 01bf 6C6F6E67 		.ascii	"long int\000"
+ 2394      20696E74 
+ 2394      00
+ 2395              	.LASF0:
+ 2396 01c8 7369676E 		.ascii	"signed char\000"
+ 2396      65642063 
+ 2396      68617200 
+ 2397              	.LASF18:
+ 2398 01d4 47656E65 		.ascii	"Generated_Source\\PSoC5\\cymetadata.c\000"
+ 2398      72617465 
+ 2398      645F536F 
+ 2398      75726365 
+ 2398      5C50536F 
+ 2399              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

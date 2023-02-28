@@ -1,0 +1,79 @@
+@font-face {
+    font-family: 'Roboto', sans-serif;
+    src: local('/fonts/roboto-regular.ttf')
+}
+
+html * {
+    font-family: 'Roboto', sans-serif;
+}
+
+.title {
+    text-align: center;
+}
+
+.centeredDiv {
+    display: flex;
+    justify-content: center;
+    padding: 1mm;
+    padding-bottom: 1em;
+}
+
+.btn {
+    margin: 1mm;
+    width: 160.0px;
+    height: 43.0px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    text-align: center;
+    color: #FFFFFF;
+    background-color: #686868;
+    border: 0px #282828;
+    border-radius: 50px;
+    transition-duration: 0.4s;
+}
+
+.btn:hover {
+    background-color: #282828;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+
+.GridTable {
+    /*background-color: rgb(0, 255, 0);*/
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.GridTable table {
+    border-collapse: collapse;
+}
+
+.GridTable th {
+    border-bottom: 4px solid #333333;
+    padding: 3px 4px;
+    border-bottom-style: groove;
+    font-weight: bold;
+    text-align: center;
+}
+
+.GridTable tr,
+.GridTable td {
+    width: 2.3em;
+    text-align: center;
+}
+
+.ColorMin {
+    display: inline-block;
+}
+
+.ColorMax {
+    display: inline-block
+}
+
+.ColorMaxTitle p {
+    display: inline;
+}

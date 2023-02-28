@@ -1,0 +1,5448 @@
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.freq_INT,"ax",%progbits
+  20              		.align	2
+  21              		.global	freq_INT
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	freq_INT, %function
+  25              	freq_INT:
+  26              	.LFB64:
+  27              		.file 1 "Color_Sensor.h"
+   1:Color_Sensor.h **** // Parts of this design was inspired by a solution from diluc_3555836 
+   2:Color_Sensor.h **** // Last visited 2020/12/02
+   3:Color_Sensor.h **** // Original post: https://community.cypress.com/thread/43433?start=0
+   4:Color_Sensor.h **** 
+   5:Color_Sensor.h **** #include "project.h"
+   6:Color_Sensor.h **** #include <stdio.h>
+   7:Color_Sensor.h **** 
+   8:Color_Sensor.h **** uint16 freq = 0;
+   9:Color_Sensor.h **** uint8 freqReady = 0;
+  10:Color_Sensor.h **** char buf[256];
+  11:Color_Sensor.h **** 
+  12:Color_Sensor.h **** struct ColorFreq{
+  13:Color_Sensor.h ****     uint16 red;
+  14:Color_Sensor.h ****     uint16 green;
+  15:Color_Sensor.h ****     uint16 blue;
+  16:Color_Sensor.h **** }sensorColor;
+  17:Color_Sensor.h **** 
+  18:Color_Sensor.h **** struct Color{
+  19:Color_Sensor.h ****     uint8 red;
+  20:Color_Sensor.h ****     uint8 green;
+  21:Color_Sensor.h ****     uint8 blue;
+  22:Color_Sensor.h **** };
+  23:Color_Sensor.h **** 
+  24:Color_Sensor.h **** typedef enum
+  25:Color_Sensor.h **** {
+  26:Color_Sensor.h ****     RED = 0b00,
+  27:Color_Sensor.h ****     BLUE = 0b01,
+  28:Color_Sensor.h ****     CLEAR = 0b10,
+  29:Color_Sensor.h ****     GREEN = 0b11
+  30:Color_Sensor.h **** } colorConst;
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 2
+
+
+  31:Color_Sensor.h **** 
+  32:Color_Sensor.h **** typedef enum
+  33:Color_Sensor.h **** {
+  34:Color_Sensor.h ****     POWER_OFF = 0b00,
+  35:Color_Sensor.h ****     TWO = 0b01,
+  36:Color_Sensor.h ****     TWENTY = 0b10,
+  37:Color_Sensor.h ****     ONEHUNDRED = 0b11
+  38:Color_Sensor.h **** } freqScale;
+  39:Color_Sensor.h **** 
+  40:Color_Sensor.h **** CY_ISR_PROTO(freq_INT);
+  41:Color_Sensor.h **** 
+  42:Color_Sensor.h **** CY_ISR(freq_INT)
+  43:Color_Sensor.h **** {
+  28              		.loc 1 43 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  44:Color_Sensor.h ****     Color_Counter_Stop();
+  36              		.loc 1 44 0
+  37 0002 FFF7FEFF 		bl	Color_Counter_Stop
+  38              	.LVL0:
+  45:Color_Sensor.h ****     freq = Color_Counter_ReadCounter();
+  39              		.loc 1 45 0
+  40 0006 FFF7FEFF 		bl	Color_Counter_ReadCounter
+  41              	.LVL1:
+  42 000a 054C     		ldr	r4, .L3
+  43 000c 2080     		strh	r0, [r4]	@ movhi
+  46:Color_Sensor.h ****     isr_Color_ClearPending();
+  44              		.loc 1 46 0
+  45 000e FFF7FEFF 		bl	isr_Color_ClearPending
+  46              	.LVL2:
+  47:Color_Sensor.h ****     Color_Reset_Write(1);
+  47              		.loc 1 47 0
+  48 0012 0120     		movs	r0, #1
+  49 0014 FFF7FEFF 		bl	Color_Reset_Write
+  50              	.LVL3:
+  48:Color_Sensor.h ****     freqReady = 1;
+  51              		.loc 1 48 0
+  52 0018 0123     		movs	r3, #1
+  53 001a A370     		strb	r3, [r4, #2]
+  54 001c 10BD     		pop	{r4, pc}
+  55              	.L4:
+  56 001e 00BF     		.align	2
+  57              	.L3:
+  58 0020 00000000 		.word	.LANCHOR0
+  59              		.cfi_endproc
+  60              	.LFE64:
+  61              		.size	freq_INT, .-freq_INT
+  62              		.section	.text.Color_Sensor_Start,"ax",%progbits
+  63              		.align	2
+  64              		.global	Color_Sensor_Start
+  65              		.thumb
+  66              		.thumb_func
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 3
+
+
+  67              		.type	Color_Sensor_Start, %function
+  68              	Color_Sensor_Start:
+  69              	.LFB65:
+  49:Color_Sensor.h **** }
+  50:Color_Sensor.h **** 
+  51:Color_Sensor.h **** // ***************************
+  52:Color_Sensor.h **** // * Initiat the ISR and set settings pins
+  53:Color_Sensor.h **** //      of the color sensor
+  54:Color_Sensor.h **** // ****************************
+  55:Color_Sensor.h **** void Color_Sensor_Start()
+  56:Color_Sensor.h **** {
+  70              		.loc 1 56 0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74 0000 08B5     		push	{r3, lr}
+  75              		.cfi_def_cfa_offset 8
+  76              		.cfi_offset 3, -8
+  77              		.cfi_offset 14, -4
+  57:Color_Sensor.h ****     isr_Color_StartEx(freq_INT);
+  78              		.loc 1 57 0
+  79 0002 0348     		ldr	r0, .L7
+  80 0004 FFF7FEFF 		bl	isr_Color_StartEx
+  81              	.LVL4:
+  58:Color_Sensor.h ****     Color_Pin_Freq_Select_Write(TWENTY);
+  82              		.loc 1 58 0
+  83 0008 0220     		movs	r0, #2
+  84 000a FFF7FEFF 		bl	Color_Pin_Freq_Select_Write
+  85              	.LVL5:
+  86 000e 08BD     		pop	{r3, pc}
+  87              	.L8:
+  88              		.align	2
+  89              	.L7:
+  90 0010 00000000 		.word	freq_INT
+  91              		.cfi_endproc
+  92              	.LFE65:
+  93              		.size	Color_Sensor_Start, .-Color_Sensor_Start
+  94              		.section	.text.Color_Sensor_Read_Freq,"ax",%progbits
+  95              		.align	2
+  96              		.global	Color_Sensor_Read_Freq
+  97              		.thumb
+  98              		.thumb_func
+  99              		.type	Color_Sensor_Read_Freq, %function
+ 100              	Color_Sensor_Read_Freq:
+ 101              	.LFB66:
+  59:Color_Sensor.h **** }
+  60:Color_Sensor.h **** 
+  61:Color_Sensor.h **** // **********************
+  62:Color_Sensor.h **** // * Returns the current freq of
+  63:Color_Sensor.h **** //      the chosen color sensor
+  64:Color_Sensor.h **** // **********************
+  65:Color_Sensor.h **** uint16 Color_Sensor_Read_Freq()
+  66:Color_Sensor.h **** {
+ 102              		.loc 1 66 0
+ 103              		.cfi_startproc
+ 104              		@ args = 0, pretend = 0, frame = 0
+ 105              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 4
+
+
+ 106 0000 08B5     		push	{r3, lr}
+ 107              		.cfi_def_cfa_offset 8
+ 108              		.cfi_offset 3, -8
+ 109              		.cfi_offset 14, -4
+  67:Color_Sensor.h ****     // Reset sensor
+  68:Color_Sensor.h ****     Color_Reset_Write(1);
+ 110              		.loc 1 68 0
+ 111 0002 0120     		movs	r0, #1
+ 112 0004 FFF7FEFF 		bl	Color_Reset_Write
+ 113              	.LVL6:
+  69:Color_Sensor.h ****     CyDelay(1);
+ 114              		.loc 1 69 0
+ 115 0008 0120     		movs	r0, #1
+ 116 000a FFF7FEFF 		bl	CyDelay
+ 117              	.LVL7:
+  70:Color_Sensor.h ****     Color_Reset_Write(0);
+ 118              		.loc 1 70 0
+ 119 000e 0020     		movs	r0, #0
+ 120 0010 FFF7FEFF 		bl	Color_Reset_Write
+ 121              	.LVL8:
+  71:Color_Sensor.h ****     
+  72:Color_Sensor.h ****     Color_Pin_LED_Write(1);
+ 122              		.loc 1 72 0
+ 123 0014 0120     		movs	r0, #1
+ 124 0016 FFF7FEFF 		bl	Color_Pin_LED_Write
+ 125              	.LVL9:
+  73:Color_Sensor.h ****     Color_Counter_Start();
+ 126              		.loc 1 73 0
+ 127 001a FFF7FEFF 		bl	Color_Counter_Start
+ 128              	.LVL10:
+  74:Color_Sensor.h ****     Color_PWM_Start();
+ 129              		.loc 1 74 0
+ 130 001e FFF7FEFF 		bl	Color_PWM_Start
+ 131              	.LVL11:
+ 132              	.L10:
+  75:Color_Sensor.h ****     
+  76:Color_Sensor.h ****     while(freqReady != 1){}
+ 133              		.loc 1 76 0 discriminator 1
+ 134 0022 064B     		ldr	r3, .L12
+ 135 0024 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 136 0026 012B     		cmp	r3, #1
+ 137 0028 FBD1     		bne	.L10
+  77:Color_Sensor.h ****     Color_Pin_LED_Write(0);
+ 138              		.loc 1 77 0
+ 139 002a 0020     		movs	r0, #0
+ 140 002c FFF7FEFF 		bl	Color_Pin_LED_Write
+ 141              	.LVL12:
+  78:Color_Sensor.h ****     freqReady = 0;
+ 142              		.loc 1 78 0
+ 143 0030 024B     		ldr	r3, .L12
+ 144 0032 0022     		movs	r2, #0
+ 145 0034 9A70     		strb	r2, [r3, #2]
+  79:Color_Sensor.h ****     return(freq);
+  80:Color_Sensor.h **** }
+ 146              		.loc 1 80 0
+ 147 0036 1888     		ldrh	r0, [r3]
+ 148 0038 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 5
+
+
+ 149              	.L13:
+ 150 003a 00BF     		.align	2
+ 151              	.L12:
+ 152 003c 00000000 		.word	.LANCHOR0
+ 153              		.cfi_endproc
+ 154              	.LFE66:
+ 155              		.size	Color_Sensor_Read_Freq, .-Color_Sensor_Read_Freq
+ 156              		.section	.text.Color_Sensor_Read_All_Freq,"ax",%progbits
+ 157              		.align	2
+ 158              		.global	Color_Sensor_Read_All_Freq
+ 159              		.thumb
+ 160              		.thumb_func
+ 161              		.type	Color_Sensor_Read_All_Freq, %function
+ 162              	Color_Sensor_Read_All_Freq:
+ 163              	.LFB67:
+  81:Color_Sensor.h **** 
+  82:Color_Sensor.h **** // *****************************
+  83:Color_Sensor.h **** // * Makes cf into the current color frequency
+  84:Color_Sensor.h **** //      of diodes
+  85:Color_Sensor.h **** // *******************************
+  86:Color_Sensor.h **** void Color_Sensor_Read_All_Freq(struct ColorFreq* cf)
+  87:Color_Sensor.h **** {
+ 164              		.loc 1 87 0
+ 165              		.cfi_startproc
+ 166              		@ args = 0, pretend = 0, frame = 0
+ 167              		@ frame_needed = 0, uses_anonymous_args = 0
+ 168              	.LVL13:
+ 169 0000 10B5     		push	{r4, lr}
+ 170              		.cfi_def_cfa_offset 8
+ 171              		.cfi_offset 4, -8
+ 172              		.cfi_offset 14, -4
+ 173 0002 0446     		mov	r4, r0
+  88:Color_Sensor.h ****     Color_Pin_Color_Select_Write(RED);
+ 174              		.loc 1 88 0
+ 175 0004 0020     		movs	r0, #0
+ 176              	.LVL14:
+ 177 0006 FFF7FEFF 		bl	Color_Pin_Color_Select_Write
+ 178              	.LVL15:
+  89:Color_Sensor.h ****     cf->red = Color_Sensor_Read_Freq();
+ 179              		.loc 1 89 0
+ 180 000a FFF7FEFF 		bl	Color_Sensor_Read_Freq
+ 181              	.LVL16:
+ 182 000e 2080     		strh	r0, [r4]	@ movhi
+  90:Color_Sensor.h ****     
+  91:Color_Sensor.h ****     Color_Pin_Color_Select_Write(GREEN);
+ 183              		.loc 1 91 0
+ 184 0010 0320     		movs	r0, #3
+ 185 0012 FFF7FEFF 		bl	Color_Pin_Color_Select_Write
+ 186              	.LVL17:
+  92:Color_Sensor.h ****     cf->green = Color_Sensor_Read_Freq();
+ 187              		.loc 1 92 0
+ 188 0016 FFF7FEFF 		bl	Color_Sensor_Read_Freq
+ 189              	.LVL18:
+ 190 001a 6080     		strh	r0, [r4, #2]	@ movhi
+  93:Color_Sensor.h ****     
+  94:Color_Sensor.h ****     Color_Pin_Color_Select_Write(BLUE);
+ 191              		.loc 1 94 0
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 6
+
+
+ 192 001c 0120     		movs	r0, #1
+ 193 001e FFF7FEFF 		bl	Color_Pin_Color_Select_Write
+ 194              	.LVL19:
+  95:Color_Sensor.h ****     cf->blue = Color_Sensor_Read_Freq();
+ 195              		.loc 1 95 0
+ 196 0022 FFF7FEFF 		bl	Color_Sensor_Read_Freq
+ 197              	.LVL20:
+ 198 0026 A080     		strh	r0, [r4, #4]	@ movhi
+ 199 0028 10BD     		pop	{r4, pc}
+ 200              		.cfi_endproc
+ 201              	.LFE67:
+ 202              		.size	Color_Sensor_Read_All_Freq, .-Color_Sensor_Read_All_Freq
+ 203 002a 00BF     		.section	.text.Color_Sensor_Read_Color,"ax",%progbits
+ 204              		.align	2
+ 205              		.global	Color_Sensor_Read_Color
+ 206              		.thumb
+ 207              		.thumb_func
+ 208              		.type	Color_Sensor_Read_Color, %function
+ 209              	Color_Sensor_Read_Color:
+ 210              	.LFB68:
+  96:Color_Sensor.h **** }
+  97:Color_Sensor.h **** 
+  98:Color_Sensor.h **** // *************************
+  99:Color_Sensor.h **** // * Makes c into the primary color 
+ 100:Color_Sensor.h **** //      from the box
+ 101:Color_Sensor.h **** // TODO: Be able to recognize more colors
+ 102:Color_Sensor.h **** // *************************
+ 103:Color_Sensor.h **** void Color_Sensor_Read_Color(struct Color* c)
+ 104:Color_Sensor.h **** {
+ 211              		.loc 1 104 0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 8
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215              	.LVL21:
+ 216 0000 10B5     		push	{r4, lr}
+ 217              		.cfi_def_cfa_offset 8
+ 218              		.cfi_offset 4, -8
+ 219              		.cfi_offset 14, -4
+ 220 0002 82B0     		sub	sp, sp, #8
+ 221              		.cfi_def_cfa_offset 16
+ 222 0004 0446     		mov	r4, r0
+ 105:Color_Sensor.h ****     struct ColorFreq cf;
+ 106:Color_Sensor.h ****     
+ 107:Color_Sensor.h ****     Color_Sensor_Read_All_Freq(&cf);
+ 223              		.loc 1 107 0
+ 224 0006 6846     		mov	r0, sp
+ 225              	.LVL22:
+ 226 0008 FFF7FEFF 		bl	Color_Sensor_Read_All_Freq
+ 227              	.LVL23:
+ 108:Color_Sensor.h ****     // Decide primary color
+ 109:Color_Sensor.h ****     if(cf.blue > cf.green && cf.blue > cf.red)
+ 228              		.loc 1 109 0
+ 229 000c BDF80430 		ldrh	r3, [sp, #4]
+ 230 0010 BDF80220 		ldrh	r2, [sp, #2]
+ 231 0014 9342     		cmp	r3, r2
+ 232 0016 09D9     		bls	.L17
+ 233              		.loc 1 109 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 7
+
+
+ 234 0018 BDF80010 		ldrh	r1, [sp]
+ 235 001c 8B42     		cmp	r3, r1
+ 236 001e 05D9     		bls	.L17
+ 110:Color_Sensor.h ****     {
+ 111:Color_Sensor.h ****         c->red = 0; 
+ 237              		.loc 1 111 0 is_stmt 1
+ 238 0020 0023     		movs	r3, #0
+ 239 0022 2370     		strb	r3, [r4]
+ 112:Color_Sensor.h ****         c->green = 0;
+ 240              		.loc 1 112 0
+ 241 0024 6370     		strb	r3, [r4, #1]
+ 113:Color_Sensor.h ****         c->blue = 255;
+ 242              		.loc 1 113 0
+ 243 0026 FF23     		movs	r3, #255
+ 244 0028 A370     		strb	r3, [r4, #2]
+ 245 002a 16E0     		b	.L16
+ 246              	.L17:
+ 114:Color_Sensor.h ****     }
+ 115:Color_Sensor.h ****     else if(cf.green> cf.blue && cf.green > cf.red)
+ 247              		.loc 1 115 0
+ 248 002c 9342     		cmp	r3, r2
+ 249 002e 09D2     		bcs	.L19
+ 250              		.loc 1 115 0 is_stmt 0 discriminator 1
+ 251 0030 BDF80010 		ldrh	r1, [sp]
+ 252 0034 8A42     		cmp	r2, r1
+ 253 0036 05D9     		bls	.L19
+ 116:Color_Sensor.h ****     {
+ 117:Color_Sensor.h ****         c->red = 0; 
+ 254              		.loc 1 117 0 is_stmt 1
+ 255 0038 0023     		movs	r3, #0
+ 256 003a 2370     		strb	r3, [r4]
+ 118:Color_Sensor.h ****         c->green = 255;
+ 257              		.loc 1 118 0
+ 258 003c FF22     		movs	r2, #255
+ 259 003e 6270     		strb	r2, [r4, #1]
+ 119:Color_Sensor.h ****         c->blue = 0;
+ 260              		.loc 1 119 0
+ 261 0040 A370     		strb	r3, [r4, #2]
+ 262 0042 0AE0     		b	.L16
+ 263              	.L19:
+ 120:Color_Sensor.h ****     }
+ 121:Color_Sensor.h ****     else if(cf.red> cf.blue && cf.red > cf.green)
+ 264              		.loc 1 121 0
+ 265 0044 BDF80010 		ldrh	r1, [sp]
+ 266 0048 8B42     		cmp	r3, r1
+ 267 004a 06D2     		bcs	.L16
+ 268              		.loc 1 121 0 is_stmt 0 discriminator 1
+ 269 004c 8A42     		cmp	r2, r1
+ 270 004e 04D2     		bcs	.L16
+ 122:Color_Sensor.h ****     {
+ 123:Color_Sensor.h ****         c->red = 255; 
+ 271              		.loc 1 123 0 is_stmt 1
+ 272 0050 FF23     		movs	r3, #255
+ 273 0052 2370     		strb	r3, [r4]
+ 124:Color_Sensor.h ****         c->green = 0;
+ 274              		.loc 1 124 0
+ 275 0054 0023     		movs	r3, #0
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 8
+
+
+ 276 0056 6370     		strb	r3, [r4, #1]
+ 125:Color_Sensor.h ****         c->blue = 0;
+ 277              		.loc 1 125 0
+ 278 0058 A370     		strb	r3, [r4, #2]
+ 279              	.L16:
+ 126:Color_Sensor.h ****     }
+ 127:Color_Sensor.h **** }
+ 280              		.loc 1 127 0
+ 281 005a 02B0     		add	sp, sp, #8
+ 282              		.cfi_def_cfa_offset 8
+ 283              		@ sp needed
+ 284 005c 10BD     		pop	{r4, pc}
+ 285              		.cfi_endproc
+ 286              	.LFE68:
+ 287              		.size	Color_Sensor_Read_Color, .-Color_Sensor_Read_Color
+ 288              		.section	.text.Weight_Sensor_Start,"ax",%progbits
+ 289              		.align	2
+ 290              		.global	Weight_Sensor_Start
+ 291              		.thumb
+ 292              		.thumb_func
+ 293              		.type	Weight_Sensor_Start, %function
+ 294              	Weight_Sensor_Start:
+ 295              	.LFB69:
+ 296              		.file 2 "Weight_Sensor.h"
+   1:Weight_Sensor.h **** /* ========================================
+   2:Weight_Sensor.h ****  *
+   3:Weight_Sensor.h ****  * Copyright YOUR COMPANY, THE YEAR
+   4:Weight_Sensor.h ****  * All Rights Reserved
+   5:Weight_Sensor.h ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:Weight_Sensor.h ****  *
+   7:Weight_Sensor.h ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:Weight_Sensor.h ****  * WHICH IS THE PROPERTY OF your company.
+   9:Weight_Sensor.h ****  *
+  10:Weight_Sensor.h ****  * ========================================
+  11:Weight_Sensor.h **** */
+  12:Weight_Sensor.h **** 
+  13:Weight_Sensor.h **** #include "project.h"
+  14:Weight_Sensor.h **** #include <stdio.h>
+  15:Weight_Sensor.h **** 
+  16:Weight_Sensor.h **** const uint16 linearity; // TODO find linearity 
+  17:Weight_Sensor.h **** const float offset_err = 0;
+  18:Weight_Sensor.h **** const float gram_per_adc = 1;
+  19:Weight_Sensor.h **** 
+  20:Weight_Sensor.h **** // ********************
+  21:Weight_Sensor.h **** // * Initiates the ADC for the 
+  22:Weight_Sensor.h **** //      weight cell
+  23:Weight_Sensor.h **** // ********************
+  24:Weight_Sensor.h **** void Weight_Sensor_Start()
+  25:Weight_Sensor.h **** {
+ 297              		.loc 2 25 0
+ 298              		.cfi_startproc
+ 299              		@ args = 0, pretend = 0, frame = 0
+ 300              		@ frame_needed = 0, uses_anonymous_args = 0
+ 301 0000 08B5     		push	{r3, lr}
+ 302              		.cfi_def_cfa_offset 8
+ 303              		.cfi_offset 3, -8
+ 304              		.cfi_offset 14, -4
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 9
+
+
+  26:Weight_Sensor.h ****     Weight_ADC_Start();
+ 305              		.loc 2 26 0
+ 306 0002 FFF7FEFF 		bl	Weight_ADC_Start
+ 307              	.LVL24:
+  27:Weight_Sensor.h ****     Weight_ADC_StartConvert();
+ 308              		.loc 2 27 0
+ 309 0006 FFF7FEFF 		bl	Weight_ADC_StartConvert
+ 310              	.LVL25:
+ 311 000a 08BD     		pop	{r3, pc}
+ 312              		.cfi_endproc
+ 313              	.LFE69:
+ 314              		.size	Weight_Sensor_Start, .-Weight_Sensor_Start
+ 315              		.global	__aeabi_i2f
+ 316              		.global	__aeabi_fcmpge
+ 317              		.global	__aeabi_fsub
+ 318              		.section	.text.Weight_Sensor_ADC_To_Grams,"ax",%progbits
+ 319              		.align	2
+ 320              		.global	Weight_Sensor_ADC_To_Grams
+ 321              		.thumb
+ 322              		.thumb_func
+ 323              		.type	Weight_Sensor_ADC_To_Grams, %function
+ 324              	Weight_Sensor_ADC_To_Grams:
+ 325              	.LFB70:
+  28:Weight_Sensor.h **** }
+  29:Weight_Sensor.h **** 
+  30:Weight_Sensor.h **** // ******************
+  31:Weight_Sensor.h **** // * Utility function
+  32:Weight_Sensor.h **** // * Converts adc value to weight in grams
+  33:Weight_Sensor.h **** // ******************
+  34:Weight_Sensor.h **** float Weight_Sensor_ADC_To_Grams(uint16_t adc)
+  35:Weight_Sensor.h **** {
+ 326              		.loc 2 35 0
+ 327              		.cfi_startproc
+ 328              		@ args = 0, pretend = 0, frame = 0
+ 329              		@ frame_needed = 0, uses_anonymous_args = 0
+ 330              	.LVL26:
+ 331 0000 10B5     		push	{r4, lr}
+ 332              		.cfi_def_cfa_offset 8
+ 333              		.cfi_offset 4, -8
+ 334              		.cfi_offset 14, -4
+  36:Weight_Sensor.h ****     //Remember this should be calibrated!!!!!!!
+  37:Weight_Sensor.h ****     float corrected_output = (adc - offset_err)/gram_per_adc;
+ 335              		.loc 2 37 0
+ 336 0002 FFF7FEFF 		bl	__aeabi_i2f
+ 337              	.LVL27:
+ 338 0006 0446     		mov	r4, r0
+ 339              	.LVL28:
+  38:Weight_Sensor.h ****     corrected_output = (corrected_output >= 0) ? corrected_output : 0;
+ 340              		.loc 2 38 0
+ 341 0008 0021     		movs	r1, #0
+ 342 000a FFF7FEFF 		bl	__aeabi_fcmpge
+ 343              	.LVL29:
+ 344 000e 00B9     		cbnz	r0, .L24
+ 345 0010 0024     		movs	r4, #0
+ 346              	.LVL30:
+ 347              	.L24:
+  39:Weight_Sensor.h ****     return (corrected_output) - 3;
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 10
+
+
+ 348              		.loc 2 39 0 discriminator 4
+ 349 0012 0249     		ldr	r1, .L26
+ 350 0014 2046     		mov	r0, r4
+ 351 0016 FFF7FEFF 		bl	__aeabi_fsub
+ 352              	.LVL31:
+  40:Weight_Sensor.h **** }
+ 353              		.loc 2 40 0 discriminator 4
+ 354 001a 10BD     		pop	{r4, pc}
+ 355              	.LVL32:
+ 356              	.L27:
+ 357              		.align	2
+ 358              	.L26:
+ 359 001c 00004040 		.word	1077936128
+ 360              		.cfi_endproc
+ 361              	.LFE70:
+ 362              		.size	Weight_Sensor_ADC_To_Grams, .-Weight_Sensor_ADC_To_Grams
+ 363              		.global	__aeabi_f2uiz
+ 364              		.section	.text.Weight_Sensor_Read_Grams,"ax",%progbits
+ 365              		.align	2
+ 366              		.global	Weight_Sensor_Read_Grams
+ 367              		.thumb
+ 368              		.thumb_func
+ 369              		.type	Weight_Sensor_Read_Grams, %function
+ 370              	Weight_Sensor_Read_Grams:
+ 371              	.LFB71:
+  41:Weight_Sensor.h **** 
+  42:Weight_Sensor.h **** // ******************
+  43:Weight_Sensor.h **** // * Returns the weight currently 
+  44:Weight_Sensor.h **** //      on the loadcell in grams
+  45:Weight_Sensor.h **** // ******************
+  46:Weight_Sensor.h **** uint16 Weight_Sensor_Read_Grams()
+  47:Weight_Sensor.h **** {
+ 372              		.loc 2 47 0
+ 373              		.cfi_startproc
+ 374              		@ args = 0, pretend = 0, frame = 0
+ 375              		@ frame_needed = 0, uses_anonymous_args = 0
+ 376 0000 08B5     		push	{r3, lr}
+ 377              		.cfi_def_cfa_offset 8
+ 378              		.cfi_offset 3, -8
+ 379              		.cfi_offset 14, -4
+ 380              	.L29:
+  48:Weight_Sensor.h ****     uint16_t result = 0;
+  49:Weight_Sensor.h ****     
+  50:Weight_Sensor.h ****     while(!Weight_ADC_IsEndConversion(Weight_ADC_WAIT_FOR_RESULT)) {}
+ 381              		.loc 2 50 0 discriminator 1
+ 382 0002 0020     		movs	r0, #0
+ 383 0004 FFF7FEFF 		bl	Weight_ADC_IsEndConversion
+ 384              	.LVL33:
+ 385 0008 0028     		cmp	r0, #0
+ 386 000a FAD0     		beq	.L29
+  51:Weight_Sensor.h ****     
+  52:Weight_Sensor.h ****     result = Weight_ADC_GetResult16();
+ 387              		.loc 2 52 0
+ 388 000c FFF7FEFF 		bl	Weight_ADC_GetResult16
+ 389              	.LVL34:
+  53:Weight_Sensor.h ****     
+  54:Weight_Sensor.h ****     return Weight_Sensor_ADC_To_Grams(result);
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 11
+
+
+ 390              		.loc 2 54 0
+ 391 0010 80B2     		uxth	r0, r0
+ 392 0012 FFF7FEFF 		bl	Weight_Sensor_ADC_To_Grams
+ 393              	.LVL35:
+ 394 0016 FFF7FEFF 		bl	__aeabi_f2uiz
+ 395              	.LVL36:
+  55:Weight_Sensor.h **** }
+ 396              		.loc 2 55 0
+ 397 001a 80B2     		uxth	r0, r0
+ 398 001c 08BD     		pop	{r3, pc}
+ 399              		.cfi_endproc
+ 400              	.LFE71:
+ 401              		.size	Weight_Sensor_Read_Grams, .-Weight_Sensor_Read_Grams
+ 402              		.global	__aeabi_fadd
+ 403              		.global	__aeabi_fdiv
+ 404 001e 00BF     		.section	.text.Weight_Sensor_Read,"ax",%progbits
+ 405              		.align	2
+ 406              		.global	Weight_Sensor_Read
+ 407              		.thumb
+ 408              		.thumb_func
+ 409              		.type	Weight_Sensor_Read, %function
+ 410              	Weight_Sensor_Read:
+ 411              	.LFB72:
+  56:Weight_Sensor.h **** 
+  57:Weight_Sensor.h **** // ******************
+  58:Weight_Sensor.h **** // * Returns the final weight in grams
+  59:Weight_Sensor.h **** // * Takes the average of 10 readings from the scale
+  60:Weight_Sensor.h **** // ******************
+  61:Weight_Sensor.h **** uint16 Weight_Sensor_Read()
+  62:Weight_Sensor.h **** {
+ 412              		.loc 2 62 0
+ 413              		.cfi_startproc
+ 414              		@ args = 0, pretend = 0, frame = 0
+ 415              		@ frame_needed = 0, uses_anonymous_args = 0
+ 416 0000 38B5     		push	{r3, r4, r5, lr}
+ 417              		.cfi_def_cfa_offset 16
+ 418              		.cfi_offset 3, -16
+ 419              		.cfi_offset 4, -12
+ 420              		.cfi_offset 5, -8
+ 421              		.cfi_offset 14, -4
+ 422              	.LVL37:
+ 423              	.LBB2:
+  63:Weight_Sensor.h ****     float sum = 0;
+  64:Weight_Sensor.h ****     for(int i = 0; i < 10; i++)
+ 424              		.loc 2 64 0
+ 425 0002 0024     		movs	r4, #0
+ 426              	.LBE2:
+  63:Weight_Sensor.h ****     float sum = 0;
+ 427              		.loc 2 63 0
+ 428 0004 0025     		movs	r5, #0
+ 429              	.LBB3:
+ 430              		.loc 2 64 0
+ 431 0006 09E0     		b	.L32
+ 432              	.LVL38:
+ 433              	.L33:
+  65:Weight_Sensor.h ****         sum += Weight_Sensor_Read_Grams();
+ 434              		.loc 2 65 0 discriminator 3
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 12
+
+
+ 435 0008 FFF7FEFF 		bl	Weight_Sensor_Read_Grams
+ 436              	.LVL39:
+ 437 000c FFF7FEFF 		bl	__aeabi_i2f
+ 438              	.LVL40:
+ 439 0010 0146     		mov	r1, r0
+ 440 0012 2846     		mov	r0, r5
+ 441 0014 FFF7FEFF 		bl	__aeabi_fadd
+ 442              	.LVL41:
+ 443 0018 0546     		mov	r5, r0
+ 444              	.LVL42:
+  64:Weight_Sensor.h ****         sum += Weight_Sensor_Read_Grams();
+ 445              		.loc 2 64 0 discriminator 3
+ 446 001a 0134     		adds	r4, r4, #1
+ 447              	.LVL43:
+ 448              	.L32:
+  64:Weight_Sensor.h ****         sum += Weight_Sensor_Read_Grams();
+ 449              		.loc 2 64 0 is_stmt 0 discriminator 1
+ 450 001c 092C     		cmp	r4, #9
+ 451 001e F3DD     		ble	.L33
+ 452              	.LBE3:
+  66:Weight_Sensor.h ****         
+  67:Weight_Sensor.h ****     uint16 result = sum/10;
+ 453              		.loc 2 67 0 is_stmt 1
+ 454 0020 0349     		ldr	r1, .L35
+ 455 0022 2846     		mov	r0, r5
+ 456 0024 FFF7FEFF 		bl	__aeabi_fdiv
+ 457              	.LVL44:
+ 458 0028 FFF7FEFF 		bl	__aeabi_f2uiz
+ 459              	.LVL45:
+  68:Weight_Sensor.h ****         
+  69:Weight_Sensor.h ****     return result;
+  70:Weight_Sensor.h **** }...
+ 460              		.loc 2 70 0
+ 461 002c 80B2     		uxth	r0, r0
+ 462 002e 38BD     		pop	{r3, r4, r5, pc}
+ 463              	.LVL46:
+ 464              	.L36:
+ 465              		.align	2
+ 466              	.L35:
+ 467 0030 00002041 		.word	1092616192
+ 468              		.cfi_endproc
+ 469              	.LFE72:
+ 470              		.size	Weight_Sensor_Read, .-Weight_Sensor_Read
+ 471              		.section	.text.Actuator_Extend,"ax",%progbits
+ 472              		.align	2
+ 473              		.global	Actuator_Extend
+ 474              		.thumb
+ 475              		.thumb_func
+ 476              		.type	Actuator_Extend, %function
+ 477              	Actuator_Extend:
+ 478              	.LFB73:
+ 479              		.file 3 "Actuator.h"
+   1:Actuator.h    **** /* ========================================
+   2:Actuator.h    ****  *
+   3:Actuator.h    ****  * Copyright YOUR COMPANY, THE YEAR
+   4:Actuator.h    ****  * All Rights Reserved
+   5:Actuator.h    ****  * UNPUBLISHED, LICENSED SOFTWARE.
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 13
+
+
+   6:Actuator.h    ****  *
+   7:Actuator.h    ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:Actuator.h    ****  * WHICH IS THE PROPERTY OF your company.
+   9:Actuator.h    ****  *
+  10:Actuator.h    ****  * ========================================
+  11:Actuator.h    **** */
+  12:Actuator.h    **** 
+  13:Actuator.h    **** #include "project.h"
+  14:Actuator.h    **** 
+  15:Actuator.h    **** enum Actuator_dir{
+  16:Actuator.h    ****     IN1 = 1,
+  17:Actuator.h    ****     IN2 = 0,
+  18:Actuator.h    **** };
+  19:Actuator.h    **** 
+  20:Actuator.h    **** const uint16 ACTUATOR_DELAY = 3000;  // ms delay
+  21:Actuator.h    **** 
+  22:Actuator.h    **** // ******************
+  23:Actuator.h    **** // * Extends the actuator and turns it
+  24:Actuator.h    **** //      off after a period
+  25:Actuator.h    **** // ******************
+  26:Actuator.h    **** void Actuator_Extend()
+  27:Actuator.h    **** {
+ 480              		.loc 3 27 0
+ 481              		.cfi_startproc
+ 482              		@ args = 0, pretend = 0, frame = 0
+ 483              		@ frame_needed = 0, uses_anonymous_args = 0
+ 484 0000 08B5     		push	{r3, lr}
+ 485              		.cfi_def_cfa_offset 8
+ 486              		.cfi_offset 3, -8
+ 487              		.cfi_offset 14, -4
+  28:Actuator.h    ****     // Set direction
+  29:Actuator.h    ****     Actuator_Dir_Write(IN1);
+ 488              		.loc 3 29 0
+ 489 0002 0120     		movs	r0, #1
+ 490 0004 FFF7FEFF 		bl	Actuator_Dir_Write
+ 491              	.LVL47:
+  30:Actuator.h    ****     Actuator_PWM_Start();
+ 492              		.loc 3 30 0
+ 493 0008 FFF7FEFF 		bl	Actuator_PWM_Start
+ 494              	.LVL48:
+  31:Actuator.h    ****     
+  32:Actuator.h    ****     // Wait till extended
+  33:Actuator.h    ****     // TODO bad implemenentation. Use pins on actuator
+  34:Actuator.h    ****     CyDelay(ACTUATOR_DELAY);
+ 495              		.loc 3 34 0
+ 496 000c 40F6B830 		movw	r0, #3000
+ 497 0010 FFF7FEFF 		bl	CyDelay
+ 498              	.LVL49:
+  35:Actuator.h    ****     Actuator_PWM_Stop();
+ 499              		.loc 3 35 0
+ 500 0014 FFF7FEFF 		bl	Actuator_PWM_Stop
+ 501              	.LVL50:
+ 502 0018 08BD     		pop	{r3, pc}
+ 503              		.cfi_endproc
+ 504              	.LFE73:
+ 505              		.size	Actuator_Extend, .-Actuator_Extend
+ 506 001a 00BF     		.section	.text.Actuator_Retract,"ax",%progbits
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 14
+
+
+ 507              		.align	2
+ 508              		.global	Actuator_Retract
+ 509              		.thumb
+ 510              		.thumb_func
+ 511              		.type	Actuator_Retract, %function
+ 512              	Actuator_Retract:
+ 513              	.LFB74:
+  36:Actuator.h    **** }
+  37:Actuator.h    **** 
+  38:Actuator.h    **** // ******************
+  39:Actuator.h    **** // * Retracts the actuator and turns it
+  40:Actuator.h    **** //      off after a period
+  41:Actuator.h    **** // ******************
+  42:Actuator.h    **** void Actuator_Retract()
+  43:Actuator.h    **** {
+ 514              		.loc 3 43 0
+ 515              		.cfi_startproc
+ 516              		@ args = 0, pretend = 0, frame = 0
+ 517              		@ frame_needed = 0, uses_anonymous_args = 0
+ 518 0000 08B5     		push	{r3, lr}
+ 519              		.cfi_def_cfa_offset 8
+ 520              		.cfi_offset 3, -8
+ 521              		.cfi_offset 14, -4
+  44:Actuator.h    ****     // Set direction
+  45:Actuator.h    ****     Actuator_Dir_Write(IN2);
+ 522              		.loc 3 45 0
+ 523 0002 0020     		movs	r0, #0
+ 524 0004 FFF7FEFF 		bl	Actuator_Dir_Write
+ 525              	.LVL51:
+  46:Actuator.h    ****     Actuator_PWM_Start();
+ 526              		.loc 3 46 0
+ 527 0008 FFF7FEFF 		bl	Actuator_PWM_Start
+ 528              	.LVL52:
+  47:Actuator.h    ****     
+  48:Actuator.h    ****     // Wait till extended
+  49:Actuator.h    ****     // TODO bad implemenentation. Use pins on actuator
+  50:Actuator.h    ****     CyDelay(ACTUATOR_DELAY);
+ 529              		.loc 3 50 0
+ 530 000c 40F6B830 		movw	r0, #3000
+ 531 0010 FFF7FEFF 		bl	CyDelay
+ 532              	.LVL53:
+  51:Actuator.h    ****     Actuator_PWM_Stop();
+ 533              		.loc 3 51 0
+ 534 0014 FFF7FEFF 		bl	Actuator_PWM_Stop
+ 535              	.LVL54:
+ 536 0018 08BD     		pop	{r3, pc}
+ 537              		.cfi_endproc
+ 538              	.LFE74:
+ 539              		.size	Actuator_Retract, .-Actuator_Retract
+ 540 001a 00BF     		.section	.text.Database_Interface_Start,"ax",%progbits
+ 541              		.align	2
+ 542              		.global	Database_Interface_Start
+ 543              		.thumb
+ 544              		.thumb_func
+ 545              		.type	Database_Interface_Start, %function
+ 546              	Database_Interface_Start:
+ 547              	.LFB75:
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 15
+
+
+ 548              		.file 4 "Database_Interface.h"
+   1:Database_Interface.h **** #include "Box.h"
+   2:Database_Interface.h **** #include "stdio.h"
+   3:Database_Interface.h **** #include "project.h"
+   4:Database_Interface.h **** 
+   5:Database_Interface.h **** 
+   6:Database_Interface.h **** void Database_Interface_Start()
+   7:Database_Interface.h **** {
+ 549              		.loc 4 7 0
+ 550              		.cfi_startproc
+ 551              		@ args = 0, pretend = 0, frame = 0
+ 552              		@ frame_needed = 0, uses_anonymous_args = 0
+ 553 0000 08B5     		push	{r3, lr}
+ 554              		.cfi_def_cfa_offset 8
+ 555              		.cfi_offset 3, -8
+ 556              		.cfi_offset 14, -4
+   8:Database_Interface.h ****     RPI_UART_Start();
+ 557              		.loc 4 8 0
+ 558 0002 FFF7FEFF 		bl	RPI_UART_Start
+ 559              	.LVL55:
+ 560 0006 08BD     		pop	{r3, pc}
+ 561              		.cfi_endproc
+ 562              	.LFE75:
+ 563              		.size	Database_Interface_Start, .-Database_Interface_Start
+ 564              		.section	.text.Database_Interface_Send,"ax",%progbits
+ 565              		.align	2
+ 566              		.global	Database_Interface_Send
+ 567              		.thumb
+ 568              		.thumb_func
+ 569              		.type	Database_Interface_Send, %function
+ 570              	Database_Interface_Send:
+ 571              	.LFB76:
+   9:Database_Interface.h **** }
+  10:Database_Interface.h **** 
+  11:Database_Interface.h **** void Database_Interface_Send(struct Box* d)
+  12:Database_Interface.h **** {
+ 572              		.loc 4 12 0
+ 573              		.cfi_startproc
+ 574              		@ args = 0, pretend = 0, frame = 104
+ 575              		@ frame_needed = 0, uses_anonymous_args = 0
+ 576              	.LVL56:
+ 577 0000 10B5     		push	{r4, lr}
+ 578              		.cfi_def_cfa_offset 8
+ 579              		.cfi_offset 4, -8
+ 580              		.cfi_offset 14, -4
+ 581 0002 9EB0     		sub	sp, sp, #120
+ 582              		.cfi_def_cfa_offset 128
+ 583 0004 0446     		mov	r4, r0
+  13:Database_Interface.h ****     char buf[100] = {'\0'};
+ 584              		.loc 4 13 0
+ 585 0006 6422     		movs	r2, #100
+ 586 0008 0021     		movs	r1, #0
+ 587 000a 05A8     		add	r0, sp, #20
+ 588              	.LVL57:
+ 589 000c FFF7FEFF 		bl	memset
+ 590              	.LVL58:
+  14:Database_Interface.h ****     
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 16
+
+
+  15:Database_Interface.h ****     int len = sprintf(buf, "%i %i %i %i %i", d->color[0], d->color[1], d->color[2], d->weight, d->s
+ 591              		.loc 4 15 0
+ 592 0010 6268     		ldr	r2, [r4, #4]
+ 593 0012 A368     		ldr	r3, [r4, #8]
+ 594 0014 E168     		ldr	r1, [r4, #12]
+ 595 0016 2069     		ldr	r0, [r4, #16]
+ 596 0018 6469     		ldr	r4, [r4, #20]
+ 597              	.LVL59:
+ 598 001a 0294     		str	r4, [sp, #8]
+ 599 001c 0190     		str	r0, [sp, #4]
+ 600 001e 0091     		str	r1, [sp]
+ 601 0020 0649     		ldr	r1, .L45
+ 602 0022 05A8     		add	r0, sp, #20
+ 603 0024 FFF7FEFF 		bl	sprintf
+ 604              	.LVL60:
+  16:Database_Interface.h ****     buf[len] = '\n';
+ 605              		.loc 4 16 0
+ 606 0028 1EAB     		add	r3, sp, #120
+ 607 002a 1844     		add	r0, r0, r3
+ 608              	.LVL61:
+ 609 002c 0A23     		movs	r3, #10
+ 610 002e 00F8643C 		strb	r3, [r0, #-100]
+  17:Database_Interface.h ****     
+  18:Database_Interface.h ****     RPI_UART_PutString(buf);
+ 611              		.loc 4 18 0
+ 612 0032 05A8     		add	r0, sp, #20
+ 613 0034 FFF7FEFF 		bl	RPI_UART_PutString
+ 614              	.LVL62:
+  19:Database_Interface.h **** }...
+ 615              		.loc 4 19 0
+ 616 0038 1EB0     		add	sp, sp, #120
+ 617              		.cfi_def_cfa_offset 8
+ 618              		@ sp needed
+ 619 003a 10BD     		pop	{r4, pc}
+ 620              	.L46:
+ 621              		.align	2
+ 622              	.L45:
+ 623 003c 00000000 		.word	.LC0
+ 624              		.cfi_endproc
+ 625              	.LFE76:
+ 626              		.size	Database_Interface_Send, .-Database_Interface_Send
+ 627              		.section	.text.Belt_Motor_Start,"ax",%progbits
+ 628              		.align	2
+ 629              		.global	Belt_Motor_Start
+ 630              		.thumb
+ 631              		.thumb_func
+ 632              		.type	Belt_Motor_Start, %function
+ 633              	Belt_Motor_Start:
+ 634              	.LFB77:
+ 635              		.file 5 "Belt_Motor.h"
+   1:Belt_Motor.h  **** /* ========================================
+   2:Belt_Motor.h  ****  *
+   3:Belt_Motor.h  ****  * Copyright YOUR COMPANY, THE YEAR
+   4:Belt_Motor.h  ****  * All Rights Reserved
+   5:Belt_Motor.h  ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:Belt_Motor.h  ****  *
+   7:Belt_Motor.h  ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 17
+
+
+   8:Belt_Motor.h  ****  * WHICH IS THE PROPERTY OF your company.
+   9:Belt_Motor.h  ****  *
+  10:Belt_Motor.h  ****  * ========================================
+  11:Belt_Motor.h  **** */
+  12:Belt_Motor.h  **** 
+  13:Belt_Motor.h  **** #include "project.h"
+  14:Belt_Motor.h  **** 
+  15:Belt_Motor.h  **** uint16 BELT_SPEED_MAX;
+  16:Belt_Motor.h  **** const uint16 BELT_SPEED_OFF = 0;
+  17:Belt_Motor.h  **** int BELT_SPEED_NORMAL;
+  18:Belt_Motor.h  **** 
+  19:Belt_Motor.h  **** void Belt_Motor_Start()
+  20:Belt_Motor.h  **** {
+ 636              		.loc 5 20 0
+ 637              		.cfi_startproc
+ 638              		@ args = 0, pretend = 0, frame = 0
+ 639              		@ frame_needed = 0, uses_anonymous_args = 0
+ 640 0000 08B5     		push	{r3, lr}
+ 641              		.cfi_def_cfa_offset 8
+ 642              		.cfi_offset 3, -8
+ 643              		.cfi_offset 14, -4
+  21:Belt_Motor.h  ****     Motor_PWM_Start();
+ 644              		.loc 5 21 0
+ 645 0002 FFF7FEFF 		bl	Motor_PWM_Start
+ 646              	.LVL63:
+  22:Belt_Motor.h  ****     BELT_SPEED_MAX = Motor_PWM_ReadPeriod();
+ 647              		.loc 5 22 0
+ 648 0006 FFF7FEFF 		bl	Motor_PWM_ReadPeriod
+ 649              	.LVL64:
+ 650 000a 014B     		ldr	r3, .L49
+ 651 000c 1880     		strh	r0, [r3]	@ movhi
+ 652 000e 08BD     		pop	{r3, pc}
+ 653              	.L50:
+ 654              		.align	2
+ 655              	.L49:
+ 656 0010 00000000 		.word	BELT_SPEED_MAX
+ 657              		.cfi_endproc
+ 658              	.LFE77:
+ 659              		.size	Belt_Motor_Start, .-Belt_Motor_Start
+ 660              		.section	.text.Belt_Motor_Set_Speed,"ax",%progbits
+ 661              		.align	2
+ 662              		.global	Belt_Motor_Set_Speed
+ 663              		.thumb
+ 664              		.thumb_func
+ 665              		.type	Belt_Motor_Set_Speed, %function
+ 666              	Belt_Motor_Set_Speed:
+ 667              	.LFB78:
+  23:Belt_Motor.h  **** }
+  24:Belt_Motor.h  **** 
+  25:Belt_Motor.h  **** void Belt_Motor_Set_Speed(uint8 speed)
+  26:Belt_Motor.h  **** {
+ 668              		.loc 5 26 0
+ 669              		.cfi_startproc
+ 670              		@ args = 0, pretend = 0, frame = 0
+ 671              		@ frame_needed = 0, uses_anonymous_args = 0
+ 672              	.LVL65:
+ 673 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 18
+
+
+ 674              		.cfi_def_cfa_offset 8
+ 675              		.cfi_offset 3, -8
+ 676              		.cfi_offset 14, -4
+  27:Belt_Motor.h  ****     if (speed < BELT_SPEED_MAX && speed > BELT_SPEED_OFF) 
+ 677              		.loc 5 27 0
+ 678 0002 82B2     		uxth	r2, r0
+ 679 0004 034B     		ldr	r3, .L54
+ 680 0006 1B88     		ldrh	r3, [r3]
+ 681 0008 9A42     		cmp	r2, r3
+ 682 000a 02D2     		bcs	.L51
+ 683              		.loc 5 27 0 is_stmt 0 discriminator 1
+ 684 000c 08B1     		cbz	r0, .L51
+  28:Belt_Motor.h  ****     {
+  29:Belt_Motor.h  ****         Motor_PWM_WriteCompare(speed);
+ 685              		.loc 5 29 0 is_stmt 1
+ 686 000e FFF7FEFF 		bl	Motor_PWM_WriteCompare
+ 687              	.LVL66:
+ 688              	.L51:
+ 689 0012 08BD     		pop	{r3, pc}
+ 690              	.L55:
+ 691              		.align	2
+ 692              	.L54:
+ 693 0014 00000000 		.word	BELT_SPEED_MAX
+ 694              		.cfi_endproc
+ 695              	.LFE78:
+ 696              		.size	Belt_Motor_Set_Speed, .-Belt_Motor_Set_Speed
+ 697              		.section	.text.createQueue,"ax",%progbits
+ 698              		.align	2
+ 699              		.global	createQueue
+ 700              		.thumb
+ 701              		.thumb_func
+ 702              		.type	createQueue, %function
+ 703              	createQueue:
+ 704              	.LFB79:
+ 705              		.file 6 "Queue.h"
+   1:Queue.h       **** //=======================================
+   2:Queue.h       **** // This implementation is taken directly from:
+   3:Queue.h       **** // https://www.geeksforgeeks.org/queue-set-1introduction-and-array-implementation/
+   4:Queue.h       **** // Last visited: 2020 12 11
+   5:Queue.h       **** // Minor tweaks implementet by: GustavNK
+   6:Queue.h       **** // ======================================
+   7:Queue.h       **** 
+   8:Queue.h       **** // C program for array implementation of queue 
+   9:Queue.h       **** #include <limits.h> 
+  10:Queue.h       **** #include <stdio.h> 
+  11:Queue.h       **** #include <stdlib.h> 
+  12:Queue.h       ****   
+  13:Queue.h       **** // A structure to represent a queue 
+  14:Queue.h       **** struct Queue { 
+  15:Queue.h       ****     int front, rear, size; 
+  16:Queue.h       ****     unsigned capacity; 
+  17:Queue.h       ****     int* array; 
+  18:Queue.h       **** }; 
+  19:Queue.h       ****   
+  20:Queue.h       **** // function to create a queue 
+  21:Queue.h       **** // of given capacity. 
+  22:Queue.h       **** // It initializes size of queue as 0 
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 19
+
+
+  23:Queue.h       **** struct Queue* createQueue(unsigned capacity) 
+  24:Queue.h       **** { 
+ 706              		.loc 6 24 0
+ 707              		.cfi_startproc
+ 708              		@ args = 0, pretend = 0, frame = 0
+ 709              		@ frame_needed = 0, uses_anonymous_args = 0
+ 710              	.LVL67:
+ 711 0000 38B5     		push	{r3, r4, r5, lr}
+ 712              		.cfi_def_cfa_offset 16
+ 713              		.cfi_offset 3, -16
+ 714              		.cfi_offset 4, -12
+ 715              		.cfi_offset 5, -8
+ 716              		.cfi_offset 14, -4
+ 717 0002 0546     		mov	r5, r0
+  25:Queue.h       ****     struct Queue* queue = (struct Queue*)malloc( 
+ 718              		.loc 6 25 0
+ 719 0004 1420     		movs	r0, #20
+ 720              	.LVL68:
+ 721 0006 FFF7FEFF 		bl	malloc
+ 722              	.LVL69:
+ 723 000a 0446     		mov	r4, r0
+ 724              	.LVL70:
+  26:Queue.h       ****         sizeof(struct Queue)); 
+  27:Queue.h       ****     queue->capacity = capacity; 
+ 725              		.loc 6 27 0
+ 726 000c C560     		str	r5, [r0, #12]
+  28:Queue.h       ****     queue->front = queue->size = 0; 
+ 727              		.loc 6 28 0
+ 728 000e 0023     		movs	r3, #0
+ 729 0010 8360     		str	r3, [r0, #8]
+ 730 0012 0360     		str	r3, [r0]
+  29:Queue.h       ****   
+  30:Queue.h       ****     // This is important, see the enqueue 
+  31:Queue.h       ****     queue->rear = capacity - 1; 
+ 731              		.loc 6 31 0
+ 732 0014 6B1E     		subs	r3, r5, #1
+ 733 0016 4360     		str	r3, [r0, #4]
+  32:Queue.h       ****     queue->array = (int*)malloc( 
+ 734              		.loc 6 32 0
+ 735 0018 A800     		lsls	r0, r5, #2
+ 736              	.LVL71:
+ 737 001a FFF7FEFF 		bl	malloc
+ 738              	.LVL72:
+ 739 001e 2061     		str	r0, [r4, #16]
+  33:Queue.h       ****         queue->capacity * sizeof(int)); 
+  34:Queue.h       ****     return queue; 
+  35:Queue.h       **** } 
+ 740              		.loc 6 35 0
+ 741 0020 2046     		mov	r0, r4
+ 742 0022 38BD     		pop	{r3, r4, r5, pc}
+ 743              		.cfi_endproc
+ 744              	.LFE79:
+ 745              		.size	createQueue, .-createQueue
+ 746              		.section	.text.isFull,"ax",%progbits
+ 747              		.align	2
+ 748              		.global	isFull
+ 749              		.thumb
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 20
+
+
+ 750              		.thumb_func
+ 751              		.type	isFull, %function
+ 752              	isFull:
+ 753              	.LFB80:
+  36:Queue.h       ****   
+  37:Queue.h       **** // Queue is full when size becomes 
+  38:Queue.h       **** // equal to the capacity 
+  39:Queue.h       **** int isFull(struct Queue* queue) 
+  40:Queue.h       **** { 
+ 754              		.loc 6 40 0
+ 755              		.cfi_startproc
+ 756              		@ args = 0, pretend = 0, frame = 0
+ 757              		@ frame_needed = 0, uses_anonymous_args = 0
+ 758              		@ link register save eliminated.
+ 759              	.LVL73:
+  41:Queue.h       ****     return (queue->size == queue->capacity); 
+ 760              		.loc 6 41 0
+ 761 0000 8268     		ldr	r2, [r0, #8]
+ 762 0002 C068     		ldr	r0, [r0, #12]
+ 763              	.LVL74:
+  42:Queue.h       **** } 
+ 764              		.loc 6 42 0
+ 765 0004 8242     		cmp	r2, r0
+ 766 0006 14BF     		ite	ne
+ 767 0008 0020     		movne	r0, #0
+ 768 000a 0120     		moveq	r0, #1
+ 769 000c 7047     		bx	lr
+ 770              		.cfi_endproc
+ 771              	.LFE80:
+ 772              		.size	isFull, .-isFull
+ 773 000e 00BF     		.section	.text.isEmpty,"ax",%progbits
+ 774              		.align	2
+ 775              		.global	isEmpty
+ 776              		.thumb
+ 777              		.thumb_func
+ 778              		.type	isEmpty, %function
+ 779              	isEmpty:
+ 780              	.LFB81:
+  43:Queue.h       ****   
+  44:Queue.h       **** // Queue is empty when size is 0 
+  45:Queue.h       **** int isEmpty(struct Queue* queue) 
+  46:Queue.h       **** { 
+ 781              		.loc 6 46 0
+ 782              		.cfi_startproc
+ 783              		@ args = 0, pretend = 0, frame = 0
+ 784              		@ frame_needed = 0, uses_anonymous_args = 0
+ 785              		@ link register save eliminated.
+ 786              	.LVL75:
+  47:Queue.h       ****     return (queue->size == 0); 
+ 787              		.loc 6 47 0
+ 788 0000 8068     		ldr	r0, [r0, #8]
+ 789              	.LVL76:
+  48:Queue.h       **** } 
+ 790              		.loc 6 48 0
+ 791 0002 B0FA80F0 		clz	r0, r0
+ 792 0006 4009     		lsrs	r0, r0, #5
+ 793 0008 7047     		bx	lr
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 21
+
+
+ 794              		.cfi_endproc
+ 795              	.LFE81:
+ 796              		.size	isEmpty, .-isEmpty
+ 797 000a 00BF     		.section	.text.enqueue,"ax",%progbits
+ 798              		.align	2
+ 799              		.global	enqueue
+ 800              		.thumb
+ 801              		.thumb_func
+ 802              		.type	enqueue, %function
+ 803              	enqueue:
+ 804              	.LFB82:
+  49:Queue.h       ****   
+  50:Queue.h       **** // Function to add an item to the queue. 
+  51:Queue.h       **** // It changes rear and size 
+  52:Queue.h       **** void enqueue(struct Queue* queue, int item) 
+  53:Queue.h       **** { 
+ 805              		.loc 6 53 0
+ 806              		.cfi_startproc
+ 807              		@ args = 0, pretend = 0, frame = 0
+ 808              		@ frame_needed = 0, uses_anonymous_args = 0
+ 809              	.LVL77:
+ 810 0000 38B5     		push	{r3, r4, r5, lr}
+ 811              		.cfi_def_cfa_offset 16
+ 812              		.cfi_offset 3, -16
+ 813              		.cfi_offset 4, -12
+ 814              		.cfi_offset 5, -8
+ 815              		.cfi_offset 14, -4
+ 816 0002 0446     		mov	r4, r0
+ 817 0004 0D46     		mov	r5, r1
+  54:Queue.h       ****     if (isFull(queue)) 
+ 818              		.loc 6 54 0
+ 819 0006 FFF7FEFF 		bl	isFull
+ 820              	.LVL78:
+ 821 000a 68B9     		cbnz	r0, .L60
+  55:Queue.h       ****         return; 
+  56:Queue.h       ****     queue->rear = (queue->rear + 1) 
+ 822              		.loc 6 56 0
+ 823 000c 6368     		ldr	r3, [r4, #4]
+ 824 000e 0133     		adds	r3, r3, #1
+  57:Queue.h       ****                   % queue->capacity; 
+ 825              		.loc 6 57 0
+ 826 0010 E168     		ldr	r1, [r4, #12]
+ 827 0012 B3FBF1F2 		udiv	r2, r3, r1
+ 828 0016 01FB1233 		mls	r3, r1, r2, r3
+  56:Queue.h       ****                   % queue->capacity; 
+ 829              		.loc 6 56 0
+ 830 001a 6360     		str	r3, [r4, #4]
+  58:Queue.h       ****     queue->array[queue->rear] = item; 
+ 831              		.loc 6 58 0
+ 832 001c 2269     		ldr	r2, [r4, #16]
+ 833 001e 42F82350 		str	r5, [r2, r3, lsl #2]
+  59:Queue.h       ****     queue->size = queue->size + 1; 
+ 834              		.loc 6 59 0
+ 835 0022 A368     		ldr	r3, [r4, #8]
+ 836 0024 0133     		adds	r3, r3, #1
+ 837 0026 A360     		str	r3, [r4, #8]
+ 838              	.L60:
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 22
+
+
+ 839 0028 38BD     		pop	{r3, r4, r5, pc}
+ 840              		.cfi_endproc
+ 841              	.LFE82:
+ 842              		.size	enqueue, .-enqueue
+ 843 002a 00BF     		.section	.text.isr_Measure_handler,"ax",%progbits
+ 844              		.align	2
+ 845              		.global	isr_Measure_handler
+ 846              		.thumb
+ 847              		.thumb_func
+ 848              		.type	isr_Measure_handler, %function
+ 849              	isr_Measure_handler:
+ 850              	.LFB86:
+ 851              		.file 7 "main.c"
+   1:main.c        **** // ================================
+   2:main.c        **** // Sorting_Controller.c
+   3:main.c        **** // * Implemented on PSoC LP5, to control all hardware pressent 
+   4:main.c        **** //      on the SortoMatic belt. Responsible for sorting packages
+   5:main.c        **** //      and notifying the Database
+   6:main.c        **** // Created by: GustavNK, rasmoller & Christian-Bach-johansen
+   7:main.c        **** // GitHub: https://github.com/rasmoller/PRJ3-Group-13/tree/master/Code/PRJ3-FULLv0.3
+   8:main.c        **** // ================================
+   9:main.c        **** // Revisions log:
+  10:main.c        **** // 20201009: Created and initial setup of TopDesign
+  11:main.c        **** // 20201120: Started implementation og color sensor
+  12:main.c        **** // 20201204: Redesign to better match PSoC C code
+  13:main.c        **** // 20201220: Added Queue funktions
+  14:main.c        **** // === TODO =======================
+  15:main.c        **** // * Interrupts may disrput the flow
+  16:main.c        **** // * 
+  17:main.c        **** // ================================
+  18:main.c        **** 
+  19:main.c        **** #include "project.h"
+  20:main.c        **** #include "Color_Sensor.h"
+  21:main.c        **** #include "Weight_Sensor.h"
+  22:main.c        **** #include "Actuator.h"
+  23:main.c        **** #include "Box.h"
+  24:main.c        **** #include "Database_Interface.h"
+  25:main.c        **** #include "Belt_Motor.h"
+  26:main.c        **** #include "Queue.h"
+  27:main.c        **** #include <stdlib.h>
+  28:main.c        **** 
+  29:main.c        **** const int MY_DEBUG = 0;
+  30:main.c        **** 
+  31:main.c        **** unsigned long msgCount = 0;
+  32:main.c        **** 
+  33:main.c        **** struct Queue* msgQueue;
+  34:main.c        **** struct Box box;
+  35:main.c        **** 
+  36:main.c        **** enum id
+  37:main.c        **** {
+  38:main.c        ****     MEASURE,
+  39:main.c        ****     ACTUATOR,
+  40:main.c        ****     RECEIVED_SETTINGS,
+  41:main.c        **** };
+  42:main.c        **** 
+  43:main.c        **** void handleMsg(unsigned long id);
+  44:main.c        **** 
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 23
+
+
+  45:main.c        **** CY_ISR_PROTO(isr_Measure_handler);
+  46:main.c        **** CY_ISR_PROTO(isr_Actuator_handler);
+  47:main.c        **** CY_ISR_PROTO(isr_rx_handler);
+  48:main.c        **** 
+  49:main.c        **** CY_ISR(isr_Measure_handler)
+  50:main.c        **** {
+ 852              		.loc 7 50 0
+ 853              		.cfi_startproc
+ 854              		@ args = 0, pretend = 0, frame = 0
+ 855              		@ frame_needed = 0, uses_anonymous_args = 0
+ 856 0000 08B5     		push	{r3, lr}
+ 857              		.cfi_def_cfa_offset 8
+ 858              		.cfi_offset 3, -8
+ 859              		.cfi_offset 14, -4
+  51:main.c        ****     msgCount++;
+ 860              		.loc 7 51 0
+ 861 0002 054A     		ldr	r2, .L65
+ 862 0004 5368     		ldr	r3, [r2, #4]
+ 863 0006 0133     		adds	r3, r3, #1
+ 864 0008 5360     		str	r3, [r2, #4]
+  52:main.c        ****     enqueue(msgQueue, MEASURE);
+ 865              		.loc 7 52 0
+ 866 000a 0021     		movs	r1, #0
+ 867 000c 034B     		ldr	r3, .L65+4
+ 868 000e 1868     		ldr	r0, [r3]
+ 869 0010 FFF7FEFF 		bl	enqueue
+ 870              	.LVL79:
+ 871 0014 08BD     		pop	{r3, pc}
+ 872              	.L66:
+ 873 0016 00BF     		.align	2
+ 874              	.L65:
+ 875 0018 00000000 		.word	.LANCHOR0
+ 876 001c 00000000 		.word	msgQueue
+ 877              		.cfi_endproc
+ 878              	.LFE86:
+ 879              		.size	isr_Measure_handler, .-isr_Measure_handler
+ 880              		.section	.text.isr_Actuator_handler,"ax",%progbits
+ 881              		.align	2
+ 882              		.global	isr_Actuator_handler
+ 883              		.thumb
+ 884              		.thumb_func
+ 885              		.type	isr_Actuator_handler, %function
+ 886              	isr_Actuator_handler:
+ 887              	.LFB87:
+  53:main.c        **** }
+  54:main.c        **** 
+  55:main.c        **** CY_ISR(isr_Actuator_handler)
+  56:main.c        **** {
+ 888              		.loc 7 56 0
+ 889              		.cfi_startproc
+ 890              		@ args = 0, pretend = 0, frame = 0
+ 891              		@ frame_needed = 0, uses_anonymous_args = 0
+ 892 0000 08B5     		push	{r3, lr}
+ 893              		.cfi_def_cfa_offset 8
+ 894              		.cfi_offset 3, -8
+ 895              		.cfi_offset 14, -4
+  57:main.c        ****     msgCount++;
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 24
+
+
+ 896              		.loc 7 57 0
+ 897 0002 054A     		ldr	r2, .L69
+ 898 0004 5368     		ldr	r3, [r2, #4]
+ 899 0006 0133     		adds	r3, r3, #1
+ 900 0008 5360     		str	r3, [r2, #4]
+  58:main.c        ****     enqueue(msgQueue, ACTUATOR);
+ 901              		.loc 7 58 0
+ 902 000a 0121     		movs	r1, #1
+ 903 000c 034B     		ldr	r3, .L69+4
+ 904 000e 1868     		ldr	r0, [r3]
+ 905 0010 FFF7FEFF 		bl	enqueue
+ 906              	.LVL80:
+ 907 0014 08BD     		pop	{r3, pc}
+ 908              	.L70:
+ 909 0016 00BF     		.align	2
+ 910              	.L69:
+ 911 0018 00000000 		.word	.LANCHOR0
+ 912 001c 00000000 		.word	msgQueue
+ 913              		.cfi_endproc
+ 914              	.LFE87:
+ 915              		.size	isr_Actuator_handler, .-isr_Actuator_handler
+ 916              		.section	.text.isr_rx_handler,"ax",%progbits
+ 917              		.align	2
+ 918              		.global	isr_rx_handler
+ 919              		.thumb
+ 920              		.thumb_func
+ 921              		.type	isr_rx_handler, %function
+ 922              	isr_rx_handler:
+ 923              	.LFB88:
+  59:main.c        **** }
+  60:main.c        **** 
+  61:main.c        **** CY_ISR(isr_rx_handler)
+  62:main.c        **** {
+ 924              		.loc 7 62 0
+ 925              		.cfi_startproc
+ 926              		@ args = 0, pretend = 0, frame = 0
+ 927              		@ frame_needed = 0, uses_anonymous_args = 0
+ 928 0000 08B5     		push	{r3, lr}
+ 929              		.cfi_def_cfa_offset 8
+ 930              		.cfi_offset 3, -8
+ 931              		.cfi_offset 14, -4
+  63:main.c        ****     msgCount++;
+ 932              		.loc 7 63 0
+ 933 0002 054A     		ldr	r2, .L73
+ 934 0004 5368     		ldr	r3, [r2, #4]
+ 935 0006 0133     		adds	r3, r3, #1
+ 936 0008 5360     		str	r3, [r2, #4]
+  64:main.c        ****     enqueue(msgQueue, RECEIVED_SETTINGS);
+ 937              		.loc 7 64 0
+ 938 000a 0221     		movs	r1, #2
+ 939 000c 034B     		ldr	r3, .L73+4
+ 940 000e 1868     		ldr	r0, [r3]
+ 941 0010 FFF7FEFF 		bl	enqueue
+ 942              	.LVL81:
+ 943 0014 08BD     		pop	{r3, pc}
+ 944              	.L74:
+ 945 0016 00BF     		.align	2
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 25
+
+
+ 946              	.L73:
+ 947 0018 00000000 		.word	.LANCHOR0
+ 948 001c 00000000 		.word	msgQueue
+ 949              		.cfi_endproc
+ 950              	.LFE88:
+ 951              		.size	isr_rx_handler, .-isr_rx_handler
+ 952              		.section	.text.dequeue,"ax",%progbits
+ 953              		.align	2
+ 954              		.global	dequeue
+ 955              		.thumb
+ 956              		.thumb_func
+ 957              		.type	dequeue, %function
+ 958              	dequeue:
+ 959              	.LFB83:
+  60:Queue.h       **** } 
+  61:Queue.h       ****   
+  62:Queue.h       **** // Function to remove an item from queue. 
+  63:Queue.h       **** // It changes front and size 
+  64:Queue.h       **** int dequeue(struct Queue* queue) 
+  65:Queue.h       **** { 
+ 960              		.loc 6 65 0
+ 961              		.cfi_startproc
+ 962              		@ args = 0, pretend = 0, frame = 0
+ 963              		@ frame_needed = 0, uses_anonymous_args = 0
+ 964              	.LVL82:
+ 965 0000 10B5     		push	{r4, lr}
+ 966              		.cfi_def_cfa_offset 8
+ 967              		.cfi_offset 4, -8
+ 968              		.cfi_offset 14, -4
+ 969 0002 0446     		mov	r4, r0
+  66:Queue.h       ****     if (isEmpty(queue)) 
+ 970              		.loc 6 66 0
+ 971 0004 FFF7FEFF 		bl	isEmpty
+ 972              	.LVL83:
+ 973 0008 70B9     		cbnz	r0, .L77
+  67:Queue.h       ****         return INT_MIN; 
+  68:Queue.h       ****     int item = queue->array[queue->front]; 
+ 974              		.loc 6 68 0
+ 975 000a 2269     		ldr	r2, [r4, #16]
+ 976 000c 2368     		ldr	r3, [r4]
+ 977 000e 52F82300 		ldr	r0, [r2, r3, lsl #2]
+ 978              	.LVL84:
+  69:Queue.h       ****     queue->front = (queue->front + 1) 
+ 979              		.loc 6 69 0
+ 980 0012 0133     		adds	r3, r3, #1
+  70:Queue.h       ****                    % queue->capacity; 
+ 981              		.loc 6 70 0
+ 982 0014 E168     		ldr	r1, [r4, #12]
+ 983 0016 B3FBF1F2 		udiv	r2, r3, r1
+ 984 001a 01FB1233 		mls	r3, r1, r2, r3
+  69:Queue.h       ****     queue->front = (queue->front + 1) 
+ 985              		.loc 6 69 0
+ 986 001e 2360     		str	r3, [r4]
+  71:Queue.h       ****     queue->size = queue->size - 1; 
+ 987              		.loc 6 71 0
+ 988 0020 A368     		ldr	r3, [r4, #8]
+ 989 0022 013B     		subs	r3, r3, #1
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 26
+
+
+ 990 0024 A360     		str	r3, [r4, #8]
+  72:Queue.h       ****     return item; 
+ 991              		.loc 6 72 0
+ 992 0026 10BD     		pop	{r4, pc}
+ 993              	.LVL85:
+ 994              	.L77:
+  67:Queue.h       ****     int item = queue->array[queue->front]; 
+ 995              		.loc 6 67 0
+ 996 0028 4FF00040 		mov	r0, #-2147483648
+  73:Queue.h       **** } 
+ 997              		.loc 6 73 0
+ 998 002c 10BD     		pop	{r4, pc}
+ 999              		.cfi_endproc
+ 1000              	.LFE83:
+ 1001              		.size	dequeue, .-dequeue
+ 1002 002e 00BF     		.section	.text.front,"ax",%progbits
+ 1003              		.align	2
+ 1004              		.global	front
+ 1005              		.thumb
+ 1006              		.thumb_func
+ 1007              		.type	front, %function
+ 1008              	front:
+ 1009              	.LFB84:
+  74:Queue.h       ****   
+  75:Queue.h       **** // Function to get front of queue 
+  76:Queue.h       **** int front(struct Queue* queue) 
+  77:Queue.h       **** { 
+ 1010              		.loc 6 77 0
+ 1011              		.cfi_startproc
+ 1012              		@ args = 0, pretend = 0, frame = 0
+ 1013              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1014              	.LVL86:
+ 1015 0000 10B5     		push	{r4, lr}
+ 1016              		.cfi_def_cfa_offset 8
+ 1017              		.cfi_offset 4, -8
+ 1018              		.cfi_offset 14, -4
+ 1019 0002 0446     		mov	r4, r0
+  78:Queue.h       ****     if (isEmpty(queue)) 
+ 1020              		.loc 6 78 0
+ 1021 0004 FFF7FEFF 		bl	isEmpty
+ 1022              	.LVL87:
+ 1023 0008 20B9     		cbnz	r0, .L81
+  79:Queue.h       ****         return INT_MIN; 
+  80:Queue.h       ****     return queue->array[queue->front]; 
+ 1024              		.loc 6 80 0
+ 1025 000a 2369     		ldr	r3, [r4, #16]
+ 1026 000c 2268     		ldr	r2, [r4]
+ 1027 000e 53F82200 		ldr	r0, [r3, r2, lsl #2]
+ 1028 0012 10BD     		pop	{r4, pc}
+ 1029              	.LVL88:
+ 1030              	.L81:
+  79:Queue.h       ****         return INT_MIN; 
+ 1031              		.loc 6 79 0
+ 1032 0014 4FF00040 		mov	r0, #-2147483648
+  81:Queue.h       **** } 
+ 1033              		.loc 6 81 0
+ 1034 0018 10BD     		pop	{r4, pc}
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 27
+
+
+ 1035              		.cfi_endproc
+ 1036              	.LFE84:
+ 1037              		.size	front, .-front
+ 1038 001a 00BF     		.section	.text.rear,"ax",%progbits
+ 1039              		.align	2
+ 1040              		.global	rear
+ 1041              		.thumb
+ 1042              		.thumb_func
+ 1043              		.type	rear, %function
+ 1044              	rear:
+ 1045              	.LFB85:
+  82:Queue.h       ****   
+  83:Queue.h       **** // Function to get rear of queue 
+  84:Queue.h       **** int rear(struct Queue* queue) 
+  85:Queue.h       **** { 
+ 1046              		.loc 6 85 0
+ 1047              		.cfi_startproc
+ 1048              		@ args = 0, pretend = 0, frame = 0
+ 1049              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1050              	.LVL89:
+ 1051 0000 10B5     		push	{r4, lr}
+ 1052              		.cfi_def_cfa_offset 8
+ 1053              		.cfi_offset 4, -8
+ 1054              		.cfi_offset 14, -4
+ 1055 0002 0446     		mov	r4, r0
+  86:Queue.h       ****     if (isEmpty(queue)) 
+ 1056              		.loc 6 86 0
+ 1057 0004 FFF7FEFF 		bl	isEmpty
+ 1058              	.LVL90:
+ 1059 0008 20B9     		cbnz	r0, .L85
+  87:Queue.h       ****         return INT_MIN; 
+  88:Queue.h       ****     return queue->array[queue->rear]; 
+ 1060              		.loc 6 88 0
+ 1061 000a 2369     		ldr	r3, [r4, #16]
+ 1062 000c 6268     		ldr	r2, [r4, #4]
+ 1063 000e 53F82200 		ldr	r0, [r3, r2, lsl #2]
+ 1064 0012 10BD     		pop	{r4, pc}
+ 1065              	.LVL91:
+ 1066              	.L85:
+  87:Queue.h       ****         return INT_MIN; 
+ 1067              		.loc 6 87 0
+ 1068 0014 4FF00040 		mov	r0, #-2147483648
+  89:Queue.h       **** }...
+ 1069              		.loc 6 89 0
+ 1070 0018 10BD     		pop	{r4, pc}
+ 1071              		.cfi_endproc
+ 1072              	.LFE85:
+ 1073              		.size	rear, .-rear
+ 1074 001a 00BF     		.section	.text.debug,"ax",%progbits
+ 1075              		.align	2
+ 1076              		.global	debug
+ 1077              		.thumb
+ 1078              		.thumb_func
+ 1079              		.type	debug, %function
+ 1080              	debug:
+ 1081              	.LFB89:
+  65:main.c        **** }
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 28
+
+
+  66:main.c        **** 
+  67:main.c        **** void debug(char * buf){if(MY_DEBUG) RPI_UART_PutString(buf);}
+ 1082              		.loc 7 67 0
+ 1083              		.cfi_startproc
+ 1084              		@ args = 0, pretend = 0, frame = 0
+ 1085              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1086              		@ link register save eliminated.
+ 1087              	.LVL92:
+ 1088 0000 7047     		bx	lr
+ 1089              		.cfi_endproc
+ 1090              	.LFE89:
+ 1091              		.size	debug, .-debug
+ 1092 0002 00BF     		.section	.text.handleMsg,"ax",%progbits
+ 1093              		.align	2
+ 1094              		.global	handleMsg
+ 1095              		.thumb
+ 1096              		.thumb_func
+ 1097              		.type	handleMsg, %function
+ 1098              	handleMsg:
+ 1099              	.LFB91:
+  68:main.c        **** 
+  69:main.c        **** int main(void)
+  70:main.c        **** {
+  71:main.c        ****     // Setup interrupts
+  72:main.c        ****     CyGlobalIntEnable;
+  73:main.c        ****     isr_Actuator_StartEx(isr_Actuator_handler);
+  74:main.c        ****     isr_Measure_StartEx(isr_Measure_handler);
+  75:main.c        ****     isr_rx_StartEx(isr_rx_handler);
+  76:main.c        ****     
+  77:main.c        ****     // Create C Queue
+  78:main.c        ****     msgQueue = createQueue(10);
+  79:main.c        ****     
+  80:main.c        ****     // Initiate internal hardware
+  81:main.c        ****     Color_Sensor_Start();
+  82:main.c        ****     Weight_Sensor_Start();
+  83:main.c        ****     Database_Interface_Start();
+  84:main.c        ****     
+  85:main.c        ****     for(;;)
+  86:main.c        ****     {        
+  87:main.c        ****         if(msgCount)    
+  88:main.c        ****         {
+  89:main.c        ****             msgCount--;
+  90:main.c        ****             int id = dequeue(msgQueue);
+  91:main.c        ****             handleMsg(id);
+  92:main.c        ****             debug("Interrupt handled");
+  93:main.c        ****         }
+  94:main.c        ****     }
+  95:main.c        **** }
+  96:main.c        **** 
+  97:main.c        **** // *********************
+  98:main.c        **** // * Takes an id and decides an action,
+  99:main.c        **** //      based on the received id
+ 100:main.c        **** // *********************
+ 101:main.c        **** void handleMsg(unsigned long id)
+ 102:main.c        **** {
+ 1100              		.loc 7 102 0
+ 1101              		.cfi_startproc
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 29
+
+
+ 1102              		@ args = 0, pretend = 0, frame = 104
+ 1103              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1104              	.LVL93:
+ 1105              		.loc 7 102 0
+ 1106 0000 30B5     		push	{r4, r5, lr}
+ 1107              		.cfi_def_cfa_offset 12
+ 1108              		.cfi_offset 4, -12
+ 1109              		.cfi_offset 5, -8
+ 1110              		.cfi_offset 14, -4
+ 1111 0002 9DB0     		sub	sp, sp, #116
+ 1112              		.cfi_def_cfa_offset 128
+ 103:main.c        ****     switch(id)
+ 1113              		.loc 7 103 0
+ 1114 0004 10B1     		cbz	r0, .L90
+ 1115 0006 0128     		cmp	r0, #1
+ 1116 0008 1CD0     		beq	.L91
+ 1117 000a 2AE0     		b	.L88
+ 1118              	.L90:
+ 1119              	.LBB4:
+ 104:main.c        ****     {
+ 105:main.c        ****     // Get info on box and send to UART
+ 106:main.c        ****     case MEASURE : 
+ 107:main.c        ****     {
+ 108:main.c        ****         struct Color c;
+ 109:main.c        ****         Color_Sensor_Read_Color(&c); // This only returns the freq. But we need an RGB value
+ 1120              		.loc 7 109 0
+ 1121 000c 02A8     		add	r0, sp, #8
+ 1122              	.LVL94:
+ 1123 000e FFF7FEFF 		bl	Color_Sensor_Read_Color
+ 1124              	.LVL95:
+ 110:main.c        ****         int weight = Weight_Sensor_Read();
+ 1125              		.loc 7 110 0
+ 1126 0012 FFF7FEFF 		bl	Weight_Sensor_Read
+ 1127              	.LVL96:
+ 111:main.c        ****         int sort = 1; //decide to sort
+ 112:main.c        ****         
+ 113:main.c        ****         // Put color, weight & sort into Data struct 
+ 114:main.c        ****         box.color[0] = c.red;
+ 1128              		.loc 7 114 0
+ 1129 0016 9DF80820 		ldrb	r2, [sp, #8]	@ zero_extendqisi2
+ 1130 001a 134C     		ldr	r4, .L93
+ 1131 001c 6260     		str	r2, [r4, #4]
+ 115:main.c        ****         box.color[1] = c.green;
+ 1132              		.loc 7 115 0
+ 1133 001e 9DF80930 		ldrb	r3, [sp, #9]	@ zero_extendqisi2
+ 1134 0022 A360     		str	r3, [r4, #8]
+ 116:main.c        ****         box.color[2] = c.blue;
+ 1135              		.loc 7 116 0
+ 1136 0024 9DF80A10 		ldrb	r1, [sp, #10]	@ zero_extendqisi2
+ 1137 0028 E160     		str	r1, [r4, #12]
+ 117:main.c        ****         box.weight = weight;
+ 1138              		.loc 7 117 0
+ 1139 002a 2061     		str	r0, [r4, #16]
+ 118:main.c        ****         box.sort = sort;
+ 1140              		.loc 7 118 0
+ 1141 002c 0125     		movs	r5, #1
+ 1142 002e 6561     		str	r5, [r4, #20]
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 30
+
+
+ 119:main.c        ****         
+ 120:main.c        ****         // DEBUG
+ 121:main.c        ****         char buf[100];
+ 122:main.c        ****         sprintf(buf, "Red %i, Green %i, Blue %i, weight %i\n", box.color[0], box.color[1], box.colo
+ 1143              		.loc 7 122 0
+ 1144 0030 0190     		str	r0, [sp, #4]
+ 1145 0032 0091     		str	r1, [sp]
+ 1146 0034 0D49     		ldr	r1, .L93+4
+ 1147 0036 03A8     		add	r0, sp, #12
+ 1148              	.LVL97:
+ 1149 0038 FFF7FEFF 		bl	sprintf
+ 1150              	.LVL98:
+ 123:main.c        ****         debug(buf);
+ 124:main.c        ****         
+ 125:main.c        ****         Database_Interface_Send(&box);
+ 1151              		.loc 7 125 0
+ 1152 003c 2046     		mov	r0, r4
+ 1153 003e FFF7FEFF 		bl	Database_Interface_Send
+ 1154              	.LVL99:
+ 1155 0042 0EE0     		b	.L88
+ 1156              	.LVL100:
+ 1157              	.L91:
+ 1158              	.LBE4:
+ 126:main.c        ****         break;
+ 127:main.c        ****     }
+ 128:main.c        ****     case ACTUATOR : // Decides wether to sort
+ 129:main.c        ****         if(box.sort)
+ 1159              		.loc 7 129 0
+ 1160 0044 084B     		ldr	r3, .L93
+ 1161 0046 5B69     		ldr	r3, [r3, #20]
+ 1162 0048 5BB1     		cbz	r3, .L88
+ 130:main.c        ****         {
+ 131:main.c        ****             // TODO Base extension on actuation length, not time
+ 132:main.c        ****             Actuator_Extend();
+ 1163              		.loc 7 132 0
+ 1164 004a FFF7FEFF 		bl	Actuator_Extend
+ 1165              	.LVL101:
+ 133:main.c        ****             CyDelay(2000); 
+ 1166              		.loc 7 133 0
+ 1167 004e 4FF4FA60 		mov	r0, #2000
+ 1168 0052 FFF7FEFF 		bl	CyDelay
+ 1169              	.LVL102:
+ 134:main.c        ****             Actuator_Retract();
+ 1170              		.loc 7 134 0
+ 1171 0056 FFF7FEFF 		bl	Actuator_Retract
+ 1172              	.LVL103:
+ 135:main.c        ****             CyDelay(2000);
+ 1173              		.loc 7 135 0
+ 1174 005a 4FF4FA60 		mov	r0, #2000
+ 1175 005e FFF7FEFF 		bl	CyDelay
+ 1176              	.LVL104:
+ 1177              	.L88:
+ 136:main.c        ****         }
+ 137:main.c        ****         break;
+ 138:main.c        ****     case RECEIVED_SETTINGS : // Receive and set new settings from Data Server
+ 139:main.c        ****     {
+ 140:main.c        ****         // TODO: Setup new settings
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 31
+
+
+ 141:main.c        ****         // * Receive Setings for Database_Interface
+ 142:main.c        ****         // * Set new settings
+ 143:main.c        ****         break;   
+ 144:main.c        ****     }
+ 145:main.c        ****     default : break;
+ 146:main.c        ****     }
+ 147:main.c        **** }
+ 1178              		.loc 7 147 0
+ 1179 0062 1DB0     		add	sp, sp, #116
+ 1180              		.cfi_def_cfa_offset 12
+ 1181              		@ sp needed
+ 1182 0064 30BD     		pop	{r4, r5, pc}
+ 1183              	.L94:
+ 1184 0066 00BF     		.align	2
+ 1185              	.L93:
+ 1186 0068 00000000 		.word	box
+ 1187 006c 10000000 		.word	.LC1
+ 1188              		.cfi_endproc
+ 1189              	.LFE91:
+ 1190              		.size	handleMsg, .-handleMsg
+ 1191              		.section	.text.main,"ax",%progbits
+ 1192              		.align	2
+ 1193              		.global	main
+ 1194              		.thumb
+ 1195              		.thumb_func
+ 1196              		.type	main, %function
+ 1197              	main:
+ 1198              	.LFB90:
+  70:main.c        ****     // Setup interrupts
+ 1199              		.loc 7 70 0
+ 1200              		.cfi_startproc
+ 1201              		@ args = 0, pretend = 0, frame = 0
+ 1202              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1203 0000 08B5     		push	{r3, lr}
+ 1204              		.cfi_def_cfa_offset 8
+ 1205              		.cfi_offset 3, -8
+ 1206              		.cfi_offset 14, -4
+  72:main.c        ****     isr_Actuator_StartEx(isr_Actuator_handler);
+ 1207              		.loc 7 72 0
+ 1208              		.syntax unified
+ 1209              	@ 72 "main.c" 1
+ 1210 0002 62B6     		CPSIE   i
+ 1211              	@ 0 "" 2
+  73:main.c        ****     isr_Measure_StartEx(isr_Measure_handler);
+ 1212              		.loc 7 73 0
+ 1213              		.thumb
+ 1214              		.syntax unified
+ 1215 0004 1048     		ldr	r0, .L99
+ 1216 0006 FFF7FEFF 		bl	isr_Actuator_StartEx
+ 1217              	.LVL105:
+  74:main.c        ****     isr_rx_StartEx(isr_rx_handler);
+ 1218              		.loc 7 74 0
+ 1219 000a 1048     		ldr	r0, .L99+4
+ 1220 000c FFF7FEFF 		bl	isr_Measure_StartEx
+ 1221              	.LVL106:
+  75:main.c        ****     
+ 1222              		.loc 7 75 0
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 32
+
+
+ 1223 0010 0F48     		ldr	r0, .L99+8
+ 1224 0012 FFF7FEFF 		bl	isr_rx_StartEx
+ 1225              	.LVL107:
+  78:main.c        ****     
+ 1226              		.loc 7 78 0
+ 1227 0016 0A20     		movs	r0, #10
+ 1228 0018 FFF7FEFF 		bl	createQueue
+ 1229              	.LVL108:
+ 1230 001c 0D4B     		ldr	r3, .L99+12
+ 1231 001e 1860     		str	r0, [r3]
+  81:main.c        ****     Weight_Sensor_Start();
+ 1232              		.loc 7 81 0
+ 1233 0020 FFF7FEFF 		bl	Color_Sensor_Start
+ 1234              	.LVL109:
+  82:main.c        ****     Database_Interface_Start();
+ 1235              		.loc 7 82 0
+ 1236 0024 FFF7FEFF 		bl	Weight_Sensor_Start
+ 1237              	.LVL110:
+  83:main.c        ****     
+ 1238              		.loc 7 83 0
+ 1239 0028 FFF7FEFF 		bl	Database_Interface_Start
+ 1240              	.LVL111:
+ 1241              	.L96:
+  87:main.c        ****         {
+ 1242              		.loc 7 87 0
+ 1243 002c 0A4B     		ldr	r3, .L99+16
+ 1244 002e 5B68     		ldr	r3, [r3, #4]
+ 1245 0030 002B     		cmp	r3, #0
+ 1246 0032 FBD0     		beq	.L96
+ 1247              	.LBB5:
+  89:main.c        ****             int id = dequeue(msgQueue);
+ 1248              		.loc 7 89 0
+ 1249 0034 013B     		subs	r3, r3, #1
+ 1250 0036 084A     		ldr	r2, .L99+16
+ 1251 0038 5360     		str	r3, [r2, #4]
+  90:main.c        ****             handleMsg(id);
+ 1252              		.loc 7 90 0
+ 1253 003a 064B     		ldr	r3, .L99+12
+ 1254 003c 1868     		ldr	r0, [r3]
+ 1255 003e FFF7FEFF 		bl	dequeue
+ 1256              	.LVL112:
+  91:main.c        ****             debug("Interrupt handled");
+ 1257              		.loc 7 91 0
+ 1258 0042 FFF7FEFF 		bl	handleMsg
+ 1259              	.LVL113:
+ 1260 0046 F1E7     		b	.L96
+ 1261              	.L100:
+ 1262              		.align	2
+ 1263              	.L99:
+ 1264 0048 00000000 		.word	isr_Actuator_handler
+ 1265 004c 00000000 		.word	isr_Measure_handler
+ 1266 0050 00000000 		.word	isr_rx_handler
+ 1267 0054 00000000 		.word	msgQueue
+ 1268 0058 00000000 		.word	.LANCHOR0
+ 1269              	.LBE5:
+ 1270              		.cfi_endproc
+ 1271              	.LFE90:
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 33
+
+
+ 1272              		.size	main, .-main
+ 1273              		.comm	box,24,4
+ 1274              		.comm	msgQueue,4,4
+ 1275              		.global	msgCount
+ 1276              		.global	MY_DEBUG
+ 1277              		.comm	BELT_SPEED_NORMAL,4,4
+ 1278              		.global	BELT_SPEED_OFF
+ 1279              		.comm	BELT_SPEED_MAX,2,2
+ 1280              		.global	ACTUATOR_DELAY
+ 1281              		.global	gram_per_adc
+ 1282              		.global	offset_err
+ 1283              		.comm	linearity,2,2
+ 1284              		.comm	sensorColor,6,4
+ 1285              		.comm	buf,256,4
+ 1286              		.global	freqReady
+ 1287              		.global	freq
+ 1288              		.section	.rodata
+ 1289              		.align	2
+ 1290              		.type	MY_DEBUG, %object
+ 1291              		.size	MY_DEBUG, 4
+ 1292              	MY_DEBUG:
+ 1293 0000 00000000 		.space	4
+ 1294              		.type	BELT_SPEED_OFF, %object
+ 1295              		.size	BELT_SPEED_OFF, 2
+ 1296              	BELT_SPEED_OFF:
+ 1297 0004 0000     		.space	2
+ 1298              		.type	ACTUATOR_DELAY, %object
+ 1299              		.size	ACTUATOR_DELAY, 2
+ 1300              	ACTUATOR_DELAY:
+ 1301 0006 B80B     		.short	3000
+ 1302              		.type	gram_per_adc, %object
+ 1303              		.size	gram_per_adc, 4
+ 1304              	gram_per_adc:
+ 1305 0008 0000803F 		.word	1065353216
+ 1306              		.type	offset_err, %object
+ 1307              		.size	offset_err, 4
+ 1308              	offset_err:
+ 1309 000c 00000000 		.space	4
+ 1310              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 1311              		.align	2
+ 1312              	.LC0:
+ 1313 0000 25692025 		.ascii	"%i %i %i %i %i\000"
+ 1313      69202569 
+ 1313      20256920 
+ 1313      256900
+ 1314 000f 00       		.space	1
+ 1315              	.LC1:
+ 1316 0010 52656420 		.ascii	"Red %i, Green %i, Blue %i, weight %i\012\000"
+ 1316      25692C20 
+ 1316      47726565 
+ 1316      6E202569 
+ 1316      2C20426C 
+ 1317              		.bss
+ 1318              		.align	2
+ 1319              		.set	.LANCHOR0,. + 0
+ 1320              		.type	freq, %object
+ 1321              		.size	freq, 2
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 34
+
+
+ 1322              	freq:
+ 1323 0000 0000     		.space	2
+ 1324              		.type	freqReady, %object
+ 1325              		.size	freqReady, 1
+ 1326              	freqReady:
+ 1327 0002 00       		.space	1
+ 1328 0003 00       		.space	1
+ 1329              		.type	msgCount, %object
+ 1330              		.size	msgCount, 4
+ 1331              	msgCount:
+ 1332 0004 00000000 		.space	4
+ 1333              		.text
+ 1334              	.Letext0:
+ 1335              		.file 8 "e:\\programmer\\cypres\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-non
+ 1336              		.file 9 "e:\\programmer\\cypres\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-non
+ 1337              		.file 10 "Generated_Source\\PSoC5/cytypes.h"
+ 1338              		.file 11 "Box.h"
+ 1339              		.file 12 "Generated_Source\\PSoC5/core_cm3.h"
+ 1340              		.file 13 "Generated_Source\\PSoC5/Color_Counter.h"
+ 1341              		.file 14 "Generated_Source\\PSoC5/isr_Color.h"
+ 1342              		.file 15 "Generated_Source\\PSoC5/Color_Reset.h"
+ 1343              		.file 16 "Generated_Source\\PSoC5/Color_Pin_Freq_Select.h"
+ 1344              		.file 17 "Generated_Source\\PSoC5/CyLib.h"
+ 1345              		.file 18 "Generated_Source\\PSoC5/Color_Pin_LED.h"
+ 1346              		.file 19 "Generated_Source\\PSoC5/Color_PWM.h"
+ 1347              		.file 20 "Generated_Source\\PSoC5/Color_Pin_Color_Select.h"
+ 1348              		.file 21 "Generated_Source\\PSoC5/Weight_ADC.h"
+ 1349              		.file 22 "Generated_Source\\PSoC5/Actuator_Dir.h"
+ 1350              		.file 23 "Generated_Source\\PSoC5/Actuator_PWM.h"
+ 1351              		.file 24 "Generated_Source\\PSoC5/RPI_UART.h"
+ 1352              		.file 25 "e:\\programmer\\cypres\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-no
+ 1353              		.file 26 "Generated_Source\\PSoC5/Motor_PWM.h"
+ 1354              		.file 27 "e:\\programmer\\cypres\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-no
+ 1355              		.file 28 "Generated_Source\\PSoC5/isr_Actuator.h"
+ 1356              		.file 29 "Generated_Source\\PSoC5/isr_Measure.h"
+ 1357              		.file 30 "Generated_Source\\PSoC5/isr_rx.h"
+ 1358              		.section	.debug_info,"",%progbits
+ 1359              	.Ldebug_info0:
+ 1360 0000 400D0000 		.4byte	0xd40
+ 1361 0004 0400     		.2byte	0x4
+ 1362 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1363 000a 04       		.byte	0x4
+ 1364 000b 01       		.uleb128 0x1
+ 1365 000c 6E020000 		.4byte	.LASF115
+ 1366 0010 0C       		.byte	0xc
+ 1367 0011 48000000 		.4byte	.LASF116
+ 1368 0015 07020000 		.4byte	.LASF117
+ 1369 0019 18000000 		.4byte	.Ldebug_ranges0+0x18
+ 1370 001d 00000000 		.4byte	0
+ 1371 0021 00000000 		.4byte	.Ldebug_line0
+ 1372 0025 02       		.uleb128 0x2
+ 1373 0026 01       		.byte	0x1
+ 1374 0027 06       		.byte	0x6
+ 1375 0028 0B060000 		.4byte	.LASF0
+ 1376 002c 02       		.uleb128 0x2
+ 1377 002d 01       		.byte	0x1
+ 1378 002e 08       		.byte	0x8
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 35
+
+
+ 1379 002f BA050000 		.4byte	.LASF1
+ 1380 0033 02       		.uleb128 0x2
+ 1381 0034 02       		.byte	0x2
+ 1382 0035 05       		.byte	0x5
+ 1383 0036 B6040000 		.4byte	.LASF2
+ 1384 003a 03       		.uleb128 0x3
+ 1385 003b 5D020000 		.4byte	.LASF4
+ 1386 003f 08       		.byte	0x8
+ 1387 0040 2B       		.byte	0x2b
+ 1388 0041 45000000 		.4byte	0x45
+ 1389 0045 02       		.uleb128 0x2
+ 1390 0046 02       		.byte	0x2
+ 1391 0047 07       		.byte	0x7
+ 1392 0048 2E060000 		.4byte	.LASF3
+ 1393 004c 03       		.uleb128 0x3
+ 1394 004d C2000000 		.4byte	.LASF5
+ 1395 0051 08       		.byte	0x8
+ 1396 0052 3F       		.byte	0x3f
+ 1397 0053 57000000 		.4byte	0x57
+ 1398 0057 02       		.uleb128 0x2
+ 1399 0058 04       		.byte	0x4
+ 1400 0059 05       		.byte	0x5
+ 1401 005a C0040000 		.4byte	.LASF6
+ 1402 005e 02       		.uleb128 0x2
+ 1403 005f 04       		.byte	0x4
+ 1404 0060 07       		.byte	0x7
+ 1405 0061 83050000 		.4byte	.LASF7
+ 1406 0065 02       		.uleb128 0x2
+ 1407 0066 08       		.byte	0x8
+ 1408 0067 05       		.byte	0x5
+ 1409 0068 93030000 		.4byte	.LASF8
+ 1410 006c 02       		.uleb128 0x2
+ 1411 006d 08       		.byte	0x8
+ 1412 006e 07       		.byte	0x7
+ 1413 006f CD010000 		.4byte	.LASF9
+ 1414 0073 04       		.uleb128 0x4
+ 1415 0074 04       		.byte	0x4
+ 1416 0075 05       		.byte	0x5
+ 1417 0076 696E7400 		.ascii	"int\000"
+ 1418 007a 02       		.uleb128 0x2
+ 1419 007b 04       		.byte	0x4
+ 1420 007c 07       		.byte	0x7
+ 1421 007d 8A000000 		.4byte	.LASF10
+ 1422 0081 03       		.uleb128 0x3
+ 1423 0082 A5040000 		.4byte	.LASF11
+ 1424 0086 09       		.byte	0x9
+ 1425 0087 24       		.byte	0x24
+ 1426 0088 3A000000 		.4byte	0x3a
+ 1427 008c 03       		.uleb128 0x3
+ 1428 008d A8050000 		.4byte	.LASF12
+ 1429 0091 09       		.byte	0x9
+ 1430 0092 2C       		.byte	0x2c
+ 1431 0093 4C000000 		.4byte	0x4c
+ 1432 0097 05       		.uleb128 0x5
+ 1433 0098 77060000 		.4byte	.LASF13
+ 1434 009c 0A       		.byte	0xa
+ 1435 009d E401     		.2byte	0x1e4
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 36
+
+
+ 1436 009f 2C000000 		.4byte	0x2c
+ 1437 00a3 05       		.uleb128 0x5
+ 1438 00a4 77030000 		.4byte	.LASF14
+ 1439 00a8 0A       		.byte	0xa
+ 1440 00a9 E501     		.2byte	0x1e5
+ 1441 00ab 45000000 		.4byte	0x45
+ 1442 00af 02       		.uleb128 0x2
+ 1443 00b0 04       		.byte	0x4
+ 1444 00b1 04       		.byte	0x4
+ 1445 00b2 B9010000 		.4byte	.LASF15
+ 1446 00b6 02       		.uleb128 0x2
+ 1447 00b7 08       		.byte	0x8
+ 1448 00b8 04       		.byte	0x4
+ 1449 00b9 7D060000 		.4byte	.LASF16
+ 1450 00bd 02       		.uleb128 0x2
+ 1451 00be 01       		.byte	0x1
+ 1452 00bf 08       		.byte	0x8
+ 1453 00c0 4E030000 		.4byte	.LASF17
+ 1454 00c4 02       		.uleb128 0x2
+ 1455 00c5 08       		.byte	0x8
+ 1456 00c6 04       		.byte	0x4
+ 1457 00c7 91040000 		.4byte	.LASF18
+ 1458 00cb 02       		.uleb128 0x2
+ 1459 00cc 04       		.byte	0x4
+ 1460 00cd 07       		.byte	0x7
+ 1461 00ce 7A050000 		.4byte	.LASF19
+ 1462 00d2 06       		.uleb128 0x6
+ 1463 00d3 04       		.byte	0x4
+ 1464 00d4 BD000000 		.4byte	0xbd
+ 1465 00d8 07       		.uleb128 0x7
+ 1466 00d9 78040000 		.4byte	.LASF22
+ 1467 00dd 06       		.byte	0x6
+ 1468 00de 01       		.byte	0x1
+ 1469 00df 0C       		.byte	0xc
+ 1470 00e0 09010000 		.4byte	0x109
+ 1471 00e4 08       		.uleb128 0x8
+ 1472 00e5 72656400 		.ascii	"red\000"
+ 1473 00e9 01       		.byte	0x1
+ 1474 00ea 0D       		.byte	0xd
+ 1475 00eb A3000000 		.4byte	0xa3
+ 1476 00ef 00       		.byte	0
+ 1477 00f0 09       		.uleb128 0x9
+ 1478 00f1 82040000 		.4byte	.LASF20
+ 1479 00f5 01       		.byte	0x1
+ 1480 00f6 0E       		.byte	0xe
+ 1481 00f7 A3000000 		.4byte	0xa3
+ 1482 00fb 02       		.byte	0x2
+ 1483 00fc 09       		.uleb128 0x9
+ 1484 00fd 2C050000 		.4byte	.LASF21
+ 1485 0101 01       		.byte	0x1
+ 1486 0102 0F       		.byte	0xf
+ 1487 0103 A3000000 		.4byte	0xa3
+ 1488 0107 04       		.byte	0x4
+ 1489 0108 00       		.byte	0
+ 1490 0109 07       		.uleb128 0x7
+ 1491 010a E5050000 		.4byte	.LASF23
+ 1492 010e 03       		.byte	0x3
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 37
+
+
+ 1493 010f 01       		.byte	0x1
+ 1494 0110 12       		.byte	0x12
+ 1495 0111 3A010000 		.4byte	0x13a
+ 1496 0115 08       		.uleb128 0x8
+ 1497 0116 72656400 		.ascii	"red\000"
+ 1498 011a 01       		.byte	0x1
+ 1499 011b 13       		.byte	0x13
+ 1500 011c 97000000 		.4byte	0x97
+ 1501 0120 00       		.byte	0
+ 1502 0121 09       		.uleb128 0x9
+ 1503 0122 82040000 		.4byte	.LASF20
+ 1504 0126 01       		.byte	0x1
+ 1505 0127 14       		.byte	0x14
+ 1506 0128 97000000 		.4byte	0x97
+ 1507 012c 01       		.byte	0x1
+ 1508 012d 09       		.uleb128 0x9
+ 1509 012e 2C050000 		.4byte	.LASF21
+ 1510 0132 01       		.byte	0x1
+ 1511 0133 15       		.byte	0x15
+ 1512 0134 97000000 		.4byte	0x97
+ 1513 0138 02       		.byte	0x2
+ 1514 0139 00       		.byte	0
+ 1515 013a 0A       		.uleb128 0xa
+ 1516 013b 01       		.byte	0x1
+ 1517 013c 2C000000 		.4byte	0x2c
+ 1518 0140 01       		.byte	0x1
+ 1519 0141 19       		.byte	0x19
+ 1520 0142 5F010000 		.4byte	0x15f
+ 1521 0146 0B       		.uleb128 0xb
+ 1522 0147 52454400 		.ascii	"RED\000"
+ 1523 014b 00       		.byte	0
+ 1524 014c 0C       		.uleb128 0xc
+ 1525 014d 72030000 		.4byte	.LASF24
+ 1526 0151 01       		.byte	0x1
+ 1527 0152 0C       		.uleb128 0xc
+ 1528 0153 33010000 		.4byte	.LASF25
+ 1529 0157 02       		.byte	0x2
+ 1530 0158 0C       		.uleb128 0xc
+ 1531 0159 8D030000 		.4byte	.LASF26
+ 1532 015d 03       		.byte	0x3
+ 1533 015e 00       		.byte	0
+ 1534 015f 0A       		.uleb128 0xa
+ 1535 0160 01       		.byte	0x1
+ 1536 0161 2C000000 		.4byte	0x2c
+ 1537 0165 01       		.byte	0x1
+ 1538 0166 21       		.byte	0x21
+ 1539 0167 84010000 		.4byte	0x184
+ 1540 016b 0C       		.uleb128 0xc
+ 1541 016c 7C010000 		.4byte	.LASF27
+ 1542 0170 00       		.byte	0
+ 1543 0171 0B       		.uleb128 0xb
+ 1544 0172 54574F00 		.ascii	"TWO\000"
+ 1545 0176 01       		.byte	0x1
+ 1546 0177 0C       		.uleb128 0xc
+ 1547 0178 53030000 		.4byte	.LASF28
+ 1548 017c 02       		.byte	0x2
+ 1549 017d 0C       		.uleb128 0xc
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 38
+
+
+ 1550 017e 9F010000 		.4byte	.LASF29
+ 1551 0182 03       		.byte	0x3
+ 1552 0183 00       		.byte	0
+ 1553 0184 0D       		.uleb128 0xd
+ 1554 0185 95050000 		.4byte	.LASF39
+ 1555 0189 01       		.byte	0x1
+ 1556 018a 2C000000 		.4byte	0x2c
+ 1557 018e 03       		.byte	0x3
+ 1558 018f 0F       		.byte	0xf
+ 1559 0190 A1010000 		.4byte	0x1a1
+ 1560 0194 0B       		.uleb128 0xb
+ 1561 0195 494E3100 		.ascii	"IN1\000"
+ 1562 0199 01       		.byte	0x1
+ 1563 019a 0B       		.uleb128 0xb
+ 1564 019b 494E3200 		.ascii	"IN2\000"
+ 1565 019f 00       		.byte	0
+ 1566 01a0 00       		.byte	0
+ 1567 01a1 0E       		.uleb128 0xe
+ 1568 01a2 426F7800 		.ascii	"Box\000"
+ 1569 01a6 18       		.byte	0x18
+ 1570 01a7 0B       		.byte	0xb
+ 1571 01a8 03       		.byte	0x3
+ 1572 01a9 DD010000 		.4byte	0x1dd
+ 1573 01ad 08       		.uleb128 0x8
+ 1574 01ae 696400   		.ascii	"id\000"
+ 1575 01b1 0B       		.byte	0xb
+ 1576 01b2 05       		.byte	0x5
+ 1577 01b3 73000000 		.4byte	0x73
+ 1578 01b7 00       		.byte	0
+ 1579 01b8 09       		.uleb128 0x9
+ 1580 01b9 68020000 		.4byte	.LASF30
+ 1581 01bd 0B       		.byte	0xb
+ 1582 01be 06       		.byte	0x6
+ 1583 01bf DD010000 		.4byte	0x1dd
+ 1584 01c3 04       		.byte	0x4
+ 1585 01c4 09       		.uleb128 0x9
+ 1586 01c5 4C050000 		.4byte	.LASF31
+ 1587 01c9 0B       		.byte	0xb
+ 1588 01ca 07       		.byte	0x7
+ 1589 01cb 73000000 		.4byte	0x73
+ 1590 01cf 10       		.byte	0x10
+ 1591 01d0 09       		.uleb128 0x9
+ 1592 01d1 6D030000 		.4byte	.LASF32
+ 1593 01d5 0B       		.byte	0xb
+ 1594 01d6 08       		.byte	0x8
+ 1595 01d7 73000000 		.4byte	0x73
+ 1596 01db 14       		.byte	0x14
+ 1597 01dc 00       		.byte	0
+ 1598 01dd 0F       		.uleb128 0xf
+ 1599 01de 73000000 		.4byte	0x73
+ 1600 01e2 ED010000 		.4byte	0x1ed
+ 1601 01e6 10       		.uleb128 0x10
+ 1602 01e7 CB000000 		.4byte	0xcb
+ 1603 01eb 02       		.byte	0x2
+ 1604 01ec 00       		.byte	0
+ 1605 01ed 07       		.uleb128 0x7
+ 1606 01ee 73000000 		.4byte	.LASF33
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 39
+
+
+ 1607 01f2 14       		.byte	0x14
+ 1608 01f3 06       		.byte	0x6
+ 1609 01f4 0E       		.byte	0xe
+ 1610 01f5 36020000 		.4byte	0x236
+ 1611 01f9 09       		.uleb128 0x9
+ 1612 01fa DF030000 		.4byte	.LASF34
+ 1613 01fe 06       		.byte	0x6
+ 1614 01ff 0F       		.byte	0xf
+ 1615 0200 73000000 		.4byte	0x73
+ 1616 0204 00       		.byte	0
+ 1617 0205 09       		.uleb128 0x9
+ 1618 0206 75050000 		.4byte	.LASF35
+ 1619 020a 06       		.byte	0x6
+ 1620 020b 0F       		.byte	0xf
+ 1621 020c 73000000 		.4byte	0x73
+ 1622 0210 04       		.byte	0x4
+ 1623 0211 09       		.uleb128 0x9
+ 1624 0212 37040000 		.4byte	.LASF36
+ 1625 0216 06       		.byte	0x6
+ 1626 0217 0F       		.byte	0xf
+ 1627 0218 73000000 		.4byte	0x73
+ 1628 021c 08       		.byte	0x8
+ 1629 021d 09       		.uleb128 0x9
+ 1630 021e 4F000000 		.4byte	.LASF37
+ 1631 0222 06       		.byte	0x6
+ 1632 0223 10       		.byte	0x10
+ 1633 0224 7A000000 		.4byte	0x7a
+ 1634 0228 0C       		.byte	0xc
+ 1635 0229 09       		.uleb128 0x9
+ 1636 022a 72040000 		.4byte	.LASF38
+ 1637 022e 06       		.byte	0x6
+ 1638 022f 11       		.byte	0x11
+ 1639 0230 36020000 		.4byte	0x236
+ 1640 0234 10       		.byte	0x10
+ 1641 0235 00       		.byte	0
+ 1642 0236 06       		.uleb128 0x6
+ 1643 0237 04       		.byte	0x4
+ 1644 0238 73000000 		.4byte	0x73
+ 1645 023c 11       		.uleb128 0x11
+ 1646 023d 696400   		.ascii	"id\000"
+ 1647 0240 01       		.byte	0x1
+ 1648 0241 2C000000 		.4byte	0x2c
+ 1649 0245 07       		.byte	0x7
+ 1650 0246 24       		.byte	0x24
+ 1651 0247 5E020000 		.4byte	0x25e
+ 1652 024b 0C       		.uleb128 0xc
+ 1653 024c AE040000 		.4byte	.LASF40
+ 1654 0250 00       		.byte	0
+ 1655 0251 0C       		.uleb128 0xc
+ 1656 0252 43050000 		.4byte	.LASF41
+ 1657 0256 01       		.byte	0x1
+ 1658 0257 0C       		.uleb128 0xc
+ 1659 0258 08000000 		.4byte	.LASF42
+ 1660 025c 02       		.byte	0x2
+ 1661 025d 00       		.byte	0
+ 1662 025e 12       		.uleb128 0x12
+ 1663 025f C8050000 		.4byte	.LASF43
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 40
+
+
+ 1664 0263 01       		.byte	0x1
+ 1665 0264 2A       		.byte	0x2a
+ 1666 0265 00000000 		.4byte	.LFB64
+ 1667 0269 24000000 		.4byte	.LFE64-.LFB64
+ 1668 026d 01       		.uleb128 0x1
+ 1669 026e 9C       		.byte	0x9c
+ 1670 026f 9E020000 		.4byte	0x29e
+ 1671 0273 13       		.uleb128 0x13
+ 1672 0274 06000000 		.4byte	.LVL0
+ 1673 0278 060C0000 		.4byte	0xc06
+ 1674 027c 13       		.uleb128 0x13
+ 1675 027d 0A000000 		.4byte	.LVL1
+ 1676 0281 110C0000 		.4byte	0xc11
+ 1677 0285 13       		.uleb128 0x13
+ 1678 0286 12000000 		.4byte	.LVL2
+ 1679 028a 1C0C0000 		.4byte	0xc1c
+ 1680 028e 14       		.uleb128 0x14
+ 1681 028f 18000000 		.4byte	.LVL3
+ 1682 0293 270C0000 		.4byte	0xc27
+ 1683 0297 15       		.uleb128 0x15
+ 1684 0298 01       		.uleb128 0x1
+ 1685 0299 50       		.byte	0x50
+ 1686 029a 01       		.uleb128 0x1
+ 1687 029b 31       		.byte	0x31
+ 1688 029c 00       		.byte	0
+ 1689 029d 00       		.byte	0
+ 1690 029e 16       		.uleb128 0x16
+ 1691 029f 41060000 		.4byte	.LASF47
+ 1692 02a3 01       		.byte	0x1
+ 1693 02a4 37       		.byte	0x37
+ 1694 02a5 00000000 		.4byte	.LFB65
+ 1695 02a9 14000000 		.4byte	.LFE65-.LFB65
+ 1696 02ad 01       		.uleb128 0x1
+ 1697 02ae 9C       		.byte	0x9c
+ 1698 02af DA020000 		.4byte	0x2da
+ 1699 02b3 17       		.uleb128 0x17
+ 1700 02b4 08000000 		.4byte	.LVL4
+ 1701 02b8 320C0000 		.4byte	0xc32
+ 1702 02bc CA020000 		.4byte	0x2ca
+ 1703 02c0 15       		.uleb128 0x15
+ 1704 02c1 01       		.uleb128 0x1
+ 1705 02c2 50       		.byte	0x50
+ 1706 02c3 05       		.uleb128 0x5
+ 1707 02c4 03       		.byte	0x3
+ 1708 02c5 00000000 		.4byte	freq_INT
+ 1709 02c9 00       		.byte	0
+ 1710 02ca 14       		.uleb128 0x14
+ 1711 02cb 0E000000 		.4byte	.LVL5
+ 1712 02cf 3D0C0000 		.4byte	0xc3d
+ 1713 02d3 15       		.uleb128 0x15
+ 1714 02d4 01       		.uleb128 0x1
+ 1715 02d5 50       		.byte	0x50
+ 1716 02d6 01       		.uleb128 0x1
+ 1717 02d7 32       		.byte	0x32
+ 1718 02d8 00       		.byte	0
+ 1719 02d9 00       		.byte	0
+ 1720 02da 18       		.uleb128 0x18
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 41
+
+
+ 1721 02db 25030000 		.4byte	.LASF44
+ 1722 02df 01       		.byte	0x1
+ 1723 02e0 41       		.byte	0x41
+ 1724 02e1 A3000000 		.4byte	0xa3
+ 1725 02e5 00000000 		.4byte	.LFB66
+ 1726 02e9 40000000 		.4byte	.LFE66-.LFB66
+ 1727 02ed 01       		.uleb128 0x1
+ 1728 02ee 9C       		.byte	0x9c
+ 1729 02ef 61030000 		.4byte	0x361
+ 1730 02f3 17       		.uleb128 0x17
+ 1731 02f4 08000000 		.4byte	.LVL6
+ 1732 02f8 270C0000 		.4byte	0xc27
+ 1733 02fc 06030000 		.4byte	0x306
+ 1734 0300 15       		.uleb128 0x15
+ 1735 0301 01       		.uleb128 0x1
+ 1736 0302 50       		.byte	0x50
+ 1737 0303 01       		.uleb128 0x1
+ 1738 0304 31       		.byte	0x31
+ 1739 0305 00       		.byte	0
+ 1740 0306 17       		.uleb128 0x17
+ 1741 0307 0E000000 		.4byte	.LVL7
+ 1742 030b 480C0000 		.4byte	0xc48
+ 1743 030f 19030000 		.4byte	0x319
+ 1744 0313 15       		.uleb128 0x15
+ 1745 0314 01       		.uleb128 0x1
+ 1746 0315 50       		.byte	0x50
+ 1747 0316 01       		.uleb128 0x1
+ 1748 0317 31       		.byte	0x31
+ 1749 0318 00       		.byte	0
+ 1750 0319 17       		.uleb128 0x17
+ 1751 031a 14000000 		.4byte	.LVL8
+ 1752 031e 270C0000 		.4byte	0xc27
+ 1753 0322 2C030000 		.4byte	0x32c
+ 1754 0326 15       		.uleb128 0x15
+ 1755 0327 01       		.uleb128 0x1
+ 1756 0328 50       		.byte	0x50
+ 1757 0329 01       		.uleb128 0x1
+ 1758 032a 30       		.byte	0x30
+ 1759 032b 00       		.byte	0
+ 1760 032c 17       		.uleb128 0x17
+ 1761 032d 1A000000 		.4byte	.LVL9
+ 1762 0331 530C0000 		.4byte	0xc53
+ 1763 0335 3F030000 		.4byte	0x33f
+ 1764 0339 15       		.uleb128 0x15
+ 1765 033a 01       		.uleb128 0x1
+ 1766 033b 50       		.byte	0x50
+ 1767 033c 01       		.uleb128 0x1
+ 1768 033d 31       		.byte	0x31
+ 1769 033e 00       		.byte	0
+ 1770 033f 13       		.uleb128 0x13
+ 1771 0340 1E000000 		.4byte	.LVL10
+ 1772 0344 5E0C0000 		.4byte	0xc5e
+ 1773 0348 13       		.uleb128 0x13
+ 1774 0349 22000000 		.4byte	.LVL11
+ 1775 034d 690C0000 		.4byte	0xc69
+ 1776 0351 14       		.uleb128 0x14
+ 1777 0352 30000000 		.4byte	.LVL12
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 42
+
+
+ 1778 0356 530C0000 		.4byte	0xc53
+ 1779 035a 15       		.uleb128 0x15
+ 1780 035b 01       		.uleb128 0x1
+ 1781 035c 50       		.byte	0x50
+ 1782 035d 01       		.uleb128 0x1
+ 1783 035e 30       		.byte	0x30
+ 1784 035f 00       		.byte	0
+ 1785 0360 00       		.byte	0
+ 1786 0361 12       		.uleb128 0x12
+ 1787 0362 94060000 		.4byte	.LASF45
+ 1788 0366 01       		.byte	0x1
+ 1789 0367 56       		.byte	0x56
+ 1790 0368 00000000 		.4byte	.LFB67
+ 1791 036c 2A000000 		.4byte	.LFE67-.LFB67
+ 1792 0370 01       		.uleb128 0x1
+ 1793 0371 9C       		.byte	0x9c
+ 1794 0372 D9030000 		.4byte	0x3d9
+ 1795 0376 19       		.uleb128 0x19
+ 1796 0377 636600   		.ascii	"cf\000"
+ 1797 037a 01       		.byte	0x1
+ 1798 037b 56       		.byte	0x56
+ 1799 037c D9030000 		.4byte	0x3d9
+ 1800 0380 00000000 		.4byte	.LLST0
+ 1801 0384 17       		.uleb128 0x17
+ 1802 0385 0A000000 		.4byte	.LVL15
+ 1803 0389 740C0000 		.4byte	0xc74
+ 1804 038d 97030000 		.4byte	0x397
+ 1805 0391 15       		.uleb128 0x15
+ 1806 0392 01       		.uleb128 0x1
+ 1807 0393 50       		.byte	0x50
+ 1808 0394 01       		.uleb128 0x1
+ 1809 0395 30       		.byte	0x30
+ 1810 0396 00       		.byte	0
+ 1811 0397 13       		.uleb128 0x13
+ 1812 0398 0E000000 		.4byte	.LVL16
+ 1813 039c DA020000 		.4byte	0x2da
+ 1814 03a0 17       		.uleb128 0x17
+ 1815 03a1 16000000 		.4byte	.LVL17
+ 1816 03a5 740C0000 		.4byte	0xc74
+ 1817 03a9 B3030000 		.4byte	0x3b3
+ 1818 03ad 15       		.uleb128 0x15
+ 1819 03ae 01       		.uleb128 0x1
+ 1820 03af 50       		.byte	0x50
+ 1821 03b0 01       		.uleb128 0x1
+ 1822 03b1 33       		.byte	0x33
+ 1823 03b2 00       		.byte	0
+ 1824 03b3 13       		.uleb128 0x13
+ 1825 03b4 1A000000 		.4byte	.LVL18
+ 1826 03b8 DA020000 		.4byte	0x2da
+ 1827 03bc 17       		.uleb128 0x17
+ 1828 03bd 22000000 		.4byte	.LVL19
+ 1829 03c1 740C0000 		.4byte	0xc74
+ 1830 03c5 CF030000 		.4byte	0x3cf
+ 1831 03c9 15       		.uleb128 0x15
+ 1832 03ca 01       		.uleb128 0x1
+ 1833 03cb 50       		.byte	0x50
+ 1834 03cc 01       		.uleb128 0x1
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 43
+
+
+ 1835 03cd 31       		.byte	0x31
+ 1836 03ce 00       		.byte	0
+ 1837 03cf 13       		.uleb128 0x13
+ 1838 03d0 26000000 		.4byte	.LVL20
+ 1839 03d4 DA020000 		.4byte	0x2da
+ 1840 03d8 00       		.byte	0
+ 1841 03d9 06       		.uleb128 0x6
+ 1842 03da 04       		.byte	0x4
+ 1843 03db D8000000 		.4byte	0xd8
+ 1844 03df 12       		.uleb128 0x12
+ 1845 03e0 AF060000 		.4byte	.LASF46
+ 1846 03e4 01       		.byte	0x1
+ 1847 03e5 67       		.byte	0x67
+ 1848 03e6 00000000 		.4byte	.LFB68
+ 1849 03ea 5E000000 		.4byte	.LFE68-.LFB68
+ 1850 03ee 01       		.uleb128 0x1
+ 1851 03ef 9C       		.byte	0x9c
+ 1852 03f0 1F040000 		.4byte	0x41f
+ 1853 03f4 19       		.uleb128 0x19
+ 1854 03f5 6300     		.ascii	"c\000"
+ 1855 03f7 01       		.byte	0x1
+ 1856 03f8 67       		.byte	0x67
+ 1857 03f9 1F040000 		.4byte	0x41f
+ 1858 03fd 1E000000 		.4byte	.LLST1
+ 1859 0401 1A       		.uleb128 0x1a
+ 1860 0402 636600   		.ascii	"cf\000"
+ 1861 0405 01       		.byte	0x1
+ 1862 0406 69       		.byte	0x69
+ 1863 0407 D8000000 		.4byte	0xd8
+ 1864 040b 02       		.uleb128 0x2
+ 1865 040c 91       		.byte	0x91
+ 1866 040d 70       		.sleb128 -16
+ 1867 040e 14       		.uleb128 0x14
+ 1868 040f 0C000000 		.4byte	.LVL23
+ 1869 0413 61030000 		.4byte	0x361
+ 1870 0417 15       		.uleb128 0x15
+ 1871 0418 01       		.uleb128 0x1
+ 1872 0419 50       		.byte	0x50
+ 1873 041a 02       		.uleb128 0x2
+ 1874 041b 7D       		.byte	0x7d
+ 1875 041c 00       		.sleb128 0
+ 1876 041d 00       		.byte	0
+ 1877 041e 00       		.byte	0
+ 1878 041f 06       		.uleb128 0x6
+ 1879 0420 04       		.byte	0x4
+ 1880 0421 09010000 		.4byte	0x109
+ 1881 0425 16       		.uleb128 0x16
+ 1882 0426 4F040000 		.4byte	.LASF48
+ 1883 042a 02       		.byte	0x2
+ 1884 042b 18       		.byte	0x18
+ 1885 042c 00000000 		.4byte	.LFB69
+ 1886 0430 0C000000 		.4byte	.LFE69-.LFB69
+ 1887 0434 01       		.uleb128 0x1
+ 1888 0435 9C       		.byte	0x9c
+ 1889 0436 4D040000 		.4byte	0x44d
+ 1890 043a 13       		.uleb128 0x13
+ 1891 043b 06000000 		.4byte	.LVL24
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 44
+
+
+ 1892 043f 7F0C0000 		.4byte	0xc7f
+ 1893 0443 13       		.uleb128 0x13
+ 1894 0444 0A000000 		.4byte	.LVL25
+ 1895 0448 8A0C0000 		.4byte	0xc8a
+ 1896 044c 00       		.byte	0
+ 1897 044d 1B       		.uleb128 0x1b
+ 1898 044e 39010000 		.4byte	.LASF60
+ 1899 0452 02       		.byte	0x2
+ 1900 0453 22       		.byte	0x22
+ 1901 0454 AF000000 		.4byte	0xaf
+ 1902 0458 00000000 		.4byte	.LFB70
+ 1903 045c 20000000 		.4byte	.LFE70-.LFB70
+ 1904 0460 01       		.uleb128 0x1
+ 1905 0461 9C       		.byte	0x9c
+ 1906 0462 85040000 		.4byte	0x485
+ 1907 0466 19       		.uleb128 0x19
+ 1908 0467 61646300 		.ascii	"adc\000"
+ 1909 046b 02       		.byte	0x2
+ 1910 046c 22       		.byte	0x22
+ 1911 046d 81000000 		.4byte	0x81
+ 1912 0471 3C000000 		.4byte	.LLST2
+ 1913 0475 1C       		.uleb128 0x1c
+ 1914 0476 C7060000 		.4byte	.LASF49
+ 1915 047a 02       		.byte	0x2
+ 1916 047b 25       		.byte	0x25
+ 1917 047c AF000000 		.4byte	0xaf
+ 1918 0480 5D000000 		.4byte	.LLST3
+ 1919 0484 00       		.byte	0
+ 1920 0485 1D       		.uleb128 0x1d
+ 1921 0486 86010000 		.4byte	.LASF50
+ 1922 048a 02       		.byte	0x2
+ 1923 048b 2E       		.byte	0x2e
+ 1924 048c A3000000 		.4byte	0xa3
+ 1925 0490 00000000 		.4byte	.LFB71
+ 1926 0494 1E000000 		.4byte	.LFE71-.LFB71
+ 1927 0498 01       		.uleb128 0x1
+ 1928 0499 9C       		.byte	0x9c
+ 1929 049a D3040000 		.4byte	0x4d3
+ 1930 049e 1C       		.uleb128 0x1c
+ 1931 049f C6010000 		.4byte	.LASF51
+ 1932 04a3 02       		.byte	0x2
+ 1933 04a4 30       		.byte	0x30
+ 1934 04a5 81000000 		.4byte	0x81
+ 1935 04a9 7B000000 		.4byte	.LLST4
+ 1936 04ad 17       		.uleb128 0x17
+ 1937 04ae 08000000 		.4byte	.LVL33
+ 1938 04b2 950C0000 		.4byte	0xc95
+ 1939 04b6 C0040000 		.4byte	0x4c0
+ 1940 04ba 15       		.uleb128 0x15
+ 1941 04bb 01       		.uleb128 0x1
+ 1942 04bc 50       		.byte	0x50
+ 1943 04bd 01       		.uleb128 0x1
+ 1944 04be 30       		.byte	0x30
+ 1945 04bf 00       		.byte	0
+ 1946 04c0 13       		.uleb128 0x13
+ 1947 04c1 10000000 		.4byte	.LVL34
+ 1948 04c5 A00C0000 		.4byte	0xca0
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 45
+
+
+ 1949 04c9 13       		.uleb128 0x13
+ 1950 04ca 16000000 		.4byte	.LVL35
+ 1951 04ce 4D040000 		.4byte	0x44d
+ 1952 04d2 00       		.byte	0
+ 1953 04d3 1D       		.uleb128 0x1d
+ 1954 04d4 5A030000 		.4byte	.LASF52
+ 1955 04d8 02       		.byte	0x2
+ 1956 04d9 3D       		.byte	0x3d
+ 1957 04da A3000000 		.4byte	0xa3
+ 1958 04de 00000000 		.4byte	.LFB72
+ 1959 04e2 34000000 		.4byte	.LFE72-.LFB72
+ 1960 04e6 01       		.uleb128 0x1
+ 1961 04e7 9C       		.byte	0x9c
+ 1962 04e8 25050000 		.4byte	0x525
+ 1963 04ec 1E       		.uleb128 0x1e
+ 1964 04ed 73756D00 		.ascii	"sum\000"
+ 1965 04f1 02       		.byte	0x2
+ 1966 04f2 3F       		.byte	0x3f
+ 1967 04f3 AF000000 		.4byte	0xaf
+ 1968 04f7 8E000000 		.4byte	.LLST5
+ 1969 04fb 1F       		.uleb128 0x1f
+ 1970 04fc C6010000 		.4byte	.LASF51
+ 1971 0500 02       		.byte	0x2
+ 1972 0501 43       		.byte	0x43
+ 1973 0502 A3000000 		.4byte	0xa3
+ 1974 0506 01       		.uleb128 0x1
+ 1975 0507 50       		.byte	0x50
+ 1976 0508 20       		.uleb128 0x20
+ 1977 0509 00000000 		.4byte	.Ldebug_ranges0+0
+ 1978 050d 1E       		.uleb128 0x1e
+ 1979 050e 6900     		.ascii	"i\000"
+ 1980 0510 02       		.byte	0x2
+ 1981 0511 40       		.byte	0x40
+ 1982 0512 73000000 		.4byte	0x73
+ 1983 0516 C7000000 		.4byte	.LLST6
+ 1984 051a 13       		.uleb128 0x13
+ 1985 051b 0C000000 		.4byte	.LVL39
+ 1986 051f 85040000 		.4byte	0x485
+ 1987 0523 00       		.byte	0
+ 1988 0524 00       		.byte	0
+ 1989 0525 16       		.uleb128 0x16
+ 1990 0526 65050000 		.4byte	.LASF53
+ 1991 052a 03       		.byte	0x3
+ 1992 052b 1A       		.byte	0x1a
+ 1993 052c 00000000 		.4byte	.LFB73
+ 1994 0530 1A000000 		.4byte	.LFE73-.LFB73
+ 1995 0534 01       		.uleb128 0x1
+ 1996 0535 9C       		.byte	0x9c
+ 1997 0536 75050000 		.4byte	0x575
+ 1998 053a 17       		.uleb128 0x17
+ 1999 053b 08000000 		.4byte	.LVL47
+ 2000 053f AB0C0000 		.4byte	0xcab
+ 2001 0543 4D050000 		.4byte	0x54d
+ 2002 0547 15       		.uleb128 0x15
+ 2003 0548 01       		.uleb128 0x1
+ 2004 0549 50       		.byte	0x50
+ 2005 054a 01       		.uleb128 0x1
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 46
+
+
+ 2006 054b 31       		.byte	0x31
+ 2007 054c 00       		.byte	0
+ 2008 054d 13       		.uleb128 0x13
+ 2009 054e 0C000000 		.4byte	.LVL48
+ 2010 0552 B60C0000 		.4byte	0xcb6
+ 2011 0556 17       		.uleb128 0x17
+ 2012 0557 14000000 		.4byte	.LVL49
+ 2013 055b 480C0000 		.4byte	0xc48
+ 2014 055f 6B050000 		.4byte	0x56b
+ 2015 0563 15       		.uleb128 0x15
+ 2016 0564 01       		.uleb128 0x1
+ 2017 0565 50       		.byte	0x50
+ 2018 0566 03       		.uleb128 0x3
+ 2019 0567 0A       		.byte	0xa
+ 2020 0568 B80B     		.2byte	0xbb8
+ 2021 056a 00       		.byte	0
+ 2022 056b 13       		.uleb128 0x13
+ 2023 056c 18000000 		.4byte	.LVL50
+ 2024 0570 C10C0000 		.4byte	0xcc1
+ 2025 0574 00       		.byte	0
+ 2026 0575 16       		.uleb128 0x16
+ 2027 0576 1A000000 		.4byte	.LASF54
+ 2028 057a 03       		.byte	0x3
+ 2029 057b 2A       		.byte	0x2a
+ 2030 057c 00000000 		.4byte	.LFB74
+ 2031 0580 1A000000 		.4byte	.LFE74-.LFB74
+ 2032 0584 01       		.uleb128 0x1
+ 2033 0585 9C       		.byte	0x9c
+ 2034 0586 C5050000 		.4byte	0x5c5
+ 2035 058a 17       		.uleb128 0x17
+ 2036 058b 08000000 		.4byte	.LVL51
+ 2037 058f AB0C0000 		.4byte	0xcab
+ 2038 0593 9D050000 		.4byte	0x59d
+ 2039 0597 15       		.uleb128 0x15
+ 2040 0598 01       		.uleb128 0x1
+ 2041 0599 50       		.byte	0x50
+ 2042 059a 01       		.uleb128 0x1
+ 2043 059b 30       		.byte	0x30
+ 2044 059c 00       		.byte	0
+ 2045 059d 13       		.uleb128 0x13
+ 2046 059e 0C000000 		.4byte	.LVL52
+ 2047 05a2 B60C0000 		.4byte	0xcb6
+ 2048 05a6 17       		.uleb128 0x17
+ 2049 05a7 14000000 		.4byte	.LVL53
+ 2050 05ab 480C0000 		.4byte	0xc48
+ 2051 05af BB050000 		.4byte	0x5bb
+ 2052 05b3 15       		.uleb128 0x15
+ 2053 05b4 01       		.uleb128 0x1
+ 2054 05b5 50       		.byte	0x50
+ 2055 05b6 03       		.uleb128 0x3
+ 2056 05b7 0A       		.byte	0xa
+ 2057 05b8 B80B     		.2byte	0xbb8
+ 2058 05ba 00       		.byte	0
+ 2059 05bb 13       		.uleb128 0x13
+ 2060 05bc 18000000 		.4byte	.LVL54
+ 2061 05c0 C10C0000 		.4byte	0xcc1
+ 2062 05c4 00       		.byte	0
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 47
+
+
+ 2063 05c5 16       		.uleb128 0x16
+ 2064 05c6 EE010000 		.4byte	.LASF55
+ 2065 05ca 04       		.byte	0x4
+ 2066 05cb 06       		.byte	0x6
+ 2067 05cc 00000000 		.4byte	.LFB75
+ 2068 05d0 08000000 		.4byte	.LFE75-.LFB75
+ 2069 05d4 01       		.uleb128 0x1
+ 2070 05d5 9C       		.byte	0x9c
+ 2071 05d6 E4050000 		.4byte	0x5e4
+ 2072 05da 13       		.uleb128 0x13
+ 2073 05db 06000000 		.4byte	.LVL55
+ 2074 05df CC0C0000 		.4byte	0xccc
+ 2075 05e3 00       		.byte	0
+ 2076 05e4 12       		.uleb128 0x12
+ 2077 05e5 FE060000 		.4byte	.LASF56
+ 2078 05e9 04       		.byte	0x4
+ 2079 05ea 0B       		.byte	0xb
+ 2080 05eb 00000000 		.4byte	.LFB76
+ 2081 05ef 40000000 		.4byte	.LFE76-.LFB76
+ 2082 05f3 01       		.uleb128 0x1
+ 2083 05f4 9C       		.byte	0x9c
+ 2084 05f5 7B060000 		.4byte	0x67b
+ 2085 05f9 19       		.uleb128 0x19
+ 2086 05fa 6400     		.ascii	"d\000"
+ 2087 05fc 04       		.byte	0x4
+ 2088 05fd 0B       		.byte	0xb
+ 2089 05fe 7B060000 		.4byte	0x67b
+ 2090 0602 E6000000 		.4byte	.LLST7
+ 2091 0606 1A       		.uleb128 0x1a
+ 2092 0607 62756600 		.ascii	"buf\000"
+ 2093 060b 04       		.byte	0x4
+ 2094 060c 0D       		.byte	0xd
+ 2095 060d 81060000 		.4byte	0x681
+ 2096 0611 03       		.uleb128 0x3
+ 2097 0612 91       		.byte	0x91
+ 2098 0613 947F     		.sleb128 -108
+ 2099 0615 1E       		.uleb128 0x1e
+ 2100 0616 6C656E00 		.ascii	"len\000"
+ 2101 061a 04       		.byte	0x4
+ 2102 061b 0F       		.byte	0xf
+ 2103 061c 73000000 		.4byte	0x73
+ 2104 0620 12010000 		.4byte	.LLST8
+ 2105 0624 17       		.uleb128 0x17
+ 2106 0625 10000000 		.4byte	.LVL58
+ 2107 0629 D70C0000 		.4byte	0xcd7
+ 2108 062d 44060000 		.4byte	0x644
+ 2109 0631 15       		.uleb128 0x15
+ 2110 0632 01       		.uleb128 0x1
+ 2111 0633 50       		.byte	0x50
+ 2112 0634 03       		.uleb128 0x3
+ 2113 0635 91       		.byte	0x91
+ 2114 0636 947F     		.sleb128 -108
+ 2115 0638 15       		.uleb128 0x15
+ 2116 0639 01       		.uleb128 0x1
+ 2117 063a 51       		.byte	0x51
+ 2118 063b 01       		.uleb128 0x1
+ 2119 063c 30       		.byte	0x30
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 48
+
+
+ 2120 063d 15       		.uleb128 0x15
+ 2121 063e 01       		.uleb128 0x1
+ 2122 063f 52       		.byte	0x52
+ 2123 0640 02       		.uleb128 0x2
+ 2124 0641 08       		.byte	0x8
+ 2125 0642 64       		.byte	0x64
+ 2126 0643 00       		.byte	0
+ 2127 0644 17       		.uleb128 0x17
+ 2128 0645 28000000 		.4byte	.LVL60
+ 2129 0649 E00C0000 		.4byte	0xce0
+ 2130 064d 69060000 		.4byte	0x669
+ 2131 0651 15       		.uleb128 0x15
+ 2132 0652 01       		.uleb128 0x1
+ 2133 0653 50       		.byte	0x50
+ 2134 0654 03       		.uleb128 0x3
+ 2135 0655 91       		.byte	0x91
+ 2136 0656 947F     		.sleb128 -108
+ 2137 0658 15       		.uleb128 0x15
+ 2138 0659 01       		.uleb128 0x1
+ 2139 065a 51       		.byte	0x51
+ 2140 065b 05       		.uleb128 0x5
+ 2141 065c 03       		.byte	0x3
+ 2142 065d 00000000 		.4byte	.LC0
+ 2143 0661 15       		.uleb128 0x15
+ 2144 0662 02       		.uleb128 0x2
+ 2145 0663 7D       		.byte	0x7d
+ 2146 0664 08       		.sleb128 8
+ 2147 0665 02       		.uleb128 0x2
+ 2148 0666 74       		.byte	0x74
+ 2149 0667 00       		.sleb128 0
+ 2150 0668 00       		.byte	0
+ 2151 0669 14       		.uleb128 0x14
+ 2152 066a 38000000 		.4byte	.LVL62
+ 2153 066e EB0C0000 		.4byte	0xceb
+ 2154 0672 15       		.uleb128 0x15
+ 2155 0673 01       		.uleb128 0x1
+ 2156 0674 50       		.byte	0x50
+ 2157 0675 03       		.uleb128 0x3
+ 2158 0676 91       		.byte	0x91
+ 2159 0677 947F     		.sleb128 -108
+ 2160 0679 00       		.byte	0
+ 2161 067a 00       		.byte	0
+ 2162 067b 06       		.uleb128 0x6
+ 2163 067c 04       		.byte	0x4
+ 2164 067d A1010000 		.4byte	0x1a1
+ 2165 0681 0F       		.uleb128 0xf
+ 2166 0682 BD000000 		.4byte	0xbd
+ 2167 0686 91060000 		.4byte	0x691
+ 2168 068a 10       		.uleb128 0x10
+ 2169 068b CB000000 		.4byte	0xcb
+ 2170 068f 63       		.byte	0x63
+ 2171 0690 00       		.byte	0
+ 2172 0691 16       		.uleb128 0x16
+ 2173 0692 79000000 		.4byte	.LASF57
+ 2174 0696 05       		.byte	0x5
+ 2175 0697 13       		.byte	0x13
+ 2176 0698 00000000 		.4byte	.LFB77
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 49
+
+
+ 2177 069c 14000000 		.4byte	.LFE77-.LFB77
+ 2178 06a0 01       		.uleb128 0x1
+ 2179 06a1 9C       		.byte	0x9c
+ 2180 06a2 B9060000 		.4byte	0x6b9
+ 2181 06a6 13       		.uleb128 0x13
+ 2182 06a7 06000000 		.4byte	.LVL63
+ 2183 06ab F60C0000 		.4byte	0xcf6
+ 2184 06af 13       		.uleb128 0x13
+ 2185 06b0 0A000000 		.4byte	.LVL64
+ 2186 06b4 010D0000 		.4byte	0xd01
+ 2187 06b8 00       		.byte	0
+ 2188 06b9 12       		.uleb128 0x12
+ 2189 06ba F6000000 		.4byte	.LASF58
+ 2190 06be 05       		.byte	0x5
+ 2191 06bf 19       		.byte	0x19
+ 2192 06c0 00000000 		.4byte	.LFB78
+ 2193 06c4 18000000 		.4byte	.LFE78-.LFB78
+ 2194 06c8 01       		.uleb128 0x1
+ 2195 06c9 9C       		.byte	0x9c
+ 2196 06ca E7060000 		.4byte	0x6e7
+ 2197 06ce 21       		.uleb128 0x21
+ 2198 06cf 2D010000 		.4byte	.LASF59
+ 2199 06d3 05       		.byte	0x5
+ 2200 06d4 19       		.byte	0x19
+ 2201 06d5 97000000 		.4byte	0x97
+ 2202 06d9 25010000 		.4byte	.LLST9
+ 2203 06dd 13       		.uleb128 0x13
+ 2204 06de 12000000 		.4byte	.LVL66
+ 2205 06e2 0C0D0000 		.4byte	0xd0c
+ 2206 06e6 00       		.byte	0
+ 2207 06e7 22       		.uleb128 0x22
+ 2208 06e8 F0050000 		.4byte	.LASF61
+ 2209 06ec 06       		.byte	0x6
+ 2210 06ed 17       		.byte	0x17
+ 2211 06ee 44070000 		.4byte	0x744
+ 2212 06f2 00000000 		.4byte	.LFB79
+ 2213 06f6 24000000 		.4byte	.LFE79-.LFB79
+ 2214 06fa 01       		.uleb128 0x1
+ 2215 06fb 9C       		.byte	0x9c
+ 2216 06fc 44070000 		.4byte	0x744
+ 2217 0700 21       		.uleb128 0x21
+ 2218 0701 4F000000 		.4byte	.LASF37
+ 2219 0705 06       		.byte	0x6
+ 2220 0706 17       		.byte	0x17
+ 2221 0707 7A000000 		.4byte	0x7a
+ 2222 070b 46010000 		.4byte	.LLST10
+ 2223 070f 1C       		.uleb128 0x1c
+ 2224 0710 A2050000 		.4byte	.LASF62
+ 2225 0714 06       		.byte	0x6
+ 2226 0715 19       		.byte	0x19
+ 2227 0716 44070000 		.4byte	0x744
+ 2228 071a 64010000 		.4byte	.LLST11
+ 2229 071e 17       		.uleb128 0x17
+ 2230 071f 0A000000 		.4byte	.LVL69
+ 2231 0723 170D0000 		.4byte	0xd17
+ 2232 0727 31070000 		.4byte	0x731
+ 2233 072b 15       		.uleb128 0x15
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 50
+
+
+ 2234 072c 01       		.uleb128 0x1
+ 2235 072d 50       		.byte	0x50
+ 2236 072e 01       		.uleb128 0x1
+ 2237 072f 44       		.byte	0x44
+ 2238 0730 00       		.byte	0
+ 2239 0731 14       		.uleb128 0x14
+ 2240 0732 1E000000 		.4byte	.LVL72
+ 2241 0736 170D0000 		.4byte	0xd17
+ 2242 073a 15       		.uleb128 0x15
+ 2243 073b 01       		.uleb128 0x1
+ 2244 073c 50       		.byte	0x50
+ 2245 073d 04       		.uleb128 0x4
+ 2246 073e 75       		.byte	0x75
+ 2247 073f 00       		.sleb128 0
+ 2248 0740 32       		.byte	0x32
+ 2249 0741 24       		.byte	0x24
+ 2250 0742 00       		.byte	0
+ 2251 0743 00       		.byte	0
+ 2252 0744 06       		.uleb128 0x6
+ 2253 0745 04       		.byte	0x4
+ 2254 0746 ED010000 		.4byte	0x1ed
+ 2255 074a 22       		.uleb128 0x22
+ 2256 074b 8D060000 		.4byte	.LASF63
+ 2257 074f 06       		.byte	0x6
+ 2258 0750 27       		.byte	0x27
+ 2259 0751 73000000 		.4byte	0x73
+ 2260 0755 00000000 		.4byte	.LFB80
+ 2261 0759 0E000000 		.4byte	.LFE80-.LFB80
+ 2262 075d 01       		.uleb128 0x1
+ 2263 075e 9C       		.byte	0x9c
+ 2264 075f 73070000 		.4byte	0x773
+ 2265 0763 21       		.uleb128 0x21
+ 2266 0764 A2050000 		.4byte	.LASF62
+ 2267 0768 06       		.byte	0x6
+ 2268 0769 27       		.byte	0x27
+ 2269 076a 44070000 		.4byte	0x744
+ 2270 076e 82010000 		.4byte	.LLST12
+ 2271 0772 00       		.byte	0
+ 2272 0773 22       		.uleb128 0x22
+ 2273 0774 07050000 		.4byte	.LASF64
+ 2274 0778 06       		.byte	0x6
+ 2275 0779 2D       		.byte	0x2d
+ 2276 077a 73000000 		.4byte	0x73
+ 2277 077e 00000000 		.4byte	.LFB81
+ 2278 0782 0A000000 		.4byte	.LFE81-.LFB81
+ 2279 0786 01       		.uleb128 0x1
+ 2280 0787 9C       		.byte	0x9c
+ 2281 0788 9C070000 		.4byte	0x79c
+ 2282 078c 21       		.uleb128 0x21
+ 2283 078d A2050000 		.4byte	.LASF62
+ 2284 0791 06       		.byte	0x6
+ 2285 0792 2D       		.byte	0x2d
+ 2286 0793 44070000 		.4byte	0x744
+ 2287 0797 A3010000 		.4byte	.LLST13
+ 2288 079b 00       		.byte	0
+ 2289 079c 12       		.uleb128 0x12
+ 2290 079d FC020000 		.4byte	.LASF65
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 51
+
+
+ 2291 07a1 06       		.byte	0x6
+ 2292 07a2 34       		.byte	0x34
+ 2293 07a3 00000000 		.4byte	.LFB82
+ 2294 07a7 2A000000 		.4byte	.LFE82-.LFB82
+ 2295 07ab 01       		.uleb128 0x1
+ 2296 07ac 9C       		.byte	0x9c
+ 2297 07ad E0070000 		.4byte	0x7e0
+ 2298 07b1 21       		.uleb128 0x21
+ 2299 07b2 A2050000 		.4byte	.LASF62
+ 2300 07b6 06       		.byte	0x6
+ 2301 07b7 34       		.byte	0x34
+ 2302 07b8 44070000 		.4byte	0x744
+ 2303 07bc C4010000 		.4byte	.LLST14
+ 2304 07c0 21       		.uleb128 0x21
+ 2305 07c1 EB050000 		.4byte	.LASF66
+ 2306 07c5 06       		.byte	0x6
+ 2307 07c6 34       		.byte	0x34
+ 2308 07c7 73000000 		.4byte	0x73
+ 2309 07cb E2010000 		.4byte	.LLST15
+ 2310 07cf 14       		.uleb128 0x14
+ 2311 07d0 0A000000 		.4byte	.LVL78
+ 2312 07d4 4A070000 		.4byte	0x74a
+ 2313 07d8 15       		.uleb128 0x15
+ 2314 07d9 01       		.uleb128 0x1
+ 2315 07da 50       		.byte	0x50
+ 2316 07db 02       		.uleb128 0x2
+ 2317 07dc 74       		.byte	0x74
+ 2318 07dd 00       		.sleb128 0
+ 2319 07de 00       		.byte	0
+ 2320 07df 00       		.byte	0
+ 2321 07e0 12       		.uleb128 0x12
+ 2322 07e1 04030000 		.4byte	.LASF67
+ 2323 07e5 07       		.byte	0x7
+ 2324 07e6 31       		.byte	0x31
+ 2325 07e7 00000000 		.4byte	.LFB86
+ 2326 07eb 20000000 		.4byte	.LFE86-.LFB86
+ 2327 07ef 01       		.uleb128 0x1
+ 2328 07f0 9C       		.byte	0x9c
+ 2329 07f1 05080000 		.4byte	0x805
+ 2330 07f5 14       		.uleb128 0x14
+ 2331 07f6 14000000 		.4byte	.LVL79
+ 2332 07fa 9C070000 		.4byte	0x79c
+ 2333 07fe 15       		.uleb128 0x15
+ 2334 07ff 01       		.uleb128 0x1
+ 2335 0800 51       		.byte	0x51
+ 2336 0801 01       		.uleb128 0x1
+ 2337 0802 30       		.byte	0x30
+ 2338 0803 00       		.byte	0
+ 2339 0804 00       		.byte	0
+ 2340 0805 12       		.uleb128 0x12
+ 2341 0806 F8030000 		.4byte	.LASF68
+ 2342 080a 07       		.byte	0x7
+ 2343 080b 37       		.byte	0x37
+ 2344 080c 00000000 		.4byte	.LFB87
+ 2345 0810 20000000 		.4byte	.LFE87-.LFB87
+ 2346 0814 01       		.uleb128 0x1
+ 2347 0815 9C       		.byte	0x9c
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 52
+
+
+ 2348 0816 2A080000 		.4byte	0x82a
+ 2349 081a 14       		.uleb128 0x14
+ 2350 081b 14000000 		.4byte	.LVL80
+ 2351 081f 9C070000 		.4byte	0x79c
+ 2352 0823 15       		.uleb128 0x15
+ 2353 0824 01       		.uleb128 0x1
+ 2354 0825 51       		.byte	0x51
+ 2355 0826 01       		.uleb128 0x1
+ 2356 0827 31       		.byte	0x31
+ 2357 0828 00       		.byte	0
+ 2358 0829 00       		.byte	0
+ 2359 082a 12       		.uleb128 0x12
+ 2360 082b 7E030000 		.4byte	.LASF69
+ 2361 082f 07       		.byte	0x7
+ 2362 0830 3D       		.byte	0x3d
+ 2363 0831 00000000 		.4byte	.LFB88
+ 2364 0835 20000000 		.4byte	.LFE88-.LFB88
+ 2365 0839 01       		.uleb128 0x1
+ 2366 083a 9C       		.byte	0x9c
+ 2367 083b 4F080000 		.4byte	0x84f
+ 2368 083f 14       		.uleb128 0x14
+ 2369 0840 14000000 		.4byte	.LVL81
+ 2370 0844 9C070000 		.4byte	0x79c
+ 2371 0848 15       		.uleb128 0x15
+ 2372 0849 01       		.uleb128 0x1
+ 2373 084a 51       		.byte	0x51
+ 2374 084b 01       		.uleb128 0x1
+ 2375 084c 32       		.byte	0x32
+ 2376 084d 00       		.byte	0
+ 2377 084e 00       		.byte	0
+ 2378 084f 22       		.uleb128 0x22
+ 2379 0850 18030000 		.4byte	.LASF70
+ 2380 0854 06       		.byte	0x6
+ 2381 0855 40       		.byte	0x40
+ 2382 0856 73000000 		.4byte	0x73
+ 2383 085a 00000000 		.4byte	.LFB83
+ 2384 085e 2E000000 		.4byte	.LFE83-.LFB83
+ 2385 0862 01       		.uleb128 0x1
+ 2386 0863 9C       		.byte	0x9c
+ 2387 0864 97080000 		.4byte	0x897
+ 2388 0868 21       		.uleb128 0x21
+ 2389 0869 A2050000 		.4byte	.LASF62
+ 2390 086d 06       		.byte	0x6
+ 2391 086e 40       		.byte	0x40
+ 2392 086f 44070000 		.4byte	0x744
+ 2393 0873 00020000 		.4byte	.LLST16
+ 2394 0877 1C       		.uleb128 0x1c
+ 2395 0878 EB050000 		.4byte	.LASF66
+ 2396 087c 06       		.byte	0x6
+ 2397 087d 44       		.byte	0x44
+ 2398 087e 73000000 		.4byte	0x73
+ 2399 0882 1E020000 		.4byte	.LLST17
+ 2400 0886 14       		.uleb128 0x14
+ 2401 0887 08000000 		.4byte	.LVL83
+ 2402 088b 73070000 		.4byte	0x773
+ 2403 088f 15       		.uleb128 0x15
+ 2404 0890 01       		.uleb128 0x1
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 53
+
+
+ 2405 0891 50       		.byte	0x50
+ 2406 0892 02       		.uleb128 0x2
+ 2407 0893 74       		.byte	0x74
+ 2408 0894 00       		.sleb128 0
+ 2409 0895 00       		.byte	0
+ 2410 0896 00       		.byte	0
+ 2411 0897 22       		.uleb128 0x22
+ 2412 0898 DF030000 		.4byte	.LASF34
+ 2413 089c 06       		.byte	0x6
+ 2414 089d 4C       		.byte	0x4c
+ 2415 089e 73000000 		.4byte	0x73
+ 2416 08a2 00000000 		.4byte	.LFB84
+ 2417 08a6 1A000000 		.4byte	.LFE84-.LFB84
+ 2418 08aa 01       		.uleb128 0x1
+ 2419 08ab 9C       		.byte	0x9c
+ 2420 08ac D0080000 		.4byte	0x8d0
+ 2421 08b0 21       		.uleb128 0x21
+ 2422 08b1 A2050000 		.4byte	.LASF62
+ 2423 08b5 06       		.byte	0x6
+ 2424 08b6 4C       		.byte	0x4c
+ 2425 08b7 44070000 		.4byte	0x744
+ 2426 08bb 31020000 		.4byte	.LLST18
+ 2427 08bf 14       		.uleb128 0x14
+ 2428 08c0 08000000 		.4byte	.LVL87
+ 2429 08c4 73070000 		.4byte	0x773
+ 2430 08c8 15       		.uleb128 0x15
+ 2431 08c9 01       		.uleb128 0x1
+ 2432 08ca 50       		.byte	0x50
+ 2433 08cb 02       		.uleb128 0x2
+ 2434 08cc 74       		.byte	0x74
+ 2435 08cd 00       		.sleb128 0
+ 2436 08ce 00       		.byte	0
+ 2437 08cf 00       		.byte	0
+ 2438 08d0 22       		.uleb128 0x22
+ 2439 08d1 75050000 		.4byte	.LASF35
+ 2440 08d5 06       		.byte	0x6
+ 2441 08d6 54       		.byte	0x54
+ 2442 08d7 73000000 		.4byte	0x73
+ 2443 08db 00000000 		.4byte	.LFB85
+ 2444 08df 1A000000 		.4byte	.LFE85-.LFB85
+ 2445 08e3 01       		.uleb128 0x1
+ 2446 08e4 9C       		.byte	0x9c
+ 2447 08e5 09090000 		.4byte	0x909
+ 2448 08e9 21       		.uleb128 0x21
+ 2449 08ea A2050000 		.4byte	.LASF62
+ 2450 08ee 06       		.byte	0x6
+ 2451 08ef 54       		.byte	0x54
+ 2452 08f0 44070000 		.4byte	0x744
+ 2453 08f4 4F020000 		.4byte	.LLST19
+ 2454 08f8 14       		.uleb128 0x14
+ 2455 08f9 08000000 		.4byte	.LVL90
+ 2456 08fd 73070000 		.4byte	0x773
+ 2457 0901 15       		.uleb128 0x15
+ 2458 0902 01       		.uleb128 0x1
+ 2459 0903 50       		.byte	0x50
+ 2460 0904 02       		.uleb128 0x2
+ 2461 0905 74       		.byte	0x74
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 54
+
+
+ 2462 0906 00       		.sleb128 0
+ 2463 0907 00       		.byte	0
+ 2464 0908 00       		.byte	0
+ 2465 0909 12       		.uleb128 0x12
+ 2466 090a 42000000 		.4byte	.LASF71
+ 2467 090e 07       		.byte	0x7
+ 2468 090f 43       		.byte	0x43
+ 2469 0910 00000000 		.4byte	.LFB89
+ 2470 0914 02000000 		.4byte	.LFE89-.LFB89
+ 2471 0918 01       		.uleb128 0x1
+ 2472 0919 9C       		.byte	0x9c
+ 2473 091a 2C090000 		.4byte	0x92c
+ 2474 091e 23       		.uleb128 0x23
+ 2475 091f 62756600 		.ascii	"buf\000"
+ 2476 0923 07       		.byte	0x7
+ 2477 0924 43       		.byte	0x43
+ 2478 0925 D2000000 		.4byte	0xd2
+ 2479 0929 01       		.uleb128 0x1
+ 2480 092a 50       		.byte	0x50
+ 2481 092b 00       		.byte	0
+ 2482 092c 12       		.uleb128 0x12
+ 2483 092d B0050000 		.4byte	.LASF72
+ 2484 0931 07       		.byte	0x7
+ 2485 0932 65       		.byte	0x65
+ 2486 0933 00000000 		.4byte	.LFB91
+ 2487 0937 70000000 		.4byte	.LFE91-.LFB91
+ 2488 093b 01       		.uleb128 0x1
+ 2489 093c 9C       		.byte	0x9c
+ 2490 093d 1C0A0000 		.4byte	0xa1c
+ 2491 0941 19       		.uleb128 0x19
+ 2492 0942 696400   		.ascii	"id\000"
+ 2493 0945 07       		.byte	0x7
+ 2494 0946 65       		.byte	0x65
+ 2495 0947 5E000000 		.4byte	0x5e
+ 2496 094b 6D020000 		.4byte	.LLST20
+ 2497 094f 24       		.uleb128 0x24
+ 2498 0950 0C000000 		.4byte	.LBB4
+ 2499 0954 38000000 		.4byte	.LBE4-.LBB4
+ 2500 0958 E3090000 		.4byte	0x9e3
+ 2501 095c 1A       		.uleb128 0x1a
+ 2502 095d 6300     		.ascii	"c\000"
+ 2503 095f 07       		.byte	0x7
+ 2504 0960 6C       		.byte	0x6c
+ 2505 0961 09010000 		.4byte	0x109
+ 2506 0965 03       		.uleb128 0x3
+ 2507 0966 91       		.byte	0x91
+ 2508 0967 887F     		.sleb128 -120
+ 2509 0969 1C       		.uleb128 0x1c
+ 2510 096a 4C050000 		.4byte	.LASF31
+ 2511 096e 07       		.byte	0x7
+ 2512 096f 6E       		.byte	0x6e
+ 2513 0970 73000000 		.4byte	0x73
+ 2514 0974 A7020000 		.4byte	.LLST21
+ 2515 0978 1C       		.uleb128 0x1c
+ 2516 0979 6D030000 		.4byte	.LASF32
+ 2517 097d 07       		.byte	0x7
+ 2518 097e 6F       		.byte	0x6f
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 55
+
+
+ 2519 097f 73000000 		.4byte	0x73
+ 2520 0983 C9020000 		.4byte	.LLST22
+ 2521 0987 1A       		.uleb128 0x1a
+ 2522 0988 62756600 		.ascii	"buf\000"
+ 2523 098c 07       		.byte	0x7
+ 2524 098d 79       		.byte	0x79
+ 2525 098e 81060000 		.4byte	0x681
+ 2526 0992 03       		.uleb128 0x3
+ 2527 0993 91       		.byte	0x91
+ 2528 0994 8C7F     		.sleb128 -116
+ 2529 0996 17       		.uleb128 0x17
+ 2530 0997 12000000 		.4byte	.LVL95
+ 2531 099b DF030000 		.4byte	0x3df
+ 2532 099f AB090000 		.4byte	0x9ab
+ 2533 09a3 15       		.uleb128 0x15
+ 2534 09a4 01       		.uleb128 0x1
+ 2535 09a5 50       		.byte	0x50
+ 2536 09a6 03       		.uleb128 0x3
+ 2537 09a7 91       		.byte	0x91
+ 2538 09a8 887F     		.sleb128 -120
+ 2539 09aa 00       		.byte	0
+ 2540 09ab 13       		.uleb128 0x13
+ 2541 09ac 16000000 		.4byte	.LVL96
+ 2542 09b0 D3040000 		.4byte	0x4d3
+ 2543 09b4 17       		.uleb128 0x17
+ 2544 09b5 3C000000 		.4byte	.LVL98
+ 2545 09b9 E00C0000 		.4byte	0xce0
+ 2546 09bd D2090000 		.4byte	0x9d2
+ 2547 09c1 15       		.uleb128 0x15
+ 2548 09c2 01       		.uleb128 0x1
+ 2549 09c3 50       		.byte	0x50
+ 2550 09c4 03       		.uleb128 0x3
+ 2551 09c5 91       		.byte	0x91
+ 2552 09c6 8C7F     		.sleb128 -116
+ 2553 09c8 15       		.uleb128 0x15
+ 2554 09c9 01       		.uleb128 0x1
+ 2555 09ca 51       		.byte	0x51
+ 2556 09cb 05       		.uleb128 0x5
+ 2557 09cc 03       		.byte	0x3
+ 2558 09cd 10000000 		.4byte	.LC1
+ 2559 09d1 00       		.byte	0
+ 2560 09d2 14       		.uleb128 0x14
+ 2561 09d3 42000000 		.4byte	.LVL99
+ 2562 09d7 E4050000 		.4byte	0x5e4
+ 2563 09db 15       		.uleb128 0x15
+ 2564 09dc 01       		.uleb128 0x1
+ 2565 09dd 50       		.byte	0x50
+ 2566 09de 02       		.uleb128 0x2
+ 2567 09df 74       		.byte	0x74
+ 2568 09e0 00       		.sleb128 0
+ 2569 09e1 00       		.byte	0
+ 2570 09e2 00       		.byte	0
+ 2571 09e3 13       		.uleb128 0x13
+ 2572 09e4 4E000000 		.4byte	.LVL101
+ 2573 09e8 25050000 		.4byte	0x525
+ 2574 09ec 17       		.uleb128 0x17
+ 2575 09ed 56000000 		.4byte	.LVL102
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 56
+
+
+ 2576 09f1 480C0000 		.4byte	0xc48
+ 2577 09f5 010A0000 		.4byte	0xa01
+ 2578 09f9 15       		.uleb128 0x15
+ 2579 09fa 01       		.uleb128 0x1
+ 2580 09fb 50       		.byte	0x50
+ 2581 09fc 03       		.uleb128 0x3
+ 2582 09fd 0A       		.byte	0xa
+ 2583 09fe D007     		.2byte	0x7d0
+ 2584 0a00 00       		.byte	0
+ 2585 0a01 13       		.uleb128 0x13
+ 2586 0a02 5A000000 		.4byte	.LVL103
+ 2587 0a06 75050000 		.4byte	0x575
+ 2588 0a0a 14       		.uleb128 0x14
+ 2589 0a0b 62000000 		.4byte	.LVL104
+ 2590 0a0f 480C0000 		.4byte	0xc48
+ 2591 0a13 15       		.uleb128 0x15
+ 2592 0a14 01       		.uleb128 0x1
+ 2593 0a15 50       		.byte	0x50
+ 2594 0a16 03       		.uleb128 0x3
+ 2595 0a17 0A       		.byte	0xa
+ 2596 0a18 D007     		.2byte	0x7d0
+ 2597 0a1a 00       		.byte	0
+ 2598 0a1b 00       		.byte	0
+ 2599 0a1c 25       		.uleb128 0x25
+ 2600 0a1d 54060000 		.4byte	.LASF118
+ 2601 0a21 07       		.byte	0x7
+ 2602 0a22 45       		.byte	0x45
+ 2603 0a23 73000000 		.4byte	0x73
+ 2604 0a27 00000000 		.4byte	.LFB90
+ 2605 0a2b 5C000000 		.4byte	.LFE90-.LFB90
+ 2606 0a2f 01       		.uleb128 0x1
+ 2607 0a30 9C       		.byte	0x9c
+ 2608 0a31 D70A0000 		.4byte	0xad7
+ 2609 0a35 24       		.uleb128 0x24
+ 2610 0a36 34000000 		.4byte	.LBB5
+ 2611 0a3a 28000000 		.4byte	.LBE5-.LBB5
+ 2612 0a3e 630A0000 		.4byte	0xa63
+ 2613 0a42 1E       		.uleb128 0x1e
+ 2614 0a43 696400   		.ascii	"id\000"
+ 2615 0a46 07       		.byte	0x7
+ 2616 0a47 5A       		.byte	0x5a
+ 2617 0a48 73000000 		.4byte	0x73
+ 2618 0a4c DD020000 		.4byte	.LLST23
+ 2619 0a50 13       		.uleb128 0x13
+ 2620 0a51 42000000 		.4byte	.LVL112
+ 2621 0a55 4F080000 		.4byte	0x84f
+ 2622 0a59 13       		.uleb128 0x13
+ 2623 0a5a 46000000 		.4byte	.LVL113
+ 2624 0a5e 2C090000 		.4byte	0x92c
+ 2625 0a62 00       		.byte	0
+ 2626 0a63 17       		.uleb128 0x17
+ 2627 0a64 0A000000 		.4byte	.LVL105
+ 2628 0a68 220D0000 		.4byte	0xd22
+ 2629 0a6c 7A0A0000 		.4byte	0xa7a
+ 2630 0a70 15       		.uleb128 0x15
+ 2631 0a71 01       		.uleb128 0x1
+ 2632 0a72 50       		.byte	0x50
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 57
+
+
+ 2633 0a73 05       		.uleb128 0x5
+ 2634 0a74 03       		.byte	0x3
+ 2635 0a75 00000000 		.4byte	isr_Actuator_handler
+ 2636 0a79 00       		.byte	0
+ 2637 0a7a 17       		.uleb128 0x17
+ 2638 0a7b 10000000 		.4byte	.LVL106
+ 2639 0a7f 2D0D0000 		.4byte	0xd2d
+ 2640 0a83 910A0000 		.4byte	0xa91
+ 2641 0a87 15       		.uleb128 0x15
+ 2642 0a88 01       		.uleb128 0x1
+ 2643 0a89 50       		.byte	0x50
+ 2644 0a8a 05       		.uleb128 0x5
+ 2645 0a8b 03       		.byte	0x3
+ 2646 0a8c 00000000 		.4byte	isr_Measure_handler
+ 2647 0a90 00       		.byte	0
+ 2648 0a91 17       		.uleb128 0x17
+ 2649 0a92 16000000 		.4byte	.LVL107
+ 2650 0a96 380D0000 		.4byte	0xd38
+ 2651 0a9a A80A0000 		.4byte	0xaa8
+ 2652 0a9e 15       		.uleb128 0x15
+ 2653 0a9f 01       		.uleb128 0x1
+ 2654 0aa0 50       		.byte	0x50
+ 2655 0aa1 05       		.uleb128 0x5
+ 2656 0aa2 03       		.byte	0x3
+ 2657 0aa3 00000000 		.4byte	isr_rx_handler
+ 2658 0aa7 00       		.byte	0
+ 2659 0aa8 17       		.uleb128 0x17
+ 2660 0aa9 1C000000 		.4byte	.LVL108
+ 2661 0aad E7060000 		.4byte	0x6e7
+ 2662 0ab1 BB0A0000 		.4byte	0xabb
+ 2663 0ab5 15       		.uleb128 0x15
+ 2664 0ab6 01       		.uleb128 0x1
+ 2665 0ab7 50       		.byte	0x50
+ 2666 0ab8 01       		.uleb128 0x1
+ 2667 0ab9 3A       		.byte	0x3a
+ 2668 0aba 00       		.byte	0
+ 2669 0abb 13       		.uleb128 0x13
+ 2670 0abc 24000000 		.4byte	.LVL109
+ 2671 0ac0 9E020000 		.4byte	0x29e
+ 2672 0ac4 13       		.uleb128 0x13
+ 2673 0ac5 28000000 		.4byte	.LVL110
+ 2674 0ac9 25040000 		.4byte	0x425
+ 2675 0acd 13       		.uleb128 0x13
+ 2676 0ace 2C000000 		.4byte	.LVL111
+ 2677 0ad2 C5050000 		.4byte	0x5c5
+ 2678 0ad6 00       		.byte	0
+ 2679 0ad7 26       		.uleb128 0x26
+ 2680 0ad8 C9040000 		.4byte	.LASF73
+ 2681 0adc 0C       		.byte	0xc
+ 2682 0add 1207     		.2byte	0x712
+ 2683 0adf E30A0000 		.4byte	0xae3
+ 2684 0ae3 27       		.uleb128 0x27
+ 2685 0ae4 8C000000 		.4byte	0x8c
+ 2686 0ae8 28       		.uleb128 0x28
+ 2687 0ae9 20030000 		.4byte	.LASF74
+ 2688 0aed 01       		.byte	0x1
+ 2689 0aee 08       		.byte	0x8
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 58
+
+
+ 2690 0aef A3000000 		.4byte	0xa3
+ 2691 0af3 05       		.uleb128 0x5
+ 2692 0af4 03       		.byte	0x3
+ 2693 0af5 00000000 		.4byte	freq
+ 2694 0af9 28       		.uleb128 0x28
+ 2695 0afa E4010000 		.4byte	.LASF75
+ 2696 0afe 01       		.byte	0x1
+ 2697 0aff 09       		.byte	0x9
+ 2698 0b00 97000000 		.4byte	0x97
+ 2699 0b04 05       		.uleb128 0x5
+ 2700 0b05 03       		.byte	0x3
+ 2701 0b06 00000000 		.4byte	freqReady
+ 2702 0b0a 0F       		.uleb128 0xf
+ 2703 0b0b BD000000 		.4byte	0xbd
+ 2704 0b0f 1A0B0000 		.4byte	0xb1a
+ 2705 0b13 10       		.uleb128 0x10
+ 2706 0b14 CB000000 		.4byte	0xcb
+ 2707 0b18 FF       		.byte	0xff
+ 2708 0b19 00       		.byte	0
+ 2709 0b1a 29       		.uleb128 0x29
+ 2710 0b1b 62756600 		.ascii	"buf\000"
+ 2711 0b1f 01       		.byte	0x1
+ 2712 0b20 0A       		.byte	0xa
+ 2713 0b21 0A0B0000 		.4byte	0xb0a
+ 2714 0b25 05       		.uleb128 0x5
+ 2715 0b26 03       		.byte	0x3
+ 2716 0b27 00000000 		.4byte	buf
+ 2717 0b2b 28       		.uleb128 0x28
+ 2718 0b2c 58000000 		.4byte	.LASF76
+ 2719 0b30 01       		.byte	0x1
+ 2720 0b31 10       		.byte	0x10
+ 2721 0b32 D8000000 		.4byte	0xd8
+ 2722 0b36 05       		.uleb128 0x5
+ 2723 0b37 03       		.byte	0x3
+ 2724 0b38 00000000 		.4byte	sensorColor
+ 2725 0b3c 28       		.uleb128 0x28
+ 2726 0b3d 59060000 		.4byte	.LASF77
+ 2727 0b41 02       		.byte	0x2
+ 2728 0b42 10       		.byte	0x10
+ 2729 0b43 4D0B0000 		.4byte	0xb4d
+ 2730 0b47 05       		.uleb128 0x5
+ 2731 0b48 03       		.byte	0x3
+ 2732 0b49 00000000 		.4byte	linearity
+ 2733 0b4d 2A       		.uleb128 0x2a
+ 2734 0b4e A3000000 		.4byte	0xa3
+ 2735 0b52 28       		.uleb128 0x28
+ 2736 0b53 D9000000 		.4byte	.LASF78
+ 2737 0b57 02       		.byte	0x2
+ 2738 0b58 11       		.byte	0x11
+ 2739 0b59 630B0000 		.4byte	0xb63
+ 2740 0b5d 05       		.uleb128 0x5
+ 2741 0b5e 03       		.byte	0x3
+ 2742 0b5f 00000000 		.4byte	offset_err
+ 2743 0b63 2A       		.uleb128 0x2a
+ 2744 0b64 AF000000 		.4byte	0xaf
+ 2745 0b68 28       		.uleb128 0x28
+ 2746 0b69 CC000000 		.4byte	.LASF79
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 59
+
+
+ 2747 0b6d 02       		.byte	0x2
+ 2748 0b6e 12       		.byte	0x12
+ 2749 0b6f 630B0000 		.4byte	0xb63
+ 2750 0b73 05       		.uleb128 0x5
+ 2751 0b74 03       		.byte	0x3
+ 2752 0b75 00000000 		.4byte	gram_per_adc
+ 2753 0b79 28       		.uleb128 0x28
+ 2754 0b7a AA010000 		.4byte	.LASF80
+ 2755 0b7e 03       		.byte	0x3
+ 2756 0b7f 14       		.byte	0x14
+ 2757 0b80 4D0B0000 		.4byte	0xb4d
+ 2758 0b84 05       		.uleb128 0x5
+ 2759 0b85 03       		.byte	0x3
+ 2760 0b86 00000000 		.4byte	ACTUATOR_DELAY
+ 2761 0b8a 28       		.uleb128 0x28
+ 2762 0b8b 64000000 		.4byte	.LASF81
+ 2763 0b8f 05       		.byte	0x5
+ 2764 0b90 0F       		.byte	0xf
+ 2765 0b91 A3000000 		.4byte	0xa3
+ 2766 0b95 05       		.uleb128 0x5
+ 2767 0b96 03       		.byte	0x3
+ 2768 0b97 00000000 		.4byte	BELT_SPEED_MAX
+ 2769 0b9b 28       		.uleb128 0x28
+ 2770 0b9c 1E010000 		.4byte	.LASF82
+ 2771 0ba0 05       		.byte	0x5
+ 2772 0ba1 10       		.byte	0x10
+ 2773 0ba2 4D0B0000 		.4byte	0xb4d
+ 2774 0ba6 05       		.uleb128 0x5
+ 2775 0ba7 03       		.byte	0x3
+ 2776 0ba8 00000000 		.4byte	BELT_SPEED_OFF
+ 2777 0bac 28       		.uleb128 0x28
+ 2778 0bad 3C030000 		.4byte	.LASF83
+ 2779 0bb1 05       		.byte	0x5
+ 2780 0bb2 11       		.byte	0x11
+ 2781 0bb3 73000000 		.4byte	0x73
+ 2782 0bb7 05       		.uleb128 0x5
+ 2783 0bb8 03       		.byte	0x3
+ 2784 0bb9 00000000 		.4byte	BELT_SPEED_NORMAL
+ 2785 0bbd 28       		.uleb128 0x28
+ 2786 0bbe D6030000 		.4byte	.LASF84
+ 2787 0bc2 07       		.byte	0x7
+ 2788 0bc3 1D       		.byte	0x1d
+ 2789 0bc4 CE0B0000 		.4byte	0xbce
+ 2790 0bc8 05       		.uleb128 0x5
+ 2791 0bc9 03       		.byte	0x3
+ 2792 0bca 00000000 		.4byte	MY_DEBUG
+ 2793 0bce 2A       		.uleb128 0x2a
+ 2794 0bcf 73000000 		.4byte	0x73
+ 2795 0bd3 28       		.uleb128 0x28
+ 2796 0bd4 84060000 		.4byte	.LASF85
+ 2797 0bd8 07       		.byte	0x7
+ 2798 0bd9 1F       		.byte	0x1f
+ 2799 0bda 5E000000 		.4byte	0x5e
+ 2800 0bde 05       		.uleb128 0x5
+ 2801 0bdf 03       		.byte	0x3
+ 2802 0be0 00000000 		.4byte	msgCount
+ 2803 0be4 28       		.uleb128 0x28
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 60
+
+
+ 2804 0be5 88040000 		.4byte	.LASF86
+ 2805 0be9 07       		.byte	0x7
+ 2806 0bea 21       		.byte	0x21
+ 2807 0beb 44070000 		.4byte	0x744
+ 2808 0bef 05       		.uleb128 0x5
+ 2809 0bf0 03       		.byte	0x3
+ 2810 0bf1 00000000 		.4byte	msgQueue
+ 2811 0bf5 29       		.uleb128 0x29
+ 2812 0bf6 626F7800 		.ascii	"box\000"
+ 2813 0bfa 07       		.byte	0x7
+ 2814 0bfb 22       		.byte	0x22
+ 2815 0bfc A1010000 		.4byte	0x1a1
+ 2816 0c00 05       		.uleb128 0x5
+ 2817 0c01 03       		.byte	0x3
+ 2818 0c02 00000000 		.4byte	box
+ 2819 0c06 2B       		.uleb128 0x2b
+ 2820 0c07 3C040000 		.4byte	.LASF87
+ 2821 0c0b 3C040000 		.4byte	.LASF87
+ 2822 0c0f 0D       		.byte	0xd
+ 2823 0c10 50       		.byte	0x50
+ 2824 0c11 2B       		.uleb128 0x2b
+ 2825 0c12 A1030000 		.4byte	.LASF88
+ 2826 0c16 A1030000 		.4byte	.LASF88
+ 2827 0c1a 0D       		.byte	0xd
+ 2828 0c1b 5D       		.byte	0x5d
+ 2829 0c1c 2B       		.uleb128 0x2b
+ 2830 0c1d AB000000 		.4byte	.LASF89
+ 2831 0c21 AB000000 		.4byte	.LASF89
+ 2832 0c25 0E       		.byte	0xe
+ 2833 0c26 28       		.byte	0x28
+ 2834 0c27 2B       		.uleb128 0x2b
+ 2835 0c28 31050000 		.4byte	.LASF90
+ 2836 0c2c 31050000 		.4byte	.LASF90
+ 2837 0c30 0F       		.byte	0xf
+ 2838 0c31 2F       		.byte	0x2f
+ 2839 0c32 2B       		.uleb128 0x2b
+ 2840 0c33 E4000000 		.4byte	.LASF91
+ 2841 0c37 E4000000 		.4byte	.LASF91
+ 2842 0c3b 0E       		.byte	0xe
+ 2843 0c3c 18       		.byte	0x18
+ 2844 0c3d 2B       		.uleb128 0x2b
+ 2845 0c3e D6040000 		.4byte	.LASF92
+ 2846 0c42 D6040000 		.4byte	.LASF92
+ 2847 0c46 10       		.byte	0x10
+ 2848 0c47 26       		.byte	0x26
+ 2849 0c48 2B       		.uleb128 0x2b
+ 2850 0c49 00000000 		.4byte	.LASF93
+ 2851 0c4d 00000000 		.4byte	.LASF93
+ 2852 0c51 11       		.byte	0x11
+ 2853 0c52 76       		.byte	0x76
+ 2854 0c53 2B       		.uleb128 0x2b
+ 2855 0c54 D1050000 		.4byte	.LASF94
+ 2856 0c58 D1050000 		.4byte	.LASF94
+ 2857 0c5c 12       		.byte	0x12
+ 2858 0c5d 26       		.byte	0x26
+ 2859 0c5e 2B       		.uleb128 0x2b
+ 2860 0c5f 63060000 		.4byte	.LASF95
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 61
+
+
+ 2861 0c63 63060000 		.4byte	.LASF95
+ 2862 0c67 0D       		.byte	0xd
+ 2863 0c68 4F       		.byte	0x4f
+ 2864 0c69 2B       		.uleb128 0x2b
+ 2865 0c6a 54010000 		.4byte	.LASF96
+ 2866 0c6e 54010000 		.4byte	.LASF96
+ 2867 0c72 13       		.byte	0x13
+ 2868 0c73 92       		.byte	0x92
+ 2869 0c74 2B       		.uleb128 0x2b
+ 2870 0c75 0F050000 		.4byte	.LASF97
+ 2871 0c79 0F050000 		.4byte	.LASF97
+ 2872 0c7d 14       		.byte	0x14
+ 2873 0c7e 26       		.byte	0x26
+ 2874 0c7f 2B       		.uleb128 0x2b
+ 2875 0c80 ED060000 		.4byte	.LASF98
+ 2876 0c84 ED060000 		.4byte	.LASF98
+ 2877 0c88 15       		.byte	0x15
+ 2878 0c89 34       		.byte	0x34
+ 2879 0c8a 2B       		.uleb128 0x2b
+ 2880 0c8b 64010000 		.4byte	.LASF99
+ 2881 0c8f 64010000 		.4byte	.LASF99
+ 2882 0c93 15       		.byte	0x15
+ 2883 0c94 D1       		.byte	0xd1
+ 2884 0c95 2B       		.uleb128 0x2b
+ 2885 0c96 BB030000 		.4byte	.LASF100
+ 2886 0c9a BB030000 		.4byte	.LASF100
+ 2887 0c9e 15       		.byte	0x15
+ 2888 0c9f 39       		.byte	0x39
+ 2889 0ca0 2B       		.uleb128 0x2b
+ 2890 0ca1 2B000000 		.4byte	.LASF101
+ 2891 0ca5 2B000000 		.4byte	.LASF101
+ 2892 0ca9 15       		.byte	0x15
+ 2893 0caa 3B       		.byte	0x3b
+ 2894 0cab 2B       		.uleb128 0x2b
+ 2895 0cac 14040000 		.4byte	.LASF102
+ 2896 0cb0 14040000 		.4byte	.LASF102
+ 2897 0cb4 16       		.byte	0x16
+ 2898 0cb5 2F       		.byte	0x2f
+ 2899 0cb6 2B       		.uleb128 0x2b
+ 2900 0cb7 0B010000 		.4byte	.LASF103
+ 2901 0cbb 0B010000 		.4byte	.LASF103
+ 2902 0cbf 17       		.byte	0x17
+ 2903 0cc0 92       		.byte	0x92
+ 2904 0cc1 2B       		.uleb128 0x2b
+ 2905 0cc2 53050000 		.4byte	.LASF104
+ 2906 0cc6 53050000 		.4byte	.LASF104
+ 2907 0cca 17       		.byte	0x17
+ 2908 0ccb 93       		.byte	0x93
+ 2909 0ccc 2B       		.uleb128 0x2b
+ 2910 0ccd 63040000 		.4byte	.LASF105
+ 2911 0cd1 63040000 		.4byte	.LASF105
+ 2912 0cd5 18       		.byte	0x18
+ 2913 0cd6 54       		.byte	0x54
+ 2914 0cd7 2C       		.uleb128 0x2c
+ 2915 0cd8 0D040000 		.4byte	.LASF119
+ 2916 0cdc 0D040000 		.4byte	.LASF119
+ 2917 0ce0 2B       		.uleb128 0x2b
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 62
+
+
+ 2918 0ce1 9D040000 		.4byte	.LASF106
+ 2919 0ce5 9D040000 		.4byte	.LASF106
+ 2920 0ce9 19       		.byte	0x19
+ 2921 0cea E7       		.byte	0xe7
+ 2922 0ceb 2B       		.uleb128 0x2b
+ 2923 0cec E5030000 		.4byte	.LASF107
+ 2924 0cf0 E5030000 		.4byte	.LASF107
+ 2925 0cf4 18       		.byte	0x18
+ 2926 0cf5 8B       		.byte	0x8b
+ 2927 0cf6 2B       		.uleb128 0x2b
+ 2928 0cf7 27040000 		.4byte	.LASF108
+ 2929 0cfb 27040000 		.4byte	.LASF108
+ 2930 0cff 1A       		.byte	0x1a
+ 2931 0d00 92       		.byte	0x92
+ 2932 0d01 2B       		.uleb128 0x2b
+ 2933 0d02 F2040000 		.4byte	.LASF109
+ 2934 0d06 F2040000 		.4byte	.LASF109
+ 2935 0d0a 1A       		.byte	0x1a
+ 2936 0d0b C0       		.byte	0xc0
+ 2937 0d0c 2B       		.uleb128 0x2b
+ 2938 0d0d 17060000 		.4byte	.LASF110
+ 2939 0d11 17060000 		.4byte	.LASF110
+ 2940 0d15 1A       		.byte	0x1a
+ 2941 0d16 C3       		.byte	0xc3
+ 2942 0d17 2B       		.uleb128 0x2b
+ 2943 0d18 BF010000 		.4byte	.LASF111
+ 2944 0d1c BF010000 		.4byte	.LASF111
+ 2945 0d20 1B       		.byte	0x1b
+ 2946 0d21 64       		.byte	0x64
+ 2947 0d22 2B       		.uleb128 0x2b
+ 2948 0d23 D8060000 		.4byte	.LASF112
+ 2949 0d27 D8060000 		.4byte	.LASF112
+ 2950 0d2b 1C       		.byte	0x1c
+ 2951 0d2c 18       		.byte	0x18
+ 2952 0d2d 2B       		.uleb128 0x2b
+ 2953 0d2e 97000000 		.4byte	.LASF113
+ 2954 0d32 97000000 		.4byte	.LASF113
+ 2955 0d36 1D       		.byte	0x1d
+ 2956 0d37 18       		.byte	0x18
+ 2957 0d38 2B       		.uleb128 0x2b
+ 2958 0d39 FC050000 		.4byte	.LASF114
+ 2959 0d3d FC050000 		.4byte	.LASF114
+ 2960 0d41 1E       		.byte	0x1e
+ 2961 0d42 18       		.byte	0x18
+ 2962 0d43 00       		.byte	0
+ 2963              		.section	.debug_abbrev,"",%progbits
+ 2964              	.Ldebug_abbrev0:
+ 2965 0000 01       		.uleb128 0x1
+ 2966 0001 11       		.uleb128 0x11
+ 2967 0002 01       		.byte	0x1
+ 2968 0003 25       		.uleb128 0x25
+ 2969 0004 0E       		.uleb128 0xe
+ 2970 0005 13       		.uleb128 0x13
+ 2971 0006 0B       		.uleb128 0xb
+ 2972 0007 03       		.uleb128 0x3
+ 2973 0008 0E       		.uleb128 0xe
+ 2974 0009 1B       		.uleb128 0x1b
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 63
+
+
+ 2975 000a 0E       		.uleb128 0xe
+ 2976 000b 55       		.uleb128 0x55
+ 2977 000c 17       		.uleb128 0x17
+ 2978 000d 11       		.uleb128 0x11
+ 2979 000e 01       		.uleb128 0x1
+ 2980 000f 10       		.uleb128 0x10
+ 2981 0010 17       		.uleb128 0x17
+ 2982 0011 00       		.byte	0
+ 2983 0012 00       		.byte	0
+ 2984 0013 02       		.uleb128 0x2
+ 2985 0014 24       		.uleb128 0x24
+ 2986 0015 00       		.byte	0
+ 2987 0016 0B       		.uleb128 0xb
+ 2988 0017 0B       		.uleb128 0xb
+ 2989 0018 3E       		.uleb128 0x3e
+ 2990 0019 0B       		.uleb128 0xb
+ 2991 001a 03       		.uleb128 0x3
+ 2992 001b 0E       		.uleb128 0xe
+ 2993 001c 00       		.byte	0
+ 2994 001d 00       		.byte	0
+ 2995 001e 03       		.uleb128 0x3
+ 2996 001f 16       		.uleb128 0x16
+ 2997 0020 00       		.byte	0
+ 2998 0021 03       		.uleb128 0x3
+ 2999 0022 0E       		.uleb128 0xe
+ 3000 0023 3A       		.uleb128 0x3a
+ 3001 0024 0B       		.uleb128 0xb
+ 3002 0025 3B       		.uleb128 0x3b
+ 3003 0026 0B       		.uleb128 0xb
+ 3004 0027 49       		.uleb128 0x49
+ 3005 0028 13       		.uleb128 0x13
+ 3006 0029 00       		.byte	0
+ 3007 002a 00       		.byte	0
+ 3008 002b 04       		.uleb128 0x4
+ 3009 002c 24       		.uleb128 0x24
+ 3010 002d 00       		.byte	0
+ 3011 002e 0B       		.uleb128 0xb
+ 3012 002f 0B       		.uleb128 0xb
+ 3013 0030 3E       		.uleb128 0x3e
+ 3014 0031 0B       		.uleb128 0xb
+ 3015 0032 03       		.uleb128 0x3
+ 3016 0033 08       		.uleb128 0x8
+ 3017 0034 00       		.byte	0
+ 3018 0035 00       		.byte	0
+ 3019 0036 05       		.uleb128 0x5
+ 3020 0037 16       		.uleb128 0x16
+ 3021 0038 00       		.byte	0
+ 3022 0039 03       		.uleb128 0x3
+ 3023 003a 0E       		.uleb128 0xe
+ 3024 003b 3A       		.uleb128 0x3a
+ 3025 003c 0B       		.uleb128 0xb
+ 3026 003d 3B       		.uleb128 0x3b
+ 3027 003e 05       		.uleb128 0x5
+ 3028 003f 49       		.uleb128 0x49
+ 3029 0040 13       		.uleb128 0x13
+ 3030 0041 00       		.byte	0
+ 3031 0042 00       		.byte	0
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 64
+
+
+ 3032 0043 06       		.uleb128 0x6
+ 3033 0044 0F       		.uleb128 0xf
+ 3034 0045 00       		.byte	0
+ 3035 0046 0B       		.uleb128 0xb
+ 3036 0047 0B       		.uleb128 0xb
+ 3037 0048 49       		.uleb128 0x49
+ 3038 0049 13       		.uleb128 0x13
+ 3039 004a 00       		.byte	0
+ 3040 004b 00       		.byte	0
+ 3041 004c 07       		.uleb128 0x7
+ 3042 004d 13       		.uleb128 0x13
+ 3043 004e 01       		.byte	0x1
+ 3044 004f 03       		.uleb128 0x3
+ 3045 0050 0E       		.uleb128 0xe
+ 3046 0051 0B       		.uleb128 0xb
+ 3047 0052 0B       		.uleb128 0xb
+ 3048 0053 3A       		.uleb128 0x3a
+ 3049 0054 0B       		.uleb128 0xb
+ 3050 0055 3B       		.uleb128 0x3b
+ 3051 0056 0B       		.uleb128 0xb
+ 3052 0057 01       		.uleb128 0x1
+ 3053 0058 13       		.uleb128 0x13
+ 3054 0059 00       		.byte	0
+ 3055 005a 00       		.byte	0
+ 3056 005b 08       		.uleb128 0x8
+ 3057 005c 0D       		.uleb128 0xd
+ 3058 005d 00       		.byte	0
+ 3059 005e 03       		.uleb128 0x3
+ 3060 005f 08       		.uleb128 0x8
+ 3061 0060 3A       		.uleb128 0x3a
+ 3062 0061 0B       		.uleb128 0xb
+ 3063 0062 3B       		.uleb128 0x3b
+ 3064 0063 0B       		.uleb128 0xb
+ 3065 0064 49       		.uleb128 0x49
+ 3066 0065 13       		.uleb128 0x13
+ 3067 0066 38       		.uleb128 0x38
+ 3068 0067 0B       		.uleb128 0xb
+ 3069 0068 00       		.byte	0
+ 3070 0069 00       		.byte	0
+ 3071 006a 09       		.uleb128 0x9
+ 3072 006b 0D       		.uleb128 0xd
+ 3073 006c 00       		.byte	0
+ 3074 006d 03       		.uleb128 0x3
+ 3075 006e 0E       		.uleb128 0xe
+ 3076 006f 3A       		.uleb128 0x3a
+ 3077 0070 0B       		.uleb128 0xb
+ 3078 0071 3B       		.uleb128 0x3b
+ 3079 0072 0B       		.uleb128 0xb
+ 3080 0073 49       		.uleb128 0x49
+ 3081 0074 13       		.uleb128 0x13
+ 3082 0075 38       		.uleb128 0x38
+ 3083 0076 0B       		.uleb128 0xb
+ 3084 0077 00       		.byte	0
+ 3085 0078 00       		.byte	0
+ 3086 0079 0A       		.uleb128 0xa
+ 3087 007a 04       		.uleb128 0x4
+ 3088 007b 01       		.byte	0x1
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 65
+
+
+ 3089 007c 0B       		.uleb128 0xb
+ 3090 007d 0B       		.uleb128 0xb
+ 3091 007e 49       		.uleb128 0x49
+ 3092 007f 13       		.uleb128 0x13
+ 3093 0080 3A       		.uleb128 0x3a
+ 3094 0081 0B       		.uleb128 0xb
+ 3095 0082 3B       		.uleb128 0x3b
+ 3096 0083 0B       		.uleb128 0xb
+ 3097 0084 01       		.uleb128 0x1
+ 3098 0085 13       		.uleb128 0x13
+ 3099 0086 00       		.byte	0
+ 3100 0087 00       		.byte	0
+ 3101 0088 0B       		.uleb128 0xb
+ 3102 0089 28       		.uleb128 0x28
+ 3103 008a 00       		.byte	0
+ 3104 008b 03       		.uleb128 0x3
+ 3105 008c 08       		.uleb128 0x8
+ 3106 008d 1C       		.uleb128 0x1c
+ 3107 008e 0B       		.uleb128 0xb
+ 3108 008f 00       		.byte	0
+ 3109 0090 00       		.byte	0
+ 3110 0091 0C       		.uleb128 0xc
+ 3111 0092 28       		.uleb128 0x28
+ 3112 0093 00       		.byte	0
+ 3113 0094 03       		.uleb128 0x3
+ 3114 0095 0E       		.uleb128 0xe
+ 3115 0096 1C       		.uleb128 0x1c
+ 3116 0097 0B       		.uleb128 0xb
+ 3117 0098 00       		.byte	0
+ 3118 0099 00       		.byte	0
+ 3119 009a 0D       		.uleb128 0xd
+ 3120 009b 04       		.uleb128 0x4
+ 3121 009c 01       		.byte	0x1
+ 3122 009d 03       		.uleb128 0x3
+ 3123 009e 0E       		.uleb128 0xe
+ 3124 009f 0B       		.uleb128 0xb
+ 3125 00a0 0B       		.uleb128 0xb
+ 3126 00a1 49       		.uleb128 0x49
+ 3127 00a2 13       		.uleb128 0x13
+ 3128 00a3 3A       		.uleb128 0x3a
+ 3129 00a4 0B       		.uleb128 0xb
+ 3130 00a5 3B       		.uleb128 0x3b
+ 3131 00a6 0B       		.uleb128 0xb
+ 3132 00a7 01       		.uleb128 0x1
+ 3133 00a8 13       		.uleb128 0x13
+ 3134 00a9 00       		.byte	0
+ 3135 00aa 00       		.byte	0
+ 3136 00ab 0E       		.uleb128 0xe
+ 3137 00ac 13       		.uleb128 0x13
+ 3138 00ad 01       		.byte	0x1
+ 3139 00ae 03       		.uleb128 0x3
+ 3140 00af 08       		.uleb128 0x8
+ 3141 00b0 0B       		.uleb128 0xb
+ 3142 00b1 0B       		.uleb128 0xb
+ 3143 00b2 3A       		.uleb128 0x3a
+ 3144 00b3 0B       		.uleb128 0xb
+ 3145 00b4 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 66
+
+
+ 3146 00b5 0B       		.uleb128 0xb
+ 3147 00b6 01       		.uleb128 0x1
+ 3148 00b7 13       		.uleb128 0x13
+ 3149 00b8 00       		.byte	0
+ 3150 00b9 00       		.byte	0
+ 3151 00ba 0F       		.uleb128 0xf
+ 3152 00bb 01       		.uleb128 0x1
+ 3153 00bc 01       		.byte	0x1
+ 3154 00bd 49       		.uleb128 0x49
+ 3155 00be 13       		.uleb128 0x13
+ 3156 00bf 01       		.uleb128 0x1
+ 3157 00c0 13       		.uleb128 0x13
+ 3158 00c1 00       		.byte	0
+ 3159 00c2 00       		.byte	0
+ 3160 00c3 10       		.uleb128 0x10
+ 3161 00c4 21       		.uleb128 0x21
+ 3162 00c5 00       		.byte	0
+ 3163 00c6 49       		.uleb128 0x49
+ 3164 00c7 13       		.uleb128 0x13
+ 3165 00c8 2F       		.uleb128 0x2f
+ 3166 00c9 0B       		.uleb128 0xb
+ 3167 00ca 00       		.byte	0
+ 3168 00cb 00       		.byte	0
+ 3169 00cc 11       		.uleb128 0x11
+ 3170 00cd 04       		.uleb128 0x4
+ 3171 00ce 01       		.byte	0x1
+ 3172 00cf 03       		.uleb128 0x3
+ 3173 00d0 08       		.uleb128 0x8
+ 3174 00d1 0B       		.uleb128 0xb
+ 3175 00d2 0B       		.uleb128 0xb
+ 3176 00d3 49       		.uleb128 0x49
+ 3177 00d4 13       		.uleb128 0x13
+ 3178 00d5 3A       		.uleb128 0x3a
+ 3179 00d6 0B       		.uleb128 0xb
+ 3180 00d7 3B       		.uleb128 0x3b
+ 3181 00d8 0B       		.uleb128 0xb
+ 3182 00d9 01       		.uleb128 0x1
+ 3183 00da 13       		.uleb128 0x13
+ 3184 00db 00       		.byte	0
+ 3185 00dc 00       		.byte	0
+ 3186 00dd 12       		.uleb128 0x12
+ 3187 00de 2E       		.uleb128 0x2e
+ 3188 00df 01       		.byte	0x1
+ 3189 00e0 3F       		.uleb128 0x3f
+ 3190 00e1 19       		.uleb128 0x19
+ 3191 00e2 03       		.uleb128 0x3
+ 3192 00e3 0E       		.uleb128 0xe
+ 3193 00e4 3A       		.uleb128 0x3a
+ 3194 00e5 0B       		.uleb128 0xb
+ 3195 00e6 3B       		.uleb128 0x3b
+ 3196 00e7 0B       		.uleb128 0xb
+ 3197 00e8 27       		.uleb128 0x27
+ 3198 00e9 19       		.uleb128 0x19
+ 3199 00ea 11       		.uleb128 0x11
+ 3200 00eb 01       		.uleb128 0x1
+ 3201 00ec 12       		.uleb128 0x12
+ 3202 00ed 06       		.uleb128 0x6
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 67
+
+
+ 3203 00ee 40       		.uleb128 0x40
+ 3204 00ef 18       		.uleb128 0x18
+ 3205 00f0 9742     		.uleb128 0x2117
+ 3206 00f2 19       		.uleb128 0x19
+ 3207 00f3 01       		.uleb128 0x1
+ 3208 00f4 13       		.uleb128 0x13
+ 3209 00f5 00       		.byte	0
+ 3210 00f6 00       		.byte	0
+ 3211 00f7 13       		.uleb128 0x13
+ 3212 00f8 898201   		.uleb128 0x4109
+ 3213 00fb 00       		.byte	0
+ 3214 00fc 11       		.uleb128 0x11
+ 3215 00fd 01       		.uleb128 0x1
+ 3216 00fe 31       		.uleb128 0x31
+ 3217 00ff 13       		.uleb128 0x13
+ 3218 0100 00       		.byte	0
+ 3219 0101 00       		.byte	0
+ 3220 0102 14       		.uleb128 0x14
+ 3221 0103 898201   		.uleb128 0x4109
+ 3222 0106 01       		.byte	0x1
+ 3223 0107 11       		.uleb128 0x11
+ 3224 0108 01       		.uleb128 0x1
+ 3225 0109 31       		.uleb128 0x31
+ 3226 010a 13       		.uleb128 0x13
+ 3227 010b 00       		.byte	0
+ 3228 010c 00       		.byte	0
+ 3229 010d 15       		.uleb128 0x15
+ 3230 010e 8A8201   		.uleb128 0x410a
+ 3231 0111 00       		.byte	0
+ 3232 0112 02       		.uleb128 0x2
+ 3233 0113 18       		.uleb128 0x18
+ 3234 0114 9142     		.uleb128 0x2111
+ 3235 0116 18       		.uleb128 0x18
+ 3236 0117 00       		.byte	0
+ 3237 0118 00       		.byte	0
+ 3238 0119 16       		.uleb128 0x16
+ 3239 011a 2E       		.uleb128 0x2e
+ 3240 011b 01       		.byte	0x1
+ 3241 011c 3F       		.uleb128 0x3f
+ 3242 011d 19       		.uleb128 0x19
+ 3243 011e 03       		.uleb128 0x3
+ 3244 011f 0E       		.uleb128 0xe
+ 3245 0120 3A       		.uleb128 0x3a
+ 3246 0121 0B       		.uleb128 0xb
+ 3247 0122 3B       		.uleb128 0x3b
+ 3248 0123 0B       		.uleb128 0xb
+ 3249 0124 11       		.uleb128 0x11
+ 3250 0125 01       		.uleb128 0x1
+ 3251 0126 12       		.uleb128 0x12
+ 3252 0127 06       		.uleb128 0x6
+ 3253 0128 40       		.uleb128 0x40
+ 3254 0129 18       		.uleb128 0x18
+ 3255 012a 9742     		.uleb128 0x2117
+ 3256 012c 19       		.uleb128 0x19
+ 3257 012d 01       		.uleb128 0x1
+ 3258 012e 13       		.uleb128 0x13
+ 3259 012f 00       		.byte	0
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 68
+
+
+ 3260 0130 00       		.byte	0
+ 3261 0131 17       		.uleb128 0x17
+ 3262 0132 898201   		.uleb128 0x4109
+ 3263 0135 01       		.byte	0x1
+ 3264 0136 11       		.uleb128 0x11
+ 3265 0137 01       		.uleb128 0x1
+ 3266 0138 31       		.uleb128 0x31
+ 3267 0139 13       		.uleb128 0x13
+ 3268 013a 01       		.uleb128 0x1
+ 3269 013b 13       		.uleb128 0x13
+ 3270 013c 00       		.byte	0
+ 3271 013d 00       		.byte	0
+ 3272 013e 18       		.uleb128 0x18
+ 3273 013f 2E       		.uleb128 0x2e
+ 3274 0140 01       		.byte	0x1
+ 3275 0141 3F       		.uleb128 0x3f
+ 3276 0142 19       		.uleb128 0x19
+ 3277 0143 03       		.uleb128 0x3
+ 3278 0144 0E       		.uleb128 0xe
+ 3279 0145 3A       		.uleb128 0x3a
+ 3280 0146 0B       		.uleb128 0xb
+ 3281 0147 3B       		.uleb128 0x3b
+ 3282 0148 0B       		.uleb128 0xb
+ 3283 0149 49       		.uleb128 0x49
+ 3284 014a 13       		.uleb128 0x13
+ 3285 014b 11       		.uleb128 0x11
+ 3286 014c 01       		.uleb128 0x1
+ 3287 014d 12       		.uleb128 0x12
+ 3288 014e 06       		.uleb128 0x6
+ 3289 014f 40       		.uleb128 0x40
+ 3290 0150 18       		.uleb128 0x18
+ 3291 0151 9742     		.uleb128 0x2117
+ 3292 0153 19       		.uleb128 0x19
+ 3293 0154 01       		.uleb128 0x1
+ 3294 0155 13       		.uleb128 0x13
+ 3295 0156 00       		.byte	0
+ 3296 0157 00       		.byte	0
+ 3297 0158 19       		.uleb128 0x19
+ 3298 0159 05       		.uleb128 0x5
+ 3299 015a 00       		.byte	0
+ 3300 015b 03       		.uleb128 0x3
+ 3301 015c 08       		.uleb128 0x8
+ 3302 015d 3A       		.uleb128 0x3a
+ 3303 015e 0B       		.uleb128 0xb
+ 3304 015f 3B       		.uleb128 0x3b
+ 3305 0160 0B       		.uleb128 0xb
+ 3306 0161 49       		.uleb128 0x49
+ 3307 0162 13       		.uleb128 0x13
+ 3308 0163 02       		.uleb128 0x2
+ 3309 0164 17       		.uleb128 0x17
+ 3310 0165 00       		.byte	0
+ 3311 0166 00       		.byte	0
+ 3312 0167 1A       		.uleb128 0x1a
+ 3313 0168 34       		.uleb128 0x34
+ 3314 0169 00       		.byte	0
+ 3315 016a 03       		.uleb128 0x3
+ 3316 016b 08       		.uleb128 0x8
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 69
+
+
+ 3317 016c 3A       		.uleb128 0x3a
+ 3318 016d 0B       		.uleb128 0xb
+ 3319 016e 3B       		.uleb128 0x3b
+ 3320 016f 0B       		.uleb128 0xb
+ 3321 0170 49       		.uleb128 0x49
+ 3322 0171 13       		.uleb128 0x13
+ 3323 0172 02       		.uleb128 0x2
+ 3324 0173 18       		.uleb128 0x18
+ 3325 0174 00       		.byte	0
+ 3326 0175 00       		.byte	0
+ 3327 0176 1B       		.uleb128 0x1b
+ 3328 0177 2E       		.uleb128 0x2e
+ 3329 0178 01       		.byte	0x1
+ 3330 0179 3F       		.uleb128 0x3f
+ 3331 017a 19       		.uleb128 0x19
+ 3332 017b 03       		.uleb128 0x3
+ 3333 017c 0E       		.uleb128 0xe
+ 3334 017d 3A       		.uleb128 0x3a
+ 3335 017e 0B       		.uleb128 0xb
+ 3336 017f 3B       		.uleb128 0x3b
+ 3337 0180 0B       		.uleb128 0xb
+ 3338 0181 27       		.uleb128 0x27
+ 3339 0182 19       		.uleb128 0x19
+ 3340 0183 49       		.uleb128 0x49
+ 3341 0184 13       		.uleb128 0x13
+ 3342 0185 11       		.uleb128 0x11
+ 3343 0186 01       		.uleb128 0x1
+ 3344 0187 12       		.uleb128 0x12
+ 3345 0188 06       		.uleb128 0x6
+ 3346 0189 40       		.uleb128 0x40
+ 3347 018a 18       		.uleb128 0x18
+ 3348 018b 9642     		.uleb128 0x2116
+ 3349 018d 19       		.uleb128 0x19
+ 3350 018e 01       		.uleb128 0x1
+ 3351 018f 13       		.uleb128 0x13
+ 3352 0190 00       		.byte	0
+ 3353 0191 00       		.byte	0
+ 3354 0192 1C       		.uleb128 0x1c
+ 3355 0193 34       		.uleb128 0x34
+ 3356 0194 00       		.byte	0
+ 3357 0195 03       		.uleb128 0x3
+ 3358 0196 0E       		.uleb128 0xe
+ 3359 0197 3A       		.uleb128 0x3a
+ 3360 0198 0B       		.uleb128 0xb
+ 3361 0199 3B       		.uleb128 0x3b
+ 3362 019a 0B       		.uleb128 0xb
+ 3363 019b 49       		.uleb128 0x49
+ 3364 019c 13       		.uleb128 0x13
+ 3365 019d 02       		.uleb128 0x2
+ 3366 019e 17       		.uleb128 0x17
+ 3367 019f 00       		.byte	0
+ 3368 01a0 00       		.byte	0
+ 3369 01a1 1D       		.uleb128 0x1d
+ 3370 01a2 2E       		.uleb128 0x2e
+ 3371 01a3 01       		.byte	0x1
+ 3372 01a4 3F       		.uleb128 0x3f
+ 3373 01a5 19       		.uleb128 0x19
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 70
+
+
+ 3374 01a6 03       		.uleb128 0x3
+ 3375 01a7 0E       		.uleb128 0xe
+ 3376 01a8 3A       		.uleb128 0x3a
+ 3377 01a9 0B       		.uleb128 0xb
+ 3378 01aa 3B       		.uleb128 0x3b
+ 3379 01ab 0B       		.uleb128 0xb
+ 3380 01ac 49       		.uleb128 0x49
+ 3381 01ad 13       		.uleb128 0x13
+ 3382 01ae 11       		.uleb128 0x11
+ 3383 01af 01       		.uleb128 0x1
+ 3384 01b0 12       		.uleb128 0x12
+ 3385 01b1 06       		.uleb128 0x6
+ 3386 01b2 40       		.uleb128 0x40
+ 3387 01b3 18       		.uleb128 0x18
+ 3388 01b4 9642     		.uleb128 0x2116
+ 3389 01b6 19       		.uleb128 0x19
+ 3390 01b7 01       		.uleb128 0x1
+ 3391 01b8 13       		.uleb128 0x13
+ 3392 01b9 00       		.byte	0
+ 3393 01ba 00       		.byte	0
+ 3394 01bb 1E       		.uleb128 0x1e
+ 3395 01bc 34       		.uleb128 0x34
+ 3396 01bd 00       		.byte	0
+ 3397 01be 03       		.uleb128 0x3
+ 3398 01bf 08       		.uleb128 0x8
+ 3399 01c0 3A       		.uleb128 0x3a
+ 3400 01c1 0B       		.uleb128 0xb
+ 3401 01c2 3B       		.uleb128 0x3b
+ 3402 01c3 0B       		.uleb128 0xb
+ 3403 01c4 49       		.uleb128 0x49
+ 3404 01c5 13       		.uleb128 0x13
+ 3405 01c6 02       		.uleb128 0x2
+ 3406 01c7 17       		.uleb128 0x17
+ 3407 01c8 00       		.byte	0
+ 3408 01c9 00       		.byte	0
+ 3409 01ca 1F       		.uleb128 0x1f
+ 3410 01cb 34       		.uleb128 0x34
+ 3411 01cc 00       		.byte	0
+ 3412 01cd 03       		.uleb128 0x3
+ 3413 01ce 0E       		.uleb128 0xe
+ 3414 01cf 3A       		.uleb128 0x3a
+ 3415 01d0 0B       		.uleb128 0xb
+ 3416 01d1 3B       		.uleb128 0x3b
+ 3417 01d2 0B       		.uleb128 0xb
+ 3418 01d3 49       		.uleb128 0x49
+ 3419 01d4 13       		.uleb128 0x13
+ 3420 01d5 02       		.uleb128 0x2
+ 3421 01d6 18       		.uleb128 0x18
+ 3422 01d7 00       		.byte	0
+ 3423 01d8 00       		.byte	0
+ 3424 01d9 20       		.uleb128 0x20
+ 3425 01da 0B       		.uleb128 0xb
+ 3426 01db 01       		.byte	0x1
+ 3427 01dc 55       		.uleb128 0x55
+ 3428 01dd 17       		.uleb128 0x17
+ 3429 01de 00       		.byte	0
+ 3430 01df 00       		.byte	0
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 71
+
+
+ 3431 01e0 21       		.uleb128 0x21
+ 3432 01e1 05       		.uleb128 0x5
+ 3433 01e2 00       		.byte	0
+ 3434 01e3 03       		.uleb128 0x3
+ 3435 01e4 0E       		.uleb128 0xe
+ 3436 01e5 3A       		.uleb128 0x3a
+ 3437 01e6 0B       		.uleb128 0xb
+ 3438 01e7 3B       		.uleb128 0x3b
+ 3439 01e8 0B       		.uleb128 0xb
+ 3440 01e9 49       		.uleb128 0x49
+ 3441 01ea 13       		.uleb128 0x13
+ 3442 01eb 02       		.uleb128 0x2
+ 3443 01ec 17       		.uleb128 0x17
+ 3444 01ed 00       		.byte	0
+ 3445 01ee 00       		.byte	0
+ 3446 01ef 22       		.uleb128 0x22
+ 3447 01f0 2E       		.uleb128 0x2e
+ 3448 01f1 01       		.byte	0x1
+ 3449 01f2 3F       		.uleb128 0x3f
+ 3450 01f3 19       		.uleb128 0x19
+ 3451 01f4 03       		.uleb128 0x3
+ 3452 01f5 0E       		.uleb128 0xe
+ 3453 01f6 3A       		.uleb128 0x3a
+ 3454 01f7 0B       		.uleb128 0xb
+ 3455 01f8 3B       		.uleb128 0x3b
+ 3456 01f9 0B       		.uleb128 0xb
+ 3457 01fa 27       		.uleb128 0x27
+ 3458 01fb 19       		.uleb128 0x19
+ 3459 01fc 49       		.uleb128 0x49
+ 3460 01fd 13       		.uleb128 0x13
+ 3461 01fe 11       		.uleb128 0x11
+ 3462 01ff 01       		.uleb128 0x1
+ 3463 0200 12       		.uleb128 0x12
+ 3464 0201 06       		.uleb128 0x6
+ 3465 0202 40       		.uleb128 0x40
+ 3466 0203 18       		.uleb128 0x18
+ 3467 0204 9742     		.uleb128 0x2117
+ 3468 0206 19       		.uleb128 0x19
+ 3469 0207 01       		.uleb128 0x1
+ 3470 0208 13       		.uleb128 0x13
+ 3471 0209 00       		.byte	0
+ 3472 020a 00       		.byte	0
+ 3473 020b 23       		.uleb128 0x23
+ 3474 020c 05       		.uleb128 0x5
+ 3475 020d 00       		.byte	0
+ 3476 020e 03       		.uleb128 0x3
+ 3477 020f 08       		.uleb128 0x8
+ 3478 0210 3A       		.uleb128 0x3a
+ 3479 0211 0B       		.uleb128 0xb
+ 3480 0212 3B       		.uleb128 0x3b
+ 3481 0213 0B       		.uleb128 0xb
+ 3482 0214 49       		.uleb128 0x49
+ 3483 0215 13       		.uleb128 0x13
+ 3484 0216 02       		.uleb128 0x2
+ 3485 0217 18       		.uleb128 0x18
+ 3486 0218 00       		.byte	0
+ 3487 0219 00       		.byte	0
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 72
+
+
+ 3488 021a 24       		.uleb128 0x24
+ 3489 021b 0B       		.uleb128 0xb
+ 3490 021c 01       		.byte	0x1
+ 3491 021d 11       		.uleb128 0x11
+ 3492 021e 01       		.uleb128 0x1
+ 3493 021f 12       		.uleb128 0x12
+ 3494 0220 06       		.uleb128 0x6
+ 3495 0221 01       		.uleb128 0x1
+ 3496 0222 13       		.uleb128 0x13
+ 3497 0223 00       		.byte	0
+ 3498 0224 00       		.byte	0
+ 3499 0225 25       		.uleb128 0x25
+ 3500 0226 2E       		.uleb128 0x2e
+ 3501 0227 01       		.byte	0x1
+ 3502 0228 3F       		.uleb128 0x3f
+ 3503 0229 19       		.uleb128 0x19
+ 3504 022a 03       		.uleb128 0x3
+ 3505 022b 0E       		.uleb128 0xe
+ 3506 022c 3A       		.uleb128 0x3a
+ 3507 022d 0B       		.uleb128 0xb
+ 3508 022e 3B       		.uleb128 0x3b
+ 3509 022f 0B       		.uleb128 0xb
+ 3510 0230 27       		.uleb128 0x27
+ 3511 0231 19       		.uleb128 0x19
+ 3512 0232 49       		.uleb128 0x49
+ 3513 0233 13       		.uleb128 0x13
+ 3514 0234 8701     		.uleb128 0x87
+ 3515 0236 19       		.uleb128 0x19
+ 3516 0237 11       		.uleb128 0x11
+ 3517 0238 01       		.uleb128 0x1
+ 3518 0239 12       		.uleb128 0x12
+ 3519 023a 06       		.uleb128 0x6
+ 3520 023b 40       		.uleb128 0x40
+ 3521 023c 18       		.uleb128 0x18
+ 3522 023d 9742     		.uleb128 0x2117
+ 3523 023f 19       		.uleb128 0x19
+ 3524 0240 01       		.uleb128 0x1
+ 3525 0241 13       		.uleb128 0x13
+ 3526 0242 00       		.byte	0
+ 3527 0243 00       		.byte	0
+ 3528 0244 26       		.uleb128 0x26
+ 3529 0245 34       		.uleb128 0x34
+ 3530 0246 00       		.byte	0
+ 3531 0247 03       		.uleb128 0x3
+ 3532 0248 0E       		.uleb128 0xe
+ 3533 0249 3A       		.uleb128 0x3a
+ 3534 024a 0B       		.uleb128 0xb
+ 3535 024b 3B       		.uleb128 0x3b
+ 3536 024c 05       		.uleb128 0x5
+ 3537 024d 49       		.uleb128 0x49
+ 3538 024e 13       		.uleb128 0x13
+ 3539 024f 3F       		.uleb128 0x3f
+ 3540 0250 19       		.uleb128 0x19
+ 3541 0251 3C       		.uleb128 0x3c
+ 3542 0252 19       		.uleb128 0x19
+ 3543 0253 00       		.byte	0
+ 3544 0254 00       		.byte	0
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 73
+
+
+ 3545 0255 27       		.uleb128 0x27
+ 3546 0256 35       		.uleb128 0x35
+ 3547 0257 00       		.byte	0
+ 3548 0258 49       		.uleb128 0x49
+ 3549 0259 13       		.uleb128 0x13
+ 3550 025a 00       		.byte	0
+ 3551 025b 00       		.byte	0
+ 3552 025c 28       		.uleb128 0x28
+ 3553 025d 34       		.uleb128 0x34
+ 3554 025e 00       		.byte	0
+ 3555 025f 03       		.uleb128 0x3
+ 3556 0260 0E       		.uleb128 0xe
+ 3557 0261 3A       		.uleb128 0x3a
+ 3558 0262 0B       		.uleb128 0xb
+ 3559 0263 3B       		.uleb128 0x3b
+ 3560 0264 0B       		.uleb128 0xb
+ 3561 0265 49       		.uleb128 0x49
+ 3562 0266 13       		.uleb128 0x13
+ 3563 0267 3F       		.uleb128 0x3f
+ 3564 0268 19       		.uleb128 0x19
+ 3565 0269 02       		.uleb128 0x2
+ 3566 026a 18       		.uleb128 0x18
+ 3567 026b 00       		.byte	0
+ 3568 026c 00       		.byte	0
+ 3569 026d 29       		.uleb128 0x29
+ 3570 026e 34       		.uleb128 0x34
+ 3571 026f 00       		.byte	0
+ 3572 0270 03       		.uleb128 0x3
+ 3573 0271 08       		.uleb128 0x8
+ 3574 0272 3A       		.uleb128 0x3a
+ 3575 0273 0B       		.uleb128 0xb
+ 3576 0274 3B       		.uleb128 0x3b
+ 3577 0275 0B       		.uleb128 0xb
+ 3578 0276 49       		.uleb128 0x49
+ 3579 0277 13       		.uleb128 0x13
+ 3580 0278 3F       		.uleb128 0x3f
+ 3581 0279 19       		.uleb128 0x19
+ 3582 027a 02       		.uleb128 0x2
+ 3583 027b 18       		.uleb128 0x18
+ 3584 027c 00       		.byte	0
+ 3585 027d 00       		.byte	0
+ 3586 027e 2A       		.uleb128 0x2a
+ 3587 027f 26       		.uleb128 0x26
+ 3588 0280 00       		.byte	0
+ 3589 0281 49       		.uleb128 0x49
+ 3590 0282 13       		.uleb128 0x13
+ 3591 0283 00       		.byte	0
+ 3592 0284 00       		.byte	0
+ 3593 0285 2B       		.uleb128 0x2b
+ 3594 0286 2E       		.uleb128 0x2e
+ 3595 0287 00       		.byte	0
+ 3596 0288 3F       		.uleb128 0x3f
+ 3597 0289 19       		.uleb128 0x19
+ 3598 028a 3C       		.uleb128 0x3c
+ 3599 028b 19       		.uleb128 0x19
+ 3600 028c 6E       		.uleb128 0x6e
+ 3601 028d 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 74
+
+
+ 3602 028e 03       		.uleb128 0x3
+ 3603 028f 0E       		.uleb128 0xe
+ 3604 0290 3A       		.uleb128 0x3a
+ 3605 0291 0B       		.uleb128 0xb
+ 3606 0292 3B       		.uleb128 0x3b
+ 3607 0293 0B       		.uleb128 0xb
+ 3608 0294 00       		.byte	0
+ 3609 0295 00       		.byte	0
+ 3610 0296 2C       		.uleb128 0x2c
+ 3611 0297 2E       		.uleb128 0x2e
+ 3612 0298 00       		.byte	0
+ 3613 0299 3F       		.uleb128 0x3f
+ 3614 029a 19       		.uleb128 0x19
+ 3615 029b 3C       		.uleb128 0x3c
+ 3616 029c 19       		.uleb128 0x19
+ 3617 029d 6E       		.uleb128 0x6e
+ 3618 029e 0E       		.uleb128 0xe
+ 3619 029f 03       		.uleb128 0x3
+ 3620 02a0 0E       		.uleb128 0xe
+ 3621 02a1 00       		.byte	0
+ 3622 02a2 00       		.byte	0
+ 3623 02a3 00       		.byte	0
+ 3624              		.section	.debug_loc,"",%progbits
+ 3625              	.Ldebug_loc0:
+ 3626              	.LLST0:
+ 3627 0000 00000000 		.4byte	.LVL13
+ 3628 0004 06000000 		.4byte	.LVL14
+ 3629 0008 0100     		.2byte	0x1
+ 3630 000a 50       		.byte	0x50
+ 3631 000b 06000000 		.4byte	.LVL14
+ 3632 000f 2A000000 		.4byte	.LFE67
+ 3633 0013 0100     		.2byte	0x1
+ 3634 0015 54       		.byte	0x54
+ 3635 0016 00000000 		.4byte	0
+ 3636 001a 00000000 		.4byte	0
+ 3637              	.LLST1:
+ 3638 001e 00000000 		.4byte	.LVL21
+ 3639 0022 08000000 		.4byte	.LVL22
+ 3640 0026 0100     		.2byte	0x1
+ 3641 0028 50       		.byte	0x50
+ 3642 0029 08000000 		.4byte	.LVL22
+ 3643 002d 5E000000 		.4byte	.LFE68
+ 3644 0031 0100     		.2byte	0x1
+ 3645 0033 54       		.byte	0x54
+ 3646 0034 00000000 		.4byte	0
+ 3647 0038 00000000 		.4byte	0
+ 3648              	.LLST2:
+ 3649 003c 00000000 		.4byte	.LVL26
+ 3650 0040 05000000 		.4byte	.LVL27-1
+ 3651 0044 0100     		.2byte	0x1
+ 3652 0046 50       		.byte	0x50
+ 3653 0047 05000000 		.4byte	.LVL27-1
+ 3654 004b 20000000 		.4byte	.LFE70
+ 3655 004f 0400     		.2byte	0x4
+ 3656 0051 F3       		.byte	0xf3
+ 3657 0052 01       		.uleb128 0x1
+ 3658 0053 50       		.byte	0x50
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 75
+
+
+ 3659 0054 9F       		.byte	0x9f
+ 3660 0055 00000000 		.4byte	0
+ 3661 0059 00000000 		.4byte	0
+ 3662              	.LLST3:
+ 3663 005d 08000000 		.4byte	.LVL28
+ 3664 0061 0D000000 		.4byte	.LVL29-1
+ 3665 0065 0100     		.2byte	0x1
+ 3666 0067 50       		.byte	0x50
+ 3667 0068 0D000000 		.4byte	.LVL29-1
+ 3668 006c 1C000000 		.4byte	.LVL32
+ 3669 0070 0100     		.2byte	0x1
+ 3670 0072 54       		.byte	0x54
+ 3671 0073 00000000 		.4byte	0
+ 3672 0077 00000000 		.4byte	0
+ 3673              	.LLST4:
+ 3674 007b 10000000 		.4byte	.LVL34
+ 3675 007f 15000000 		.4byte	.LVL35-1
+ 3676 0083 0100     		.2byte	0x1
+ 3677 0085 50       		.byte	0x50
+ 3678 0086 00000000 		.4byte	0
+ 3679 008a 00000000 		.4byte	0
+ 3680              	.LLST5:
+ 3681 008e 02000000 		.4byte	.LVL37
+ 3682 0092 08000000 		.4byte	.LVL38
+ 3683 0096 0600     		.2byte	0x6
+ 3684 0098 9E       		.byte	0x9e
+ 3685 0099 04       		.uleb128 0x4
+ 3686 009a 00000000 		.4byte	0
+ 3687 009e 08000000 		.4byte	.LVL38
+ 3688 00a2 1A000000 		.4byte	.LVL42
+ 3689 00a6 0100     		.2byte	0x1
+ 3690 00a8 55       		.byte	0x55
+ 3691 00a9 1A000000 		.4byte	.LVL42
+ 3692 00ad 1C000000 		.4byte	.LVL43
+ 3693 00b1 0100     		.2byte	0x1
+ 3694 00b3 50       		.byte	0x50
+ 3695 00b4 1C000000 		.4byte	.LVL43
+ 3696 00b8 30000000 		.4byte	.LVL46
+ 3697 00bc 0100     		.2byte	0x1
+ 3698 00be 55       		.byte	0x55
+ 3699 00bf 00000000 		.4byte	0
+ 3700 00c3 00000000 		.4byte	0
+ 3701              	.LLST6:
+ 3702 00c7 02000000 		.4byte	.LVL37
+ 3703 00cb 08000000 		.4byte	.LVL38
+ 3704 00cf 0200     		.2byte	0x2
+ 3705 00d1 30       		.byte	0x30
+ 3706 00d2 9F       		.byte	0x9f
+ 3707 00d3 08000000 		.4byte	.LVL38
+ 3708 00d7 30000000 		.4byte	.LVL46
+ 3709 00db 0100     		.2byte	0x1
+ 3710 00dd 54       		.byte	0x54
+ 3711 00de 00000000 		.4byte	0
+ 3712 00e2 00000000 		.4byte	0
+ 3713              	.LLST7:
+ 3714 00e6 00000000 		.4byte	.LVL56
+ 3715 00ea 0C000000 		.4byte	.LVL57
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 76
+
+
+ 3716 00ee 0100     		.2byte	0x1
+ 3717 00f0 50       		.byte	0x50
+ 3718 00f1 0C000000 		.4byte	.LVL57
+ 3719 00f5 1A000000 		.4byte	.LVL59
+ 3720 00f9 0100     		.2byte	0x1
+ 3721 00fb 54       		.byte	0x54
+ 3722 00fc 1A000000 		.4byte	.LVL59
+ 3723 0100 40000000 		.4byte	.LFE76
+ 3724 0104 0400     		.2byte	0x4
+ 3725 0106 F3       		.byte	0xf3
+ 3726 0107 01       		.uleb128 0x1
+ 3727 0108 50       		.byte	0x50
+ 3728 0109 9F       		.byte	0x9f
+ 3729 010a 00000000 		.4byte	0
+ 3730 010e 00000000 		.4byte	0
+ 3731              	.LLST8:
+ 3732 0112 28000000 		.4byte	.LVL60
+ 3733 0116 2C000000 		.4byte	.LVL61
+ 3734 011a 0100     		.2byte	0x1
+ 3735 011c 50       		.byte	0x50
+ 3736 011d 00000000 		.4byte	0
+ 3737 0121 00000000 		.4byte	0
+ 3738              	.LLST9:
+ 3739 0125 00000000 		.4byte	.LVL65
+ 3740 0129 11000000 		.4byte	.LVL66-1
+ 3741 012d 0100     		.2byte	0x1
+ 3742 012f 50       		.byte	0x50
+ 3743 0130 11000000 		.4byte	.LVL66-1
+ 3744 0134 18000000 		.4byte	.LFE78
+ 3745 0138 0400     		.2byte	0x4
+ 3746 013a F3       		.byte	0xf3
+ 3747 013b 01       		.uleb128 0x1
+ 3748 013c 50       		.byte	0x50
+ 3749 013d 9F       		.byte	0x9f
+ 3750 013e 00000000 		.4byte	0
+ 3751 0142 00000000 		.4byte	0
+ 3752              	.LLST10:
+ 3753 0146 00000000 		.4byte	.LVL67
+ 3754 014a 06000000 		.4byte	.LVL68
+ 3755 014e 0100     		.2byte	0x1
+ 3756 0150 50       		.byte	0x50
+ 3757 0151 06000000 		.4byte	.LVL68
+ 3758 0155 24000000 		.4byte	.LFE79
+ 3759 0159 0100     		.2byte	0x1
+ 3760 015b 55       		.byte	0x55
+ 3761 015c 00000000 		.4byte	0
+ 3762 0160 00000000 		.4byte	0
+ 3763              	.LLST11:
+ 3764 0164 0C000000 		.4byte	.LVL70
+ 3765 0168 1A000000 		.4byte	.LVL71
+ 3766 016c 0100     		.2byte	0x1
+ 3767 016e 50       		.byte	0x50
+ 3768 016f 1A000000 		.4byte	.LVL71
+ 3769 0173 24000000 		.4byte	.LFE79
+ 3770 0177 0100     		.2byte	0x1
+ 3771 0179 54       		.byte	0x54
+ 3772 017a 00000000 		.4byte	0
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 77
+
+
+ 3773 017e 00000000 		.4byte	0
+ 3774              	.LLST12:
+ 3775 0182 00000000 		.4byte	.LVL73
+ 3776 0186 04000000 		.4byte	.LVL74
+ 3777 018a 0100     		.2byte	0x1
+ 3778 018c 50       		.byte	0x50
+ 3779 018d 04000000 		.4byte	.LVL74
+ 3780 0191 0E000000 		.4byte	.LFE80
+ 3781 0195 0400     		.2byte	0x4
+ 3782 0197 F3       		.byte	0xf3
+ 3783 0198 01       		.uleb128 0x1
+ 3784 0199 50       		.byte	0x50
+ 3785 019a 9F       		.byte	0x9f
+ 3786 019b 00000000 		.4byte	0
+ 3787 019f 00000000 		.4byte	0
+ 3788              	.LLST13:
+ 3789 01a3 00000000 		.4byte	.LVL75
+ 3790 01a7 02000000 		.4byte	.LVL76
+ 3791 01ab 0100     		.2byte	0x1
+ 3792 01ad 50       		.byte	0x50
+ 3793 01ae 02000000 		.4byte	.LVL76
+ 3794 01b2 0A000000 		.4byte	.LFE81
+ 3795 01b6 0400     		.2byte	0x4
+ 3796 01b8 F3       		.byte	0xf3
+ 3797 01b9 01       		.uleb128 0x1
+ 3798 01ba 50       		.byte	0x50
+ 3799 01bb 9F       		.byte	0x9f
+ 3800 01bc 00000000 		.4byte	0
+ 3801 01c0 00000000 		.4byte	0
+ 3802              	.LLST14:
+ 3803 01c4 00000000 		.4byte	.LVL77
+ 3804 01c8 09000000 		.4byte	.LVL78-1
+ 3805 01cc 0100     		.2byte	0x1
+ 3806 01ce 50       		.byte	0x50
+ 3807 01cf 09000000 		.4byte	.LVL78-1
+ 3808 01d3 2A000000 		.4byte	.LFE82
+ 3809 01d7 0100     		.2byte	0x1
+ 3810 01d9 54       		.byte	0x54
+ 3811 01da 00000000 		.4byte	0
+ 3812 01de 00000000 		.4byte	0
+ 3813              	.LLST15:
+ 3814 01e2 00000000 		.4byte	.LVL77
+ 3815 01e6 09000000 		.4byte	.LVL78-1
+ 3816 01ea 0100     		.2byte	0x1
+ 3817 01ec 51       		.byte	0x51
+ 3818 01ed 09000000 		.4byte	.LVL78-1
+ 3819 01f1 2A000000 		.4byte	.LFE82
+ 3820 01f5 0100     		.2byte	0x1
+ 3821 01f7 55       		.byte	0x55
+ 3822 01f8 00000000 		.4byte	0
+ 3823 01fc 00000000 		.4byte	0
+ 3824              	.LLST16:
+ 3825 0200 00000000 		.4byte	.LVL82
+ 3826 0204 07000000 		.4byte	.LVL83-1
+ 3827 0208 0100     		.2byte	0x1
+ 3828 020a 50       		.byte	0x50
+ 3829 020b 07000000 		.4byte	.LVL83-1
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 78
+
+
+ 3830 020f 2E000000 		.4byte	.LFE83
+ 3831 0213 0100     		.2byte	0x1
+ 3832 0215 54       		.byte	0x54
+ 3833 0216 00000000 		.4byte	0
+ 3834 021a 00000000 		.4byte	0
+ 3835              	.LLST17:
+ 3836 021e 12000000 		.4byte	.LVL84
+ 3837 0222 28000000 		.4byte	.LVL85
+ 3838 0226 0100     		.2byte	0x1
+ 3839 0228 50       		.byte	0x50
+ 3840 0229 00000000 		.4byte	0
+ 3841 022d 00000000 		.4byte	0
+ 3842              	.LLST18:
+ 3843 0231 00000000 		.4byte	.LVL86
+ 3844 0235 07000000 		.4byte	.LVL87-1
+ 3845 0239 0100     		.2byte	0x1
+ 3846 023b 50       		.byte	0x50
+ 3847 023c 07000000 		.4byte	.LVL87-1
+ 3848 0240 1A000000 		.4byte	.LFE84
+ 3849 0244 0100     		.2byte	0x1
+ 3850 0246 54       		.byte	0x54
+ 3851 0247 00000000 		.4byte	0
+ 3852 024b 00000000 		.4byte	0
+ 3853              	.LLST19:
+ 3854 024f 00000000 		.4byte	.LVL89
+ 3855 0253 07000000 		.4byte	.LVL90-1
+ 3856 0257 0100     		.2byte	0x1
+ 3857 0259 50       		.byte	0x50
+ 3858 025a 07000000 		.4byte	.LVL90-1
+ 3859 025e 1A000000 		.4byte	.LFE85
+ 3860 0262 0100     		.2byte	0x1
+ 3861 0264 54       		.byte	0x54
+ 3862 0265 00000000 		.4byte	0
+ 3863 0269 00000000 		.4byte	0
+ 3864              	.LLST20:
+ 3865 026d 00000000 		.4byte	.LVL93
+ 3866 0271 0E000000 		.4byte	.LVL94
+ 3867 0275 0100     		.2byte	0x1
+ 3868 0277 50       		.byte	0x50
+ 3869 0278 0E000000 		.4byte	.LVL94
+ 3870 027c 44000000 		.4byte	.LVL100
+ 3871 0280 0400     		.2byte	0x4
+ 3872 0282 F3       		.byte	0xf3
+ 3873 0283 01       		.uleb128 0x1
+ 3874 0284 50       		.byte	0x50
+ 3875 0285 9F       		.byte	0x9f
+ 3876 0286 44000000 		.4byte	.LVL100
+ 3877 028a 4D000000 		.4byte	.LVL101-1
+ 3878 028e 0100     		.2byte	0x1
+ 3879 0290 50       		.byte	0x50
+ 3880 0291 4D000000 		.4byte	.LVL101-1
+ 3881 0295 70000000 		.4byte	.LFE91
+ 3882 0299 0400     		.2byte	0x4
+ 3883 029b F3       		.byte	0xf3
+ 3884 029c 01       		.uleb128 0x1
+ 3885 029d 50       		.byte	0x50
+ 3886 029e 9F       		.byte	0x9f
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 79
+
+
+ 3887 029f 00000000 		.4byte	0
+ 3888 02a3 00000000 		.4byte	0
+ 3889              	.LLST21:
+ 3890 02a7 16000000 		.4byte	.LVL96
+ 3891 02ab 38000000 		.4byte	.LVL97
+ 3892 02af 0100     		.2byte	0x1
+ 3893 02b1 50       		.byte	0x50
+ 3894 02b2 38000000 		.4byte	.LVL97
+ 3895 02b6 3B000000 		.4byte	.LVL98-1
+ 3896 02ba 0500     		.2byte	0x5
+ 3897 02bc 03       		.byte	0x3
+ 3898 02bd 10000000 		.4byte	box+16
+ 3899 02c1 00000000 		.4byte	0
+ 3900 02c5 00000000 		.4byte	0
+ 3901              	.LLST22:
+ 3902 02c9 16000000 		.4byte	.LVL96
+ 3903 02cd 44000000 		.4byte	.LVL100
+ 3904 02d1 0200     		.2byte	0x2
+ 3905 02d3 31       		.byte	0x31
+ 3906 02d4 9F       		.byte	0x9f
+ 3907 02d5 00000000 		.4byte	0
+ 3908 02d9 00000000 		.4byte	0
+ 3909              	.LLST23:
+ 3910 02dd 42000000 		.4byte	.LVL112
+ 3911 02e1 45000000 		.4byte	.LVL113-1
+ 3912 02e5 0100     		.2byte	0x1
+ 3913 02e7 50       		.byte	0x50
+ 3914 02e8 00000000 		.4byte	0
+ 3915 02ec 00000000 		.4byte	0
+ 3916              		.section	.debug_aranges,"",%progbits
+ 3917 0000 F4000000 		.4byte	0xf4
+ 3918 0004 0200     		.2byte	0x2
+ 3919 0006 00000000 		.4byte	.Ldebug_info0
+ 3920 000a 04       		.byte	0x4
+ 3921 000b 00       		.byte	0
+ 3922 000c 0000     		.2byte	0
+ 3923 000e 0000     		.2byte	0
+ 3924 0010 00000000 		.4byte	.LFB64
+ 3925 0014 24000000 		.4byte	.LFE64-.LFB64
+ 3926 0018 00000000 		.4byte	.LFB65
+ 3927 001c 14000000 		.4byte	.LFE65-.LFB65
+ 3928 0020 00000000 		.4byte	.LFB66
+ 3929 0024 40000000 		.4byte	.LFE66-.LFB66
+ 3930 0028 00000000 		.4byte	.LFB67
+ 3931 002c 2A000000 		.4byte	.LFE67-.LFB67
+ 3932 0030 00000000 		.4byte	.LFB68
+ 3933 0034 5E000000 		.4byte	.LFE68-.LFB68
+ 3934 0038 00000000 		.4byte	.LFB69
+ 3935 003c 0C000000 		.4byte	.LFE69-.LFB69
+ 3936 0040 00000000 		.4byte	.LFB70
+ 3937 0044 20000000 		.4byte	.LFE70-.LFB70
+ 3938 0048 00000000 		.4byte	.LFB71
+ 3939 004c 1E000000 		.4byte	.LFE71-.LFB71
+ 3940 0050 00000000 		.4byte	.LFB72
+ 3941 0054 34000000 		.4byte	.LFE72-.LFB72
+ 3942 0058 00000000 		.4byte	.LFB73
+ 3943 005c 1A000000 		.4byte	.LFE73-.LFB73
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 80
+
+
+ 3944 0060 00000000 		.4byte	.LFB74
+ 3945 0064 1A000000 		.4byte	.LFE74-.LFB74
+ 3946 0068 00000000 		.4byte	.LFB75
+ 3947 006c 08000000 		.4byte	.LFE75-.LFB75
+ 3948 0070 00000000 		.4byte	.LFB76
+ 3949 0074 40000000 		.4byte	.LFE76-.LFB76
+ 3950 0078 00000000 		.4byte	.LFB77
+ 3951 007c 14000000 		.4byte	.LFE77-.LFB77
+ 3952 0080 00000000 		.4byte	.LFB78
+ 3953 0084 18000000 		.4byte	.LFE78-.LFB78
+ 3954 0088 00000000 		.4byte	.LFB79
+ 3955 008c 24000000 		.4byte	.LFE79-.LFB79
+ 3956 0090 00000000 		.4byte	.LFB80
+ 3957 0094 0E000000 		.4byte	.LFE80-.LFB80
+ 3958 0098 00000000 		.4byte	.LFB81
+ 3959 009c 0A000000 		.4byte	.LFE81-.LFB81
+ 3960 00a0 00000000 		.4byte	.LFB82
+ 3961 00a4 2A000000 		.4byte	.LFE82-.LFB82
+ 3962 00a8 00000000 		.4byte	.LFB86
+ 3963 00ac 20000000 		.4byte	.LFE86-.LFB86
+ 3964 00b0 00000000 		.4byte	.LFB87
+ 3965 00b4 20000000 		.4byte	.LFE87-.LFB87
+ 3966 00b8 00000000 		.4byte	.LFB88
+ 3967 00bc 20000000 		.4byte	.LFE88-.LFB88
+ 3968 00c0 00000000 		.4byte	.LFB83
+ 3969 00c4 2E000000 		.4byte	.LFE83-.LFB83
+ 3970 00c8 00000000 		.4byte	.LFB84
+ 3971 00cc 1A000000 		.4byte	.LFE84-.LFB84
+ 3972 00d0 00000000 		.4byte	.LFB85
+ 3973 00d4 1A000000 		.4byte	.LFE85-.LFB85
+ 3974 00d8 00000000 		.4byte	.LFB89
+ 3975 00dc 02000000 		.4byte	.LFE89-.LFB89
+ 3976 00e0 00000000 		.4byte	.LFB91
+ 3977 00e4 70000000 		.4byte	.LFE91-.LFB91
+ 3978 00e8 00000000 		.4byte	.LFB90
+ 3979 00ec 5C000000 		.4byte	.LFE90-.LFB90
+ 3980 00f0 00000000 		.4byte	0
+ 3981 00f4 00000000 		.4byte	0
+ 3982              		.section	.debug_ranges,"",%progbits
+ 3983              	.Ldebug_ranges0:
+ 3984 0000 02000000 		.4byte	.LBB2
+ 3985 0004 04000000 		.4byte	.LBE2
+ 3986 0008 06000000 		.4byte	.LBB3
+ 3987 000c 20000000 		.4byte	.LBE3
+ 3988 0010 00000000 		.4byte	0
+ 3989 0014 00000000 		.4byte	0
+ 3990 0018 00000000 		.4byte	.LFB64
+ 3991 001c 24000000 		.4byte	.LFE64
+ 3992 0020 00000000 		.4byte	.LFB65
+ 3993 0024 14000000 		.4byte	.LFE65
+ 3994 0028 00000000 		.4byte	.LFB66
+ 3995 002c 40000000 		.4byte	.LFE66
+ 3996 0030 00000000 		.4byte	.LFB67
+ 3997 0034 2A000000 		.4byte	.LFE67
+ 3998 0038 00000000 		.4byte	.LFB68
+ 3999 003c 5E000000 		.4byte	.LFE68
+ 4000 0040 00000000 		.4byte	.LFB69
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 81
+
+
+ 4001 0044 0C000000 		.4byte	.LFE69
+ 4002 0048 00000000 		.4byte	.LFB70
+ 4003 004c 20000000 		.4byte	.LFE70
+ 4004 0050 00000000 		.4byte	.LFB71
+ 4005 0054 1E000000 		.4byte	.LFE71
+ 4006 0058 00000000 		.4byte	.LFB72
+ 4007 005c 34000000 		.4byte	.LFE72
+ 4008 0060 00000000 		.4byte	.LFB73
+ 4009 0064 1A000000 		.4byte	.LFE73
+ 4010 0068 00000000 		.4byte	.LFB74
+ 4011 006c 1A000000 		.4byte	.LFE74
+ 4012 0070 00000000 		.4byte	.LFB75
+ 4013 0074 08000000 		.4byte	.LFE75
+ 4014 0078 00000000 		.4byte	.LFB76
+ 4015 007c 40000000 		.4byte	.LFE76
+ 4016 0080 00000000 		.4byte	.LFB77
+ 4017 0084 14000000 		.4byte	.LFE77
+ 4018 0088 00000000 		.4byte	.LFB78
+ 4019 008c 18000000 		.4byte	.LFE78
+ 4020 0090 00000000 		.4byte	.LFB79
+ 4021 0094 24000000 		.4byte	.LFE79
+ 4022 0098 00000000 		.4byte	.LFB80
+ 4023 009c 0E000000 		.4byte	.LFE80
+ 4024 00a0 00000000 		.4byte	.LFB81
+ 4025 00a4 0A000000 		.4byte	.LFE81
+ 4026 00a8 00000000 		.4byte	.LFB82
+ 4027 00ac 2A000000 		.4byte	.LFE82
+ 4028 00b0 00000000 		.4byte	.LFB86
+ 4029 00b4 20000000 		.4byte	.LFE86
+ 4030 00b8 00000000 		.4byte	.LFB87
+ 4031 00bc 20000000 		.4byte	.LFE87
+ 4032 00c0 00000000 		.4byte	.LFB88
+ 4033 00c4 20000000 		.4byte	.LFE88
+ 4034 00c8 00000000 		.4byte	.LFB83
+ 4035 00cc 2E000000 		.4byte	.LFE83
+ 4036 00d0 00000000 		.4byte	.LFB84
+ 4037 00d4 1A000000 		.4byte	.LFE84
+ 4038 00d8 00000000 		.4byte	.LFB85
+ 4039 00dc 1A000000 		.4byte	.LFE85
+ 4040 00e0 00000000 		.4byte	.LFB89
+ 4041 00e4 02000000 		.4byte	.LFE89
+ 4042 00e8 00000000 		.4byte	.LFB91
+ 4043 00ec 70000000 		.4byte	.LFE91
+ 4044 00f0 00000000 		.4byte	.LFB90
+ 4045 00f4 5C000000 		.4byte	.LFE90
+ 4046 00f8 00000000 		.4byte	0
+ 4047 00fc 00000000 		.4byte	0
+ 4048              		.section	.debug_line,"",%progbits
+ 4049              	.Ldebug_line0:
+ 4050 0000 DB050000 		.section	.debug_str,"MS",%progbits,1
+ 4050      02003303 
+ 4050      00000201 
+ 4050      FB0E0D00 
+ 4050      01010101 
+ 4051              	.LASF93:
+ 4052 0000 43794465 		.ascii	"CyDelay\000"
+ 4052      6C617900 
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 82
+
+
+ 4053              	.LASF42:
+ 4054 0008 52454345 		.ascii	"RECEIVED_SETTINGS\000"
+ 4054      49564544 
+ 4054      5F534554 
+ 4054      54494E47 
+ 4054      5300
+ 4055              	.LASF54:
+ 4056 001a 41637475 		.ascii	"Actuator_Retract\000"
+ 4056      61746F72 
+ 4056      5F526574 
+ 4056      72616374 
+ 4056      00
+ 4057              	.LASF101:
+ 4058 002b 57656967 		.ascii	"Weight_ADC_GetResult16\000"
+ 4058      68745F41 
+ 4058      44435F47 
+ 4058      65745265 
+ 4058      73756C74 
+ 4059              	.LASF71:
+ 4060 0042 64656275 		.ascii	"debug\000"
+ 4060      6700
+ 4061              	.LASF116:
+ 4062 0048 6D61696E 		.ascii	"main.c\000"
+ 4062      2E6300
+ 4063              	.LASF37:
+ 4064 004f 63617061 		.ascii	"capacity\000"
+ 4064      63697479 
+ 4064      00
+ 4065              	.LASF76:
+ 4066 0058 73656E73 		.ascii	"sensorColor\000"
+ 4066      6F72436F 
+ 4066      6C6F7200 
+ 4067              	.LASF81:
+ 4068 0064 42454C54 		.ascii	"BELT_SPEED_MAX\000"
+ 4068      5F535045 
+ 4068      45445F4D 
+ 4068      415800
+ 4069              	.LASF33:
+ 4070 0073 51756575 		.ascii	"Queue\000"
+ 4070      6500
+ 4071              	.LASF57:
+ 4072 0079 42656C74 		.ascii	"Belt_Motor_Start\000"
+ 4072      5F4D6F74 
+ 4072      6F725F53 
+ 4072      74617274 
+ 4072      00
+ 4073              	.LASF10:
+ 4074 008a 756E7369 		.ascii	"unsigned int\000"
+ 4074      676E6564 
+ 4074      20696E74 
+ 4074      00
+ 4075              	.LASF113:
+ 4076 0097 6973725F 		.ascii	"isr_Measure_StartEx\000"
+ 4076      4D656173 
+ 4076      7572655F 
+ 4076      53746172 
+ 4076      74457800 
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 83
+
+
+ 4077              	.LASF89:
+ 4078 00ab 6973725F 		.ascii	"isr_Color_ClearPending\000"
+ 4078      436F6C6F 
+ 4078      725F436C 
+ 4078      65617250 
+ 4078      656E6469 
+ 4079              	.LASF5:
+ 4080 00c2 5F5F696E 		.ascii	"__int32_t\000"
+ 4080      7433325F 
+ 4080      7400
+ 4081              	.LASF79:
+ 4082 00cc 6772616D 		.ascii	"gram_per_adc\000"
+ 4082      5F706572 
+ 4082      5F616463 
+ 4082      00
+ 4083              	.LASF78:
+ 4084 00d9 6F666673 		.ascii	"offset_err\000"
+ 4084      65745F65 
+ 4084      727200
+ 4085              	.LASF91:
+ 4086 00e4 6973725F 		.ascii	"isr_Color_StartEx\000"
+ 4086      436F6C6F 
+ 4086      725F5374 
+ 4086      61727445 
+ 4086      7800
+ 4087              	.LASF58:
+ 4088 00f6 42656C74 		.ascii	"Belt_Motor_Set_Speed\000"
+ 4088      5F4D6F74 
+ 4088      6F725F53 
+ 4088      65745F53 
+ 4088      70656564 
+ 4089              	.LASF103:
+ 4090 010b 41637475 		.ascii	"Actuator_PWM_Start\000"
+ 4090      61746F72 
+ 4090      5F50574D 
+ 4090      5F537461 
+ 4090      727400
+ 4091              	.LASF82:
+ 4092 011e 42454C54 		.ascii	"BELT_SPEED_OFF\000"
+ 4092      5F535045 
+ 4092      45445F4F 
+ 4092      464600
+ 4093              	.LASF59:
+ 4094 012d 73706565 		.ascii	"speed\000"
+ 4094      6400
+ 4095              	.LASF25:
+ 4096 0133 434C4541 		.ascii	"CLEAR\000"
+ 4096      5200
+ 4097              	.LASF60:
+ 4098 0139 57656967 		.ascii	"Weight_Sensor_ADC_To_Grams\000"
+ 4098      68745F53 
+ 4098      656E736F 
+ 4098      725F4144 
+ 4098      435F546F 
+ 4099              	.LASF96:
+ 4100 0154 436F6C6F 		.ascii	"Color_PWM_Start\000"
+ 4100      725F5057 
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 84
+
+
+ 4100      4D5F5374 
+ 4100      61727400 
+ 4101              	.LASF99:
+ 4102 0164 57656967 		.ascii	"Weight_ADC_StartConvert\000"
+ 4102      68745F41 
+ 4102      44435F53 
+ 4102      74617274 
+ 4102      436F6E76 
+ 4103              	.LASF27:
+ 4104 017c 504F5745 		.ascii	"POWER_OFF\000"
+ 4104      525F4F46 
+ 4104      4600
+ 4105              	.LASF50:
+ 4106 0186 57656967 		.ascii	"Weight_Sensor_Read_Grams\000"
+ 4106      68745F53 
+ 4106      656E736F 
+ 4106      725F5265 
+ 4106      61645F47 
+ 4107              	.LASF29:
+ 4108 019f 4F4E4548 		.ascii	"ONEHUNDRED\000"
+ 4108      554E4452 
+ 4108      454400
+ 4109              	.LASF80:
+ 4110 01aa 41435455 		.ascii	"ACTUATOR_DELAY\000"
+ 4110      41544F52 
+ 4110      5F44454C 
+ 4110      415900
+ 4111              	.LASF15:
+ 4112 01b9 666C6F61 		.ascii	"float\000"
+ 4112      7400
+ 4113              	.LASF111:
+ 4114 01bf 6D616C6C 		.ascii	"malloc\000"
+ 4114      6F6300
+ 4115              	.LASF51:
+ 4116 01c6 72657375 		.ascii	"result\000"
+ 4116      6C7400
+ 4117              	.LASF9:
+ 4118 01cd 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 4118      206C6F6E 
+ 4118      6720756E 
+ 4118      7369676E 
+ 4118      65642069 
+ 4119              	.LASF75:
+ 4120 01e4 66726571 		.ascii	"freqReady\000"
+ 4120      52656164 
+ 4120      7900
+ 4121              	.LASF55:
+ 4122 01ee 44617461 		.ascii	"Database_Interface_Start\000"
+ 4122      62617365 
+ 4122      5F496E74 
+ 4122      65726661 
+ 4122      63655F53 
+ 4123              	.LASF117:
+ 4124 0207 433A5C55 		.ascii	"C:\\Users\\Gustav\\source\\PRJ3-Group-13\\Code\\Sor"
+ 4124      73657273 
+ 4124      5C477573 
+ 4124      7461765C 
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 85
+
+
+ 4124      736F7572 
+ 4125 0234 74696E67 		.ascii	"ting Controller\\Sorting_Controller.cydsn\000"
+ 4125      20436F6E 
+ 4125      74726F6C 
+ 4125      6C65725C 
+ 4125      536F7274 
+ 4126              	.LASF4:
+ 4127 025d 5F5F7569 		.ascii	"__uint16_t\000"
+ 4127      6E743136 
+ 4127      5F7400
+ 4128              	.LASF30:
+ 4129 0268 636F6C6F 		.ascii	"color\000"
+ 4129      7200
+ 4130              	.LASF115:
+ 4131 026e 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 4131      43313120 
+ 4131      352E342E 
+ 4131      31203230 
+ 4131      31363036 
+ 4132 02a1 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 4132      20726576 
+ 4132      6973696F 
+ 4132      6E203233 
+ 4132      37373135 
+ 4133 02d4 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 4133      66756E63 
+ 4133      74696F6E 
+ 4133      2D736563 
+ 4133      74696F6E 
+ 4134              	.LASF65:
+ 4135 02fc 656E7175 		.ascii	"enqueue\000"
+ 4135      65756500 
+ 4136              	.LASF67:
+ 4137 0304 6973725F 		.ascii	"isr_Measure_handler\000"
+ 4137      4D656173 
+ 4137      7572655F 
+ 4137      68616E64 
+ 4137      6C657200 
+ 4138              	.LASF70:
+ 4139 0318 64657175 		.ascii	"dequeue\000"
+ 4139      65756500 
+ 4140              	.LASF74:
+ 4141 0320 66726571 		.ascii	"freq\000"
+ 4141      00
+ 4142              	.LASF44:
+ 4143 0325 436F6C6F 		.ascii	"Color_Sensor_Read_Freq\000"
+ 4143      725F5365 
+ 4143      6E736F72 
+ 4143      5F526561 
+ 4143      645F4672 
+ 4144              	.LASF83:
+ 4145 033c 42454C54 		.ascii	"BELT_SPEED_NORMAL\000"
+ 4145      5F535045 
+ 4145      45445F4E 
+ 4145      4F524D41 
+ 4145      4C00
+ 4146              	.LASF17:
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 86
+
+
+ 4147 034e 63686172 		.ascii	"char\000"
+ 4147      00
+ 4148              	.LASF28:
+ 4149 0353 5457454E 		.ascii	"TWENTY\000"
+ 4149      545900
+ 4150              	.LASF52:
+ 4151 035a 57656967 		.ascii	"Weight_Sensor_Read\000"
+ 4151      68745F53 
+ 4151      656E736F 
+ 4151      725F5265 
+ 4151      616400
+ 4152              	.LASF32:
+ 4153 036d 736F7274 		.ascii	"sort\000"
+ 4153      00
+ 4154              	.LASF24:
+ 4155 0372 424C5545 		.ascii	"BLUE\000"
+ 4155      00
+ 4156              	.LASF14:
+ 4157 0377 75696E74 		.ascii	"uint16\000"
+ 4157      313600
+ 4158              	.LASF69:
+ 4159 037e 6973725F 		.ascii	"isr_rx_handler\000"
+ 4159      72785F68 
+ 4159      616E646C 
+ 4159      657200
+ 4160              	.LASF26:
+ 4161 038d 47524545 		.ascii	"GREEN\000"
+ 4161      4E00
+ 4162              	.LASF8:
+ 4163 0393 6C6F6E67 		.ascii	"long long int\000"
+ 4163      206C6F6E 
+ 4163      6720696E 
+ 4163      7400
+ 4164              	.LASF88:
+ 4165 03a1 436F6C6F 		.ascii	"Color_Counter_ReadCounter\000"
+ 4165      725F436F 
+ 4165      756E7465 
+ 4165      725F5265 
+ 4165      6164436F 
+ 4166              	.LASF100:
+ 4167 03bb 57656967 		.ascii	"Weight_ADC_IsEndConversion\000"
+ 4167      68745F41 
+ 4167      44435F49 
+ 4167      73456E64 
+ 4167      436F6E76 
+ 4168              	.LASF84:
+ 4169 03d6 4D595F44 		.ascii	"MY_DEBUG\000"
+ 4169      45425547 
+ 4169      00
+ 4170              	.LASF34:
+ 4171 03df 66726F6E 		.ascii	"front\000"
+ 4171      7400
+ 4172              	.LASF107:
+ 4173 03e5 5250495F 		.ascii	"RPI_UART_PutString\000"
+ 4173      55415254 
+ 4173      5F507574 
+ 4173      53747269 
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 87
+
+
+ 4173      6E6700
+ 4174              	.LASF68:
+ 4175 03f8 6973725F 		.ascii	"isr_Actuator_handler\000"
+ 4175      41637475 
+ 4175      61746F72 
+ 4175      5F68616E 
+ 4175      646C6572 
+ 4176              	.LASF119:
+ 4177 040d 6D656D73 		.ascii	"memset\000"
+ 4177      657400
+ 4178              	.LASF102:
+ 4179 0414 41637475 		.ascii	"Actuator_Dir_Write\000"
+ 4179      61746F72 
+ 4179      5F446972 
+ 4179      5F577269 
+ 4179      746500
+ 4180              	.LASF108:
+ 4181 0427 4D6F746F 		.ascii	"Motor_PWM_Start\000"
+ 4181      725F5057 
+ 4181      4D5F5374 
+ 4181      61727400 
+ 4182              	.LASF36:
+ 4183 0437 73697A65 		.ascii	"size\000"
+ 4183      00
+ 4184              	.LASF87:
+ 4185 043c 436F6C6F 		.ascii	"Color_Counter_Stop\000"
+ 4185      725F436F 
+ 4185      756E7465 
+ 4185      725F5374 
+ 4185      6F7000
+ 4186              	.LASF48:
+ 4187 044f 57656967 		.ascii	"Weight_Sensor_Start\000"
+ 4187      68745F53 
+ 4187      656E736F 
+ 4187      725F5374 
+ 4187      61727400 
+ 4188              	.LASF105:
+ 4189 0463 5250495F 		.ascii	"RPI_UART_Start\000"
+ 4189      55415254 
+ 4189      5F537461 
+ 4189      727400
+ 4190              	.LASF38:
+ 4191 0472 61727261 		.ascii	"array\000"
+ 4191      7900
+ 4192              	.LASF22:
+ 4193 0478 436F6C6F 		.ascii	"ColorFreq\000"
+ 4193      72467265 
+ 4193      7100
+ 4194              	.LASF20:
+ 4195 0482 67726565 		.ascii	"green\000"
+ 4195      6E00
+ 4196              	.LASF86:
+ 4197 0488 6D736751 		.ascii	"msgQueue\000"
+ 4197      75657565 
+ 4197      00
+ 4198              	.LASF18:
+ 4199 0491 6C6F6E67 		.ascii	"long double\000"
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 88
+
+
+ 4199      20646F75 
+ 4199      626C6500 
+ 4200              	.LASF106:
+ 4201 049d 73707269 		.ascii	"sprintf\000"
+ 4201      6E746600 
+ 4202              	.LASF11:
+ 4203 04a5 75696E74 		.ascii	"uint16_t\000"
+ 4203      31365F74 
+ 4203      00
+ 4204              	.LASF40:
+ 4205 04ae 4D454153 		.ascii	"MEASURE\000"
+ 4205      55524500 
+ 4206              	.LASF2:
+ 4207 04b6 73686F72 		.ascii	"short int\000"
+ 4207      7420696E 
+ 4207      7400
+ 4208              	.LASF6:
+ 4209 04c0 6C6F6E67 		.ascii	"long int\000"
+ 4209      20696E74 
+ 4209      00
+ 4210              	.LASF73:
+ 4211 04c9 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 4211      52784275 
+ 4211      66666572 
+ 4211      00
+ 4212              	.LASF92:
+ 4213 04d6 436F6C6F 		.ascii	"Color_Pin_Freq_Select_Write\000"
+ 4213      725F5069 
+ 4213      6E5F4672 
+ 4213      65715F53 
+ 4213      656C6563 
+ 4214              	.LASF109:
+ 4215 04f2 4D6F746F 		.ascii	"Motor_PWM_ReadPeriod\000"
+ 4215      725F5057 
+ 4215      4D5F5265 
+ 4215      61645065 
+ 4215      72696F64 
+ 4216              	.LASF64:
+ 4217 0507 6973456D 		.ascii	"isEmpty\000"
+ 4217      70747900 
+ 4218              	.LASF97:
+ 4219 050f 436F6C6F 		.ascii	"Color_Pin_Color_Select_Write\000"
+ 4219      725F5069 
+ 4219      6E5F436F 
+ 4219      6C6F725F 
+ 4219      53656C65 
+ 4220              	.LASF21:
+ 4221 052c 626C7565 		.ascii	"blue\000"
+ 4221      00
+ 4222              	.LASF90:
+ 4223 0531 436F6C6F 		.ascii	"Color_Reset_Write\000"
+ 4223      725F5265 
+ 4223      7365745F 
+ 4223      57726974 
+ 4223      6500
+ 4224              	.LASF41:
+ 4225 0543 41435455 		.ascii	"ACTUATOR\000"
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 89
+
+
+ 4225      41544F52 
+ 4225      00
+ 4226              	.LASF31:
+ 4227 054c 77656967 		.ascii	"weight\000"
+ 4227      687400
+ 4228              	.LASF104:
+ 4229 0553 41637475 		.ascii	"Actuator_PWM_Stop\000"
+ 4229      61746F72 
+ 4229      5F50574D 
+ 4229      5F53746F 
+ 4229      7000
+ 4230              	.LASF53:
+ 4231 0565 41637475 		.ascii	"Actuator_Extend\000"
+ 4231      61746F72 
+ 4231      5F457874 
+ 4231      656E6400 
+ 4232              	.LASF35:
+ 4233 0575 72656172 		.ascii	"rear\000"
+ 4233      00
+ 4234              	.LASF19:
+ 4235 057a 73697A65 		.ascii	"sizetype\000"
+ 4235      74797065 
+ 4235      00
+ 4236              	.LASF7:
+ 4237 0583 6C6F6E67 		.ascii	"long unsigned int\000"
+ 4237      20756E73 
+ 4237      69676E65 
+ 4237      6420696E 
+ 4237      7400
+ 4238              	.LASF39:
+ 4239 0595 41637475 		.ascii	"Actuator_dir\000"
+ 4239      61746F72 
+ 4239      5F646972 
+ 4239      00
+ 4240              	.LASF62:
+ 4241 05a2 71756575 		.ascii	"queue\000"
+ 4241      6500
+ 4242              	.LASF12:
+ 4243 05a8 696E7433 		.ascii	"int32_t\000"
+ 4243      325F7400 
+ 4244              	.LASF72:
+ 4245 05b0 68616E64 		.ascii	"handleMsg\000"
+ 4245      6C654D73 
+ 4245      6700
+ 4246              	.LASF1:
+ 4247 05ba 756E7369 		.ascii	"unsigned char\000"
+ 4247      676E6564 
+ 4247      20636861 
+ 4247      7200
+ 4248              	.LASF43:
+ 4249 05c8 66726571 		.ascii	"freq_INT\000"
+ 4249      5F494E54 
+ 4249      00
+ 4250              	.LASF94:
+ 4251 05d1 436F6C6F 		.ascii	"Color_Pin_LED_Write\000"
+ 4251      725F5069 
+ 4251      6E5F4C45 
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 90
+
+
+ 4251      445F5772 
+ 4251      69746500 
+ 4252              	.LASF23:
+ 4253 05e5 436F6C6F 		.ascii	"Color\000"
+ 4253      7200
+ 4254              	.LASF66:
+ 4255 05eb 6974656D 		.ascii	"item\000"
+ 4255      00
+ 4256              	.LASF61:
+ 4257 05f0 63726561 		.ascii	"createQueue\000"
+ 4257      74655175 
+ 4257      65756500 
+ 4258              	.LASF114:
+ 4259 05fc 6973725F 		.ascii	"isr_rx_StartEx\000"
+ 4259      72785F53 
+ 4259      74617274 
+ 4259      457800
+ 4260              	.LASF0:
+ 4261 060b 7369676E 		.ascii	"signed char\000"
+ 4261      65642063 
+ 4261      68617200 
+ 4262              	.LASF110:
+ 4263 0617 4D6F746F 		.ascii	"Motor_PWM_WriteCompare\000"
+ 4263      725F5057 
+ 4263      4D5F5772 
+ 4263      69746543 
+ 4263      6F6D7061 
+ 4264              	.LASF3:
+ 4265 062e 73686F72 		.ascii	"short unsigned int\000"
+ 4265      7420756E 
+ 4265      7369676E 
+ 4265      65642069 
+ 4265      6E7400
+ 4266              	.LASF47:
+ 4267 0641 436F6C6F 		.ascii	"Color_Sensor_Start\000"
+ 4267      725F5365 
+ 4267      6E736F72 
+ 4267      5F537461 
+ 4267      727400
+ 4268              	.LASF118:
+ 4269 0654 6D61696E 		.ascii	"main\000"
+ 4269      00
+ 4270              	.LASF77:
+ 4271 0659 6C696E65 		.ascii	"linearity\000"
+ 4271      61726974 
+ 4271      7900
+ 4272              	.LASF95:
+ 4273 0663 436F6C6F 		.ascii	"Color_Counter_Start\000"
+ 4273      725F436F 
+ 4273      756E7465 
+ 4273      725F5374 
+ 4273      61727400 
+ 4274              	.LASF13:
+ 4275 0677 75696E74 		.ascii	"uint8\000"
+ 4275      3800
+ 4276              	.LASF16:
+ 4277 067d 646F7562 		.ascii	"double\000"
+ARM GAS  C:\Users\Gustav\AppData\Local\Temp\ccUC5mEw.s 			page 91
+
+
+ 4277      6C6500
+ 4278              	.LASF85:
+ 4279 0684 6D736743 		.ascii	"msgCount\000"
+ 4279      6F756E74 
+ 4279      00
+ 4280              	.LASF63:
+ 4281 068d 69734675 		.ascii	"isFull\000"
+ 4281      6C6C00
+ 4282              	.LASF45:
+ 4283 0694 436F6C6F 		.ascii	"Color_Sensor_Read_All_Freq\000"
+ 4283      725F5365 
+ 4283      6E736F72 
+ 4283      5F526561 
+ 4283      645F416C 
+ 4284              	.LASF46:
+ 4285 06af 436F6C6F 		.ascii	"Color_Sensor_Read_Color\000"
+ 4285      725F5365 
+ 4285      6E736F72 
+ 4285      5F526561 
+ 4285      645F436F 
+ 4286              	.LASF49:
+ 4287 06c7 636F7272 		.ascii	"corrected_output\000"
+ 4287      65637465 
+ 4287      645F6F75 
+ 4287      74707574 
+ 4287      00
+ 4288              	.LASF112:
+ 4289 06d8 6973725F 		.ascii	"isr_Actuator_StartEx\000"
+ 4289      41637475 
+ 4289      61746F72 
+ 4289      5F537461 
+ 4289      72744578 
+ 4290              	.LASF98:
+ 4291 06ed 57656967 		.ascii	"Weight_ADC_Start\000"
+ 4291      68745F41 
+ 4291      44435F53 
+ 4291      74617274 
+ 4291      00
+ 4292              	.LASF56:
+ 4293 06fe 44617461 		.ascii	"Database_Interface_Send\000"
+ 4293      62617365 
+ 4293      5F496E74 
+ 4293      65726661 
+ 4293      63655F53 
+ 4294              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

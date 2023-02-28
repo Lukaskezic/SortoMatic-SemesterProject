@@ -1,0 +1,6 @@
+C:\Users\Gustav\source\PRJ3-Group-13\Code\Sorting Controller\Sorting_Controller.cydsn\Sorting_Controller.cyprj|7b166bfa-3c5d-4013-a8fe-7183cd78a055
+E:\Programmer\Cypres\PSoC Creator\4.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|db10f931-290d-410f-bf01-c1b177a4cde9
+C:\Users\Gustav\Documents\PSoC Creator\4.3\Downloads ( 4.3).cylib\Downloads ( 4.3).cyprj|4aad6872-0e0a-4a95-9026-f9b1d3432c0f
+E:\Programmer\Cypres\PSoC Creator\4.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|145b092e-0d3a-40cb-9d7d-a18731224e45
+E:\Programmer\Cypres\PSoC Creator\4.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|c269ca20-fe24-445a-81ae-cde381c436f5
+E:\Programmer\Cypres\PSoC Creator\4.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|28f6cdf8-7057-465a-80b9-307116b89300

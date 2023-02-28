@@ -1,0 +1,106 @@
+# Sorting_Controller
+# 2020-12-16 08:51:47Z
+
+# IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 0
+# IO_1@[IOP=(1)][IoId=(1)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 1
+# IO_3@[IOP=(1)][IoId=(3)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 3
+set_location "ClockBlock" clockblockcell -1 -1 0
+set_io "RPI_TX(0)" iocell 12 7
+set_io "RPI_RX(0)" iocell 12 6
+set_io "Color_Pin_Freq_Select(0)" iocell 2 4
+set_io "Color_Pin_Freq_Select(1)" iocell 2 5
+set_io "Weight_Ref_Pin(0)" iocell 0 2
+set_io "Actuator_Pin_IN1(0)" iocell 12 2
+set_io "Proximity_Pin_Measure(0)" iocell 2 1
+set_io "Proximity_Pin_Actuator(0)" iocell 2 0
+set_io "\Weight_ADC:ExtVref(0)\" iocell 0 4
+set_io "Color_Pin_Freq(0)" iocell 0 6
+set_io "Color_Pin_Color_Select(0)" iocell 2 2
+set_io "Color_Pin_Color_Select(1)" iocell 2 3
+set_io "Color_Pin_LED(0)" iocell 0 5
+set_io "Motor_Pin_PWM(0)" iocell 2 7
+set_io "Actuator_Pin_IN2(0)" iocell 12 3
+set_location "Net_3" 0 0 1 3
+set_location "\RPI_UART:BUART:counter_load_not\" 1 1 1 2
+set_location "\RPI_UART:BUART:tx_status_0\" 0 0 1 2
+set_location "\RPI_UART:BUART:tx_status_2\" 0 0 1 0
+set_location "\RPI_UART:BUART:rx_counter_load\" 1 2 1 3
+set_location "\RPI_UART:BUART:rx_postpoll\" 1 2 0 2
+set_location "\RPI_UART:BUART:rx_status_4\" 1 2 0 0
+set_location "\RPI_UART:BUART:rx_status_5\" 1 1 0 3
+set_location "\Color_PWM:PWMUDB:status_2\" 2 4 0 2
+set_location "\Color_Counter:CounterUDB:hwCapture\" 2 4 0 0
+set_location "\Color_Counter:CounterUDB:reload\" 3 5 1 2
+set_location "\Color_Counter:CounterUDB:status_0\" 3 5 0 0
+set_location "\Color_Counter:CounterUDB:status_2\" 3 5 0 3
+set_location "\Color_Counter:CounterUDB:count_enable\" 3 4 0 1
+set_location "\Motor_PWM:PWMUDB:status_2\" 0 3 0 2
+set_location "Net_6306" 0 3 1 2
+set_location "Net_5968" 0 3 1 1
+set_location "\Actuator_PWM:PWMUDB:status_2\" 3 3 1 0
+set_location "Net_6180" 3 3 1 2
+set_location "Net_6166" 3 3 1 1
+set_location "isr_Measure" interrupt -1 -1 3
+set_location "__ONE__" 2 1 1 1
+set_location "\RPI_UART:BUART:sTX:TxShifter:u0\" 0 0 2
+set_location "\RPI_UART:BUART:sTX:sCLOCK:TxBitClkGen\" 1 1 2
+set_location "\RPI_UART:BUART:sTX:TxSts\" 0 0 4
+set_location "\RPI_UART:BUART:sRX:RxShifter:u0\" 1 2 2
+set_location "\RPI_UART:BUART:sRX:RxBitCounter\" 1 2 7
+set_location "\RPI_UART:BUART:sRX:RxSts\" 1 1 4
+set_location "\Color_PWM:PWMUDB:genblk1:ctrlreg\" 2 3 6
+set_location "\Color_PWM:PWMUDB:genblk8:stsreg\" 2 4 4
+set_location "\Color_PWM:PWMUDB:sP16:pwmdp:u0\" 3 4 2
+set_location "\Color_PWM:PWMUDB:sP16:pwmdp:u1\" 2 4 2
+set_location "\Color_Counter:CounterUDB:sCTRLReg:ctrlreg\" 3 4 6
+set_location "\Color_Counter:CounterUDB:sSTSReg:stsreg\" 3 5 4
+set_location "\Color_Counter:CounterUDB:sC16:counterdp:u0\" 2 5 2
+set_location "\Color_Counter:CounterUDB:sC16:counterdp:u1\" 3 5 2
+set_location "isr_Color" interrupt -1 -1 2
+set_location "isr_Actuator" interrupt -1 -1 1
+set_location "\Weight_ADC:IRQ\" interrupt -1 -1 0
+set_location "\Weight_ADC:ADC_SAR\" sarcell -1 -1 0
+set_location "\Color_Reset:Sync:ctrl_reg\" 2 4 6
+set_location "\Motor_PWM:PWMUDB:genblk1:ctrlreg\" 0 3 6
+set_location "\Motor_PWM:PWMUDB:genblk8:stsreg\" 0 3 4
+set_location "\Motor_PWM:PWMUDB:sP8:pwmdp:u0\" 0 3 2
+set_location "isr_rx" interrupt -1 -1 4
+set_location "\Actuator_PWM:PWMUDB:genblk1:ctrlreg\" 2 5 6
+set_location "\Actuator_PWM:PWMUDB:genblk8:stsreg\" 3 3 4
+set_location "\Actuator_PWM:PWMUDB:sP8:pwmdp:u0\" 3 3 2
+set_location "\Actuator_Dir:Sync:ctrl_reg\" 3 3 6
+set_location "\RPI_UART:BUART:txn\" 0 0 0 0
+set_location "\RPI_UART:BUART:tx_state_1\" 0 1 0 3
+set_location "\RPI_UART:BUART:tx_state_0\" 1 0 1 0
+set_location "\RPI_UART:BUART:tx_state_2\" 0 1 1 1
+set_location "\RPI_UART:BUART:tx_bitclk\" 1 0 0 3
+set_location "\RPI_UART:BUART:tx_ctrl_mark_last\" 1 3 0 0
+set_location "\RPI_UART:BUART:rx_state_0\" 1 2 1 0
+set_location "\RPI_UART:BUART:rx_load_fifo\" 1 2 1 1
+set_location "\RPI_UART:BUART:rx_state_3\" 1 3 0 2
+set_location "\RPI_UART:BUART:rx_state_2\" 1 3 1 3
+set_location "\RPI_UART:BUART:rx_bitclk_enable\" 1 2 0 3
+set_location "\RPI_UART:BUART:rx_state_stop1_reg\" 1 2 0 1
+set_location "\RPI_UART:BUART:pollcount_1\" 1 1 1 0
+set_location "\RPI_UART:BUART:pollcount_0\" 1 1 0 1
+set_location "\RPI_UART:BUART:rx_status_3\" 1 2 1 2
+set_location "\RPI_UART:BUART:rx_last\" 1 3 1 2
+set_location "\Color_PWM:PWMUDB:runmode_enable\" 2 3 0 0
+set_location "\Color_PWM:PWMUDB:prevCompare1\" 2 3 0 3
+set_location "\Color_PWM:PWMUDB:status_0\" 2 3 1 0
+set_location "Net_2799" 2 4 0 1
+set_location "\Color_Counter:CounterUDB:prevCapture\" 2 4 1 0
+set_location "\Color_Counter:CounterUDB:overflow_reg_i\" 3 5 1 1
+set_location "\Color_Counter:CounterUDB:prevCompare\" 3 5 1 0
+set_location "\Color_Counter:CounterUDB:count_stored_i\" 3 4 1 2
+set_location "\Motor_PWM:PWMUDB:runmode_enable\" 0 3 0 1
+set_location "\Motor_PWM:PWMUDB:prevCompare1\" 0 3 0 3
+set_location "\Motor_PWM:PWMUDB:status_0\" 0 3 1 0
+set_location "Net_5892" 0 3 0 0
+set_location "\Actuator_PWM:PWMUDB:runmode_enable\" 3 5 0 1
+set_location "\Actuator_PWM:PWMUDB:prevCompare1\" 3 3 0 1
+set_location "\Actuator_PWM:PWMUDB:status_0\" 3 3 0 0
+set_location "Net_6200" 3 3 0 2

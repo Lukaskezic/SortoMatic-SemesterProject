@@ -1,0 +1,89 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <script src="jquery-3.5.1.min.js"></script>
+    <!-- Page title -->
+    <title>SortoMatic</title>
+</head>
+
+<body>
+    <h1 class="title">
+        SortoMatic
+    </h1>
+
+    <div class="centeredDiv">
+        <input class="btn" type="button" value="Update Table" id="updateTable" onclick="updateTable()">
+        <input class="btn" type="button" value="Clear table" id="clearTable" onclick="cleanTable()">
+        <input class="btn" type="button" value="Edit Settings" id="settingsBtn">
+    </div>
+
+    <div class="centeredDiv">
+        <b style="padding-right: 2mm">
+            Sorted:
+        </b>
+        <select id="sorted" onchange="genTable()">
+            <option value="all">All</option>
+            <option value="true">Sorted</option>
+            <option value="false">Not sorted</option>
+        </select>
+    </div>
+
+    <div class="centeredDiv">
+        <table>
+            <tr>
+                <th>R Min:</th>
+                <th>G Min:</th>
+                <th>B Min:</th>
+            </tr>
+            <tr>
+                <td>
+                    <input id="Rmin" onsubmit="false" onchange="updateTable()" type="number" min="0" max="255"
+                        placeholder="0-255">
+                </td>
+                <td> <input id="Gmin" onsubmit="false" onchange="updateTable()" type="number" min="0" max="255"
+                        placeholder="0-255">
+                </td>
+                <td><input id="Bmin" onsubmit="false" onchange="updateTable()" type="number" min="0" max="255"
+                        placeholder="0-255"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="centeredDiv">
+        <table>
+            <tr>
+                <th>R Max:</th>
+                <th>G Max:</th>
+                <th>B Max:</th>
+            </tr>
+            <tr>
+                <td><input id="Rmax" onsubmit="false" onchange="updateTable()" type="number" min="0" max="255"
+                        placeholder="0-255"></td>
+                <td><input id="Gmax" onsubmit="false" onchange="updateTable()" type="number" min="0" max="255"
+                        placeholder="0-255"></td>
+                <td><input id="Bmax" onsubmit="false" onchange="updateTable()" type="number" min="0" max="255"
+                        placeholder="0-255"></td>
+            </tr>
+        </table>
+
+    </div>
+    <div class="centeredDiv">
+        <b style="padding-right: 2mm">
+            Weight max:
+        </b>
+        <input id="Weight" onsubmit="false" onchange="updateTable()" type="number" min="0" max="1000" placeholder="0-1000">
+    </div>
+
+    <div class="GridTable" id="output">
+    </div>
+
+</body>
+
+</html>
+
+<script type="text/javascript">
+    document.getElementById("settingsBtn").onclick = function () {
+        location.href = "settings.html";
+    }
+</script>
+<script type="text/javascript" src="build-table.js"></script>

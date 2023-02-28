@@ -1,0 +1,104 @@
+dont_use_io iocell 1 0
+dont_use_io iocell 1 1
+dont_use_io iocell 1 3
+set_location "\RPI_UART:BUART:pollcount_1\" macrocell 1 1 1 0
+set_location "\RPI_UART:BUART:tx_state_2\" macrocell 0 1 1 1
+set_location "\RPI_UART:BUART:sRX:RxBitCounter\" count7cell 1 2 7 
+set_location "\RPI_UART:BUART:rx_status_4\" macrocell 1 2 0 0
+set_location "\Motor_PWM:PWMUDB:prevCompare1\" macrocell 0 3 0 3
+set_location "\Color_PWM:PWMUDB:genblk8:stsreg\" statusicell 2 4 4 
+set_location "\Motor_PWM:PWMUDB:genblk8:stsreg\" statusicell 0 3 4 
+set_location "\Color_Counter:CounterUDB:sC16:counterdp:u0\" datapathcell 2 5 2 
+set_location "\RPI_UART:BUART:sTX:TxShifter:u0\" datapathcell 0 0 2 
+set_location "\RPI_UART:BUART:pollcount_0\" macrocell 1 1 0 1
+set_location "\RPI_UART:BUART:rx_bitclk_enable\" macrocell 1 2 0 3
+set_location "\Color_Counter:CounterUDB:count_stored_i\" macrocell 3 4 1 2
+set_location "__ONE__" macrocell 2 1 1 1
+set_location "\RPI_UART:BUART:counter_load_not\" macrocell 1 1 1 2
+set_location "\Color_Counter:CounterUDB:status_2\" macrocell 3 5 0 3
+set_location "\Actuator_PWM:PWMUDB:genblk8:stsreg\" statusicell 3 3 4 
+set_location "\Color_PWM:PWMUDB:sP16:pwmdp:u1\" datapathcell 2 4 2 
+set_location "Net_6166" macrocell 3 3 1 1
+set_location "\RPI_UART:BUART:rx_postpoll\" macrocell 1 2 0 2
+set_location "\RPI_UART:BUART:sRX:RxShifter:u0\" datapathcell 1 2 2 
+set_location "\RPI_UART:BUART:rx_state_3\" macrocell 1 3 0 2
+set_location "\RPI_UART:BUART:rx_state_stop1_reg\" macrocell 1 2 0 1
+set_location "\RPI_UART:BUART:sRX:RxSts\" statusicell 1 1 4 
+set_location "\Color_PWM:PWMUDB:status_2\" macrocell 2 4 0 2
+set_location "\Color_Counter:CounterUDB:prevCompare\" macrocell 3 5 1 0
+set_location "\Color_Counter:CounterUDB:prevCapture\" macrocell 2 4 1 0
+set_location "\Actuator_PWM:PWMUDB:prevCompare1\" macrocell 3 3 0 1
+set_location "\Color_Counter:CounterUDB:overflow_reg_i\" macrocell 3 5 1 1
+set_location "Net_5968" macrocell 0 3 1 1
+set_location "Net_6180" macrocell 3 3 1 2
+set_location "\Motor_PWM:PWMUDB:status_0\" macrocell 0 3 1 0
+set_location "Net_5892" macrocell 0 3 0 0
+set_location "\RPI_UART:BUART:tx_status_0\" macrocell 0 0 1 2
+set_location "\Color_PWM:PWMUDB:sP16:pwmdp:u0\" datapathcell 3 4 2 
+set_location "\RPI_UART:BUART:tx_status_2\" macrocell 0 0 1 0
+set_location "Net_3" macrocell 0 0 1 3
+set_location "\Actuator_PWM:PWMUDB:status_2\" macrocell 3 3 1 0
+set_location "\Motor_PWM:PWMUDB:status_2\" macrocell 0 3 0 2
+set_location "\Color_PWM:PWMUDB:prevCompare1\" macrocell 2 3 0 3
+set_location "\RPI_UART:BUART:rx_state_0\" macrocell 1 2 1 0
+set_location "\RPI_UART:BUART:rx_last\" macrocell 1 3 1 2
+set_location "\Actuator_PWM:PWMUDB:runmode_enable\" macrocell 3 5 0 1
+set_location "\Motor_PWM:PWMUDB:sP8:pwmdp:u0\" datapathcell 0 3 2 
+set_location "\Actuator_PWM:PWMUDB:sP8:pwmdp:u0\" datapathcell 3 3 2 
+set_location "\RPI_UART:BUART:tx_bitclk\" macrocell 1 0 0 3
+set_location "Net_6200" macrocell 3 3 0 2
+set_location "Net_2799" macrocell 2 4 0 1
+set_location "\RPI_UART:BUART:txn\" macrocell 0 0 0 0
+set_location "\RPI_UART:BUART:rx_load_fifo\" macrocell 1 2 1 1
+set_location "\RPI_UART:BUART:rx_state_2\" macrocell 1 3 1 3
+set_location "\Color_Counter:CounterUDB:sSTSReg:stsreg\" statusicell 3 5 4 
+set_location "\Color_Counter:CounterUDB:status_0\" macrocell 3 5 0 0
+set_location "\Color_Counter:CounterUDB:hwCapture\" macrocell 2 4 0 0
+set_location "\RPI_UART:BUART:tx_state_0\" macrocell 1 0 1 0
+set_location "\Color_PWM:PWMUDB:status_0\" macrocell 2 3 1 0
+set_location "\Motor_PWM:PWMUDB:runmode_enable\" macrocell 0 3 0 1
+set_location "\Color_Counter:CounterUDB:sC16:counterdp:u1\" datapathcell 3 5 2 
+set_location "\RPI_UART:BUART:sTX:sCLOCK:TxBitClkGen\" datapathcell 1 1 2 
+set_location "\RPI_UART:BUART:sTX:TxSts\" statusicell 0 0 4 
+set_location "\Actuator_PWM:PWMUDB:status_0\" macrocell 3 3 0 0
+set_location "Net_6306" macrocell 0 3 1 2
+set_location "\RPI_UART:BUART:tx_state_1\" macrocell 0 1 0 3
+set_location "\Color_PWM:PWMUDB:runmode_enable\" macrocell 2 3 0 0
+set_location "\RPI_UART:BUART:tx_ctrl_mark_last\" macrocell 1 3 0 0
+set_location "\Color_Counter:CounterUDB:count_enable\" macrocell 3 4 0 1
+set_location "\RPI_UART:BUART:rx_status_3\" macrocell 1 2 1 2
+set_location "\RPI_UART:BUART:rx_status_5\" macrocell 1 1 0 3
+set_location "\RPI_UART:BUART:rx_counter_load\" macrocell 1 2 1 3
+set_location "\Color_Counter:CounterUDB:reload\" macrocell 3 5 1 2
+set_io "Color_Pin_Freq(0)" iocell 0 6
+set_io "Motor_Pin_PWM(0)" iocell 2 7
+set_location "\Color_Counter:CounterUDB:sCTRLReg:ctrlreg\" controlcell 3 4 6 
+set_io "Proximity_Pin_Actuator(0)" iocell 2 0
+set_location "\Motor_PWM:PWMUDB:genblk1:ctrlreg\" controlcell 0 3 6 
+set_location "\Weight_ADC:IRQ\" interrupt -1 -1 0
+# Note: port 12 is the logical name for port 7
+set_io "Actuator_Pin_IN1(0)" iocell 12 2
+# Note: port 12 is the logical name for port 7
+set_io "RPI_RX(0)" iocell 12 6
+# Note: port 12 is the logical name for port 7
+set_io "Actuator_Pin_IN2(0)" iocell 12 3
+set_location "isr_Measure" interrupt -1 -1 3
+set_location "isr_Actuator" interrupt -1 -1 1
+set_location "\Actuator_PWM:PWMUDB:genblk1:ctrlreg\" controlcell 2 5 6 
+set_location "\Weight_ADC:ADC_SAR\" sarcell -1 -1 0
+set_location "\Color_Reset:Sync:ctrl_reg\" controlcell 2 4 6 
+set_location "\Actuator_Dir:Sync:ctrl_reg\" controlcell 3 3 6 
+set_io "Proximity_Pin_Measure(0)" iocell 2 1
+set_location "isr_Color" interrupt -1 -1 2
+set_location "isr_rx" interrupt -1 -1 4
+set_location "\Color_PWM:PWMUDB:genblk1:ctrlreg\" controlcell 2 3 6 
+set_io "Color_Pin_Freq_Select(0)" iocell 2 4
+set_io "Weight_Ref_Pin(0)" iocell 0 2
+set_io "\Weight_ADC:ExtVref(0)\" iocell 0 4
+set_io "Color_Pin_Color_Select(0)" iocell 2 2
+set_io "Color_Pin_LED(0)" iocell 0 5
+set_location "ClockBlock" clockblockcell -1 -1 0
+# Note: port 12 is the logical name for port 7
+set_io "RPI_TX(0)" iocell 12 7
+set_io "Color_Pin_Freq_Select(1)" iocell 2 5
+set_io "Color_Pin_Color_Select(1)" iocell 2 3
